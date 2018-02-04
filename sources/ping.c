@@ -85,7 +85,7 @@ __unused static const char copyright[] =
 
 #include <sys/param.h>		/* NB: we rely on this for <sys/types.h> */
 #include <sys/socket.h>
-#define PRIVATE
+#define PRIVATE 1
 #include "sys_socket.h" // for all the constants
 #include <sys/sysctl.h>
 #include <sys/time.h>
@@ -184,60 +184,60 @@ int options;
  * to 8192 for complete accuracy...
  */
 #define	MAX_DUP_CHK	(8 * 128)
-int mx_dup_ck = MAX_DUP_CHK;
-char rcvd_tbl[MAX_DUP_CHK / 8];
+static int mx_dup_ck = MAX_DUP_CHK;
+static char rcvd_tbl[MAX_DUP_CHK / 8];
 
 static struct sockaddr_in whereto;    /* who to ping */
-int datalen = DEFDATALEN;
-int maxpayload;
+static int datalen = DEFDATALEN;
+static int maxpayload;
 static int s;                /* socket file descriptor */
-u_char outpackhdr[IP_MAXPACKET], *outpack;
-char BBELL = '\a';		/* characters written for MISSED and AUDIBLE */
-char BSPACE = '\b';		/* characters written for flood */
-char DOT = '.';
+static u_char outpackhdr[IP_MAXPACKET], *outpack;
+static char BBELL = '\a';		/* characters written for MISSED and AUDIBLE */
+static char BSPACE = '\b';		/* characters written for flood */
+static char DOT = '.';
 static char *hostname;
-char *shostname;
+static char *shostname;
 static int ident;            /* process id to identify our packets */
-int uid;            /* cached uid for micro-optimization */
-u_char icmp_type = ICMP_ECHO;
-u_char icmp_type_rsp = ICMP_ECHOREPLY;
-int phdr_len = 0;
-int send_len;
-char *boundif;
-unsigned int ifscope;
-int nocell;
-int use_sendmsg = 0;
-int use_recvmsg = 0;
-int traffic_class = SO_TC_CTL;	/* use control class, by default */
-int net_service_type = -1;
-int no_dup = 0;
+static int uid;            /* cached uid for micro-optimization */
+static u_char icmp_type = ICMP_ECHO;
+static u_char icmp_type_rsp = ICMP_ECHOREPLY;
+static int phdr_len = 0;
+static int send_len;
+static char *boundif;
+static unsigned int ifscope;
+static int nocell;
+static int use_sendmsg = 0;
+static int use_recvmsg = 0;
+static int traffic_class = SO_TC_CTL;	/* use control class, by default */
+static int net_service_type = -1;
+static int no_dup = 0;
 
 /* counters */
-long nmissedmax;		/* max value of ntransmitted - nreceived - 1 */
-long npackets;			/* max packets to transmit */
-long nreceived;			/* # of packets we got back */
-long nrepeats;			/* number of duplicates */
-long ntransmitted;		/* sequence # for outbound packets = #sent */
-long snpackets;			/* max packets to transmit in one sweep */
-long snreceived;		/* # of packets we got back in this sweep */
-long sntransmitted;		/* # of packets we sent in this sweep */
-int sweepmax;			/* max value of payload in sweep */
-int sweepmin = 0;		/* start value of payload in sweep */
-int sweepincr = 1;		/* payload increment in sweep */
-int interval = 1000;		/* interval between packets, ms */
-int waittime = MAXWAIT;		/* timeout for each packet */
-long nrcvtimeout = 0;		/* # of packets we got back after waittime */
-int icmp_len = 0;		/* length of the ICMP header */
+static long nmissedmax;		/* max value of ntransmitted - nreceived - 1 */
+static long npackets;			/* max packets to transmit */
+static long nreceived;			/* # of packets we got back */
+static long nrepeats;			/* number of duplicates */
+static long ntransmitted;		/* sequence # for outbound packets = #sent */
+static long snpackets;			/* max packets to transmit in one sweep */
+static long snreceived;		/* # of packets we got back in this sweep */
+static long sntransmitted;		/* # of packets we sent in this sweep */
+static int sweepmax;			/* max value of payload in sweep */
+static int sweepmin = 0;		/* start value of payload in sweep */
+static int sweepincr = 1;		/* payload increment in sweep */
+static int interval = 1000;		/* interval between packets, ms */
+static int waittime = MAXWAIT;		/* timeout for each packet */
+static long nrcvtimeout = 0;		/* # of packets we got back after waittime */
+static int icmp_len = 0;		/* length of the ICMP header */
 
 /* timing */
-int timing;			/* flag to do timing */
-double tmin = 999999999.0;	/* minimum round trip time */
-double tmax = 0.0;		/* maximum round trip time */
-double tsum = 0.0;		/* sum of all times, for doing average */
-double tsumsq = 0.0;		/* sum of all times squared, for std. dev. */
+static int timing;			/* flag to do timing */
+static double tmin = 999999999.0;	/* minimum round trip time */
+static double tmax = 0.0;		/* maximum round trip time */
+static double tsum = 0.0;		/* sum of all times, for doing average */
+static double tsumsq = 0.0;		/* sum of all times squared, for std. dev. */
 
-volatile sig_atomic_t finish_up;  /* nonzero if we've been told to finish up */
-volatile sig_atomic_t siginfo_p;
+static volatile sig_atomic_t finish_up;  /* nonzero if we've been told to finish up */
+static volatile sig_atomic_t siginfo_p;
 
 static void fill(char *, char *);
 static u_short in_cksum(u_short *, int);
@@ -420,7 +420,7 @@ ping_main(int argc, char *const *argv)
 				// err(EX_NOPERM, "-f flag");
 			}
 			options |= F_FLOOD;
-			setbuf(stdout, (char *)NULL);
+			setbuf(thread_stdout, (char *)NULL);
 			break;
 		case 'G': /* Maximum packet size for ping sweep */
 			ultmp = strtoul(optarg, &ep, 0);
@@ -1297,7 +1297,7 @@ ping_main(int argc, char *const *argv)
 					fprintf(thread_stdout, "Request timeout for icmp_seq %u\n",
 					       (uint16_t)(ntransmitted - 2));
 					if (!(options & F_FLOOD))
-						(void)fflush(stdout);
+						(void)fflush(thread_stdout);
 				}
 			}
 		}
@@ -1739,7 +1739,7 @@ pr_pack(char *buf, int cc, struct sockaddr_in *from, struct timeval *tv,
 		}
 	if (!(options & F_FLOOD)) {
 		(void)putchar('\n');
-		(void)fflush(stdout);
+		(void)fflush(thread_stdout);
 	}
 }
 
@@ -1841,7 +1841,7 @@ finish(void)
     (void)signal(SIGINT, SIG_IGN);
     (void)signal(SIGALRM, SIG_IGN);
     (void)putchar('\n');
-    (void)fflush(stdout);
+    (void)fflush(thread_stdout);
     (void)fprintf(thread_stdout, "--- %s ping statistics ---\n", hostname);
     (void)fprintf(thread_stdout, "%ld packets transmitted, ", ntransmitted);
     (void)fprintf(thread_stdout, "%ld packets received, ", nreceived);

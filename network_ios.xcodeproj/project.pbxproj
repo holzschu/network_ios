@@ -10,6 +10,10 @@
 		229EC3EC20259A53004E76C6 /* ping.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3EB20259A53004E76C6 /* ping.c */; };
 		229EC3EF2025B810004E76C6 /* ios_system.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 229EC3EE2025B810004E76C6 /* ios_system.framework */; };
 		229EC3F320264FCB004E76C6 /* gmt2local.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F220264FCB004E76C6 /* gmt2local.c */; };
+		229EC3FE20265981004E76C6 /* atomicio.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F920265980004E76C6 /* atomicio.c */; };
+		229EC3FF20265981004E76C6 /* netcat.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3FA20265980004E76C6 /* netcat.c */; };
+		229EC40020265981004E76C6 /* socks.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3FC20265981004E76C6 /* socks.c */; };
+		229EC40120265981004E76C6 /* sourceroute.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3FD20265981004E76C6 /* sourceroute.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +36,16 @@
 		229EC3F02025BA61004E76C6 /* sys_socket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sys_socket.h; sourceTree = "<group>"; };
 		229EC3F12025FC6F004E76C6 /* netinet_in.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = netinet_in.h; sourceTree = "<group>"; };
 		229EC3F220264FCB004E76C6 /* gmt2local.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gmt2local.c; path = sources/gmt2local.c; sourceTree = "<group>"; };
+		229EC3F920265980004E76C6 /* atomicio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = atomicio.c; path = sources/netcat/atomicio.c; sourceTree = "<group>"; };
+		229EC3FA20265980004E76C6 /* netcat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = netcat.c; path = sources/netcat/netcat.c; sourceTree = "<group>"; };
+		229EC3FC20265981004E76C6 /* socks.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = socks.c; path = sources/netcat/socks.c; sourceTree = "<group>"; };
+		229EC3FD20265981004E76C6 /* sourceroute.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sourceroute.c; path = sources/netcat/sourceroute.c; sourceTree = "<group>"; };
+		229EC40220265990004E76C6 /* netcat.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = netcat.txt; path = sources/netcat/netcat.txt; sourceTree = "<group>"; };
+		229EC40320265C2E004E76C6 /* netinet_tcp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = netinet_tcp.h; sourceTree = "<group>"; };
+		229EC4042026636D004E76C6 /* arpa_telnet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = arpa_telnet.h; sourceTree = "<group>"; };
+		229EC40520266417004E76C6 /* sys_event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sys_event.h; sourceTree = "<group>"; };
+		229EC406202668F6004E76C6 /* mptcp_client */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mptcp_client; path = sources/mptcp_client; sourceTree = "<group>"; };
+		229EC4072026694F004E76C6 /* conn_lib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = conn_lib.h; path = sources/mptcp_client/conn_lib.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +66,12 @@
 				229EC3EA20259991004E76C6 /* ip_var.h */,
 				229EC3F02025BA61004E76C6 /* sys_socket.h */,
 				229EC3F12025FC6F004E76C6 /* netinet_in.h */,
+				229EC40320265C2E004E76C6 /* netinet_tcp.h */,
+				229EC4042026636D004E76C6 /* arpa_telnet.h */,
+				229EC40520266417004E76C6 /* sys_event.h */,
+				229EC4072026694F004E76C6 /* conn_lib.h */,
+				229EC406202668F6004E76C6 /* mptcp_client */,
+				229EC3F820265918004E76C6 /* netcat */,
 				229EC3E720249394004E76C6 /* ping */,
 				229EC3DB20249305004E76C6 /* Products */,
 				229EC3ED2025B810004E76C6 /* Frameworks */,
@@ -81,6 +101,18 @@
 				229EC3EE2025B810004E76C6 /* ios_system.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		229EC3F820265918004E76C6 /* netcat */ = {
+			isa = PBXGroup;
+			children = (
+				229EC40220265990004E76C6 /* netcat.txt */,
+				229EC3F920265980004E76C6 /* atomicio.c */,
+				229EC3FA20265980004E76C6 /* netcat.c */,
+				229EC3FC20265981004E76C6 /* socks.c */,
+				229EC3FD20265981004E76C6 /* sourceroute.c */,
+			);
+			name = netcat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +171,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				229EC3FF20265981004E76C6 /* netcat.c in Sources */,
 				229EC3EC20259A53004E76C6 /* ping.c in Sources */,
+				229EC40020265981004E76C6 /* socks.c in Sources */,
+				229EC3FE20265981004E76C6 /* atomicio.c in Sources */,
+				229EC40120265981004E76C6 /* sourceroute.c in Sources */,
 				229EC3F320264FCB004E76C6 /* gmt2local.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
