@@ -7,13 +7,204 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		229EC3EC20259A53004E76C6 /* ping.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3EB20259A53004E76C6 /* ping.c */; };
 		229EC3EF2025B810004E76C6 /* ios_system.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 229EC3EE2025B810004E76C6 /* ios_system.framework */; };
 		229EC3F320264FCB004E76C6 /* gmt2local.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F220264FCB004E76C6 /* gmt2local.c */; };
 		229EC3FE20265981004E76C6 /* atomicio.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F920265980004E76C6 /* atomicio.c */; };
 		229EC3FF20265981004E76C6 /* netcat.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3FA20265980004E76C6 /* netcat.c */; };
 		229EC40020265981004E76C6 /* socks.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3FC20265981004E76C6 /* socks.c */; };
 		229EC40120265981004E76C6 /* sourceroute.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3FD20265981004E76C6 /* sourceroute.c */; };
+		22D862C820279ECD00456179 /* ping.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3EB20259A53004E76C6 /* ping.c */; };
+		22D862CB20279F9100456179 /* assertions.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8625420279D0300456179 /* assertions.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862CC20279F9100456179 /* backtrace-emptytbl.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8625620279D0900456179 /* backtrace-emptytbl.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862CD20279F9100456179 /* backtrace.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8625820279D0E00456179 /* backtrace.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862CE20279F9100456179 /* base32.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8625A20279D1600456179 /* base32.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862CF20279F9100456179 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8625C20279D1C00456179 /* base64.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862D020279F9100456179 /* bitstring.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8625E20279D2300456179 /* bitstring.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862D120279F9100456179 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8626020279D2900456179 /* buffer.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862D220279F9100456179 /* bufferlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8626220279D2F00456179 /* bufferlist.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862D320279F9100456179 /* commandline.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8626420279D3400456179 /* commandline.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862D420279F9100456179 /* counter.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8626620279D3500456179 /* counter.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862D520279F9100456179 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8626A20279D3D00456179 /* error.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862D620279F9100456179 /* event.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8626C20279D4400456179 /* event.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862D720279F9100456179 /* hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8626E20279D4C00456179 /* hash.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862D820279F9100456179 /* heap.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8627020279D5200456179 /* heap.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862D920279F9100456179 /* hex.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8627220279D5700456179 /* hex.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862DA20279F9100456179 /* hmacmd5.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8627420279D5C00456179 /* hmacmd5.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862DB20279F9100456179 /* hmacsha.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8627620279D6200456179 /* hmacsha.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862DC20279F9100456179 /* httpd.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8627820279D6700456179 /* httpd.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862DD20279F9100456179 /* inet_aton.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8627A20279D7100456179 /* inet_aton.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862DE20279F9100456179 /* inet_pton.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8627C20279D7800456179 /* inet_pton.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862DF20279F9100456179 /* iterated_hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8627E20279D7D00456179 /* iterated_hash.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862E020279F9100456179 /* lex.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8628020279D8300456179 /* lex.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862E120279F9100456179 /* lfsr.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8628220279D8800456179 /* lfsr.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862E220279F9100456179 /* lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8628420279D8D00456179 /* lib.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862E320279F9100456179 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8628620279D9300456179 /* log.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862E420279F9100456179 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8628820279D9A00456179 /* md5.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862E520279F9100456179 /* mem.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8628A20279DA300456179 /* mem.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862E620279F9100456179 /* mutexblock.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8628C20279DA900456179 /* mutexblock.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862E720279F9100456179 /* netaddr.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8628E20279DAD00456179 /* netaddr.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862E820279F9100456179 /* netscope.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8629020279DB100456179 /* netscope.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862E920279F9100456179 /* ondestroy.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8629220279DB700456179 /* ondestroy.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862EA20279F9100456179 /* parseint.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8629420279DBF00456179 /* parseint.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862EB20279F9100456179 /* pool.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8629620279DC300456179 /* pool.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862EC20279F9100456179 /* portset.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8629820279DC800456179 /* portset.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862ED20279F9100456179 /* quota.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8629A20279DD100456179 /* quota.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862EE20279F9100456179 /* radix.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8629C20279DD500456179 /* radix.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862EF20279F9100456179 /* random.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8629E20279DDA00456179 /* random.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862F020279F9100456179 /* ratelimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862A020279DE000456179 /* ratelimiter.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862F120279F9100456179 /* refcount.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862A220279DE900456179 /* refcount.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862F220279F9100456179 /* regex.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862A420279DF000456179 /* regex.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862F320279F9100456179 /* region.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862A620279DF700456179 /* region.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862F420279F9100456179 /* result.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862A820279DFC00456179 /* result.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862F520279F9100456179 /* rwlock.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862AA20279E0100456179 /* rwlock.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862F620279F9100456179 /* safe.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862AC20279E0600456179 /* safe.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862F720279F9100456179 /* serial.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862AE20279E0D00456179 /* serial.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862F820279F9100456179 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862B020279E1200456179 /* sha1.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862F920279F9100456179 /* sha2.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862B220279E1800456179 /* sha2.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862FA20279F9100456179 /* sockaddr.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862B420279E1D00456179 /* sockaddr.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862FB20279F9100456179 /* stats.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862B620279E2500456179 /* stats.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862FC20279F9100456179 /* string.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862B820279E2B00456179 /* string.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862FD20279F9100456179 /* strtoul.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862BA20279E3100456179 /* strtoul.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862FE20279F9100456179 /* symtab.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862BC20279E3600456179 /* symtab.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D862FF20279F9100456179 /* task.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862BE20279E3C00456179 /* task.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8630020279F9100456179 /* taskpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862C020279E4300456179 /* taskpool.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8630120279F9100456179 /* timer.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862C220279E5000456179 /* timer.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8630220279F9100456179 /* tm.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862C420279E5700456179 /* tm.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8630320279F9100456179 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D862C620279E5E00456179 /* version.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863062027A31400456179 /* app.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863052027A31400456179 /* app.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863082027A31A00456179 /* dir.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863072027A31A00456179 /* dir.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8630A2027A32200456179 /* entropy.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863092027A32100456179 /* entropy.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8630C2027A32700456179 /* errno2result.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8630B2027A32700456179 /* errno2result.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8630E2027A32C00456179 /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8630D2027A32C00456179 /* file.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863102027A33100456179 /* fsaccess.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8630F2027A33100456179 /* fsaccess.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863122027A33900456179 /* interfaceiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863112027A33900456179 /* interfaceiter.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863142027A33F00456179 /* keyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863132027A33F00456179 /* keyboard.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863162027A34600456179 /* net.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863152027A34600456179 /* net.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -D __APPLE_USE_RFC_3542"; }; };
+		22D863182027A34B00456179 /* os.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863172027A34B00456179 /* os.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8631A2027A35300456179 /* resource.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863192027A35300456179 /* resource.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8631C2027A35800456179 /* socket.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8631B2027A35800456179 /* socket.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -D __APPLE_USE_RFC_3542"; }; };
+		22D8631E2027A35F00456179 /* stdio.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8631D2027A35F00456179 /* stdio.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863202027A36400456179 /* stdtime.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8631F2027A36400456179 /* stdtime.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863222027A36900456179 /* strerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863212027A36900456179 /* strerror.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863242027A37000456179 /* syslog.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863232027A37000456179 /* syslog.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863262027A37500456179 /* time.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863252027A37500456179 /* time.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863292027A6BE00456179 /* condition.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863282027A6BE00456179 /* condition.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8632B2027A6C400456179 /* mutex.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8632A2027A6C400456179 /* mutex.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8632D2027A6CA00456179 /* thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8632C2027A6CA00456179 /* thread.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863302027A73500456179 /* msgcat.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8632F2027A73500456179 /* msgcat.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863332027A78B00456179 /* nslookup.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863322027A78B00456179 /* nslookup.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/"; }; };
+		22D863362027A86300456179 /* acache.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863352027A86300456179 /* acache.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863382027A86900456179 /* acl.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863372027A86900456179 /* acl.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8633A2027A86D00456179 /* adb.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863392027A86D00456179 /* adb.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8633C2027A87300456179 /* byaddr.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8633B2027A87300456179 /* byaddr.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8633E2027A87800456179 /* cache.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8633D2027A87700456179 /* cache.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863402027A87E00456179 /* callbacks.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8633F2027A87E00456179 /* callbacks.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863422027A88400456179 /* clientinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863412027A88400456179 /* clientinfo.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863442027A88A00456179 /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863432027A88A00456179 /* compress.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863462027A88E00456179 /* db.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863452027A88E00456179 /* db.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863482027A89200456179 /* dbiterator.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863472027A89200456179 /* dbiterator.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8634A2027A89600456179 /* dbtable.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863492027A89600456179 /* dbtable.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8634C2027A89B00456179 /* diff.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8634B2027A89B00456179 /* diff.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8634E2027A8A000456179 /* dispatch.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8634D2027A8A000456179 /* dispatch.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863502027A8A400456179 /* dlz.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8634F2027A8A400456179 /* dlz.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863522027A8A900456179 /* dns64.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863512027A8A900456179 /* dns64.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863542027A8B000456179 /* dnssec.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863532027A8AF00456179 /* dnssec.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863562027A8B900456179 /* ds.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863552027A8B900456179 /* ds.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863582027A8BE00456179 /* dst_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863572027A8BE00456179 /* dst_api.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8635A2027A8C500456179 /* dst_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863592027A8C400456179 /* dst_lib.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8635C2027A8CD00456179 /* dst_parse.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8635B2027A8CD00456179 /* dst_parse.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8635E2027A8D100456179 /* dst_result.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8635D2027A8D100456179 /* dst_result.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863602027A8D600456179 /* forward.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8635F2027A8D600456179 /* forward.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863622027A8DC00456179 /* gssapi_link.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863612027A8DC00456179 /* gssapi_link.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863642027A8E200456179 /* gssapictx.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863632027A8E100456179 /* gssapictx.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863662027A8E600456179 /* hmac_link.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863652027A8E600456179 /* hmac_link.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863682027A8EB00456179 /* iptable.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863672027A8EB00456179 /* iptable.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8636A2027A8F000456179 /* journal.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863692027A8EF00456179 /* journal.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8636C2027A8F600456179 /* key.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8636B2027A8F500456179 /* key.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8636E2027A8FA00456179 /* keydata.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8636D2027A8FA00456179 /* keydata.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863702027A90000456179 /* keytable.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8636F2027A90000456179 /* keytable.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863722027A90400456179 /* lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863712027A90400456179 /* lib.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863742027A90B00456179 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863732027A90B00456179 /* log.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863762027A90F00456179 /* lookup.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863752027A90F00456179 /* lookup.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863782027A91500456179 /* master.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863772027A91500456179 /* master.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8637A2027A92100456179 /* masterdump.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863792027A92000456179 /* masterdump.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8637C2027A92500456179 /* message.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8637B2027A92500456179 /* message.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8637E2027A92A00456179 /* name.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8637D2027A92A00456179 /* name.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863802027A93100456179 /* ncache.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8637F2027A93100456179 /* ncache.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863822027A93A00456179 /* nsec.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863812027A93A00456179 /* nsec.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863842027A94000456179 /* nsec3.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863832027A94000456179 /* nsec3.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863862027A94700456179 /* order.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863852027A94700456179 /* order.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863882027A94C00456179 /* peer.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863872027A94C00456179 /* peer.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8638A2027A95200456179 /* portlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863892027A95200456179 /* portlist.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8638C2027A95800456179 /* private.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8638B2027A95800456179 /* private.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8638E2027A95E00456179 /* rbt.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8638D2027A95E00456179 /* rbt.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863902027A96400456179 /* rbtdb.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8638F2027A96300456179 /* rbtdb.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863922027A96C00456179 /* rbtdb64.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863912027A96B00456179 /* rbtdb64.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863942027A97200456179 /* rcode.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863932027A97100456179 /* rcode.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863962027A97700456179 /* rdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863952027A97700456179 /* rdata.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863982027A97D00456179 /* rdatalist.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863972027A97D00456179 /* rdatalist.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8639A2027A98400456179 /* rdataset.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863992027A98400456179 /* rdataset.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8639C2027A98A00456179 /* rdatasetiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8639B2027A98A00456179 /* rdatasetiter.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D8639E2027A99000456179 /* rdataslab.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8639D2027A99000456179 /* rdataslab.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863A02027A99700456179 /* request.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8639F2027A99600456179 /* request.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863A22027A99D00456179 /* resolver.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863A12027A99C00456179 /* resolver.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863A42027A9A200456179 /* result.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863A32027A9A200456179 /* result.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863A62027A9A700456179 /* rootns.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863A52027A9A700456179 /* rootns.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863A82027A9AC00456179 /* rpz.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863A72027A9AC00456179 /* rpz.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863AA2027A9B200456179 /* rriterator.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863A92027A9B100456179 /* rriterator.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863AC2027A9B700456179 /* sdb.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863AB2027A9B700456179 /* sdb.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863AE2027A9BD00456179 /* sdlz.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863AD2027A9BD00456179 /* sdlz.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863B02027A9C300456179 /* soa.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863AF2027A9C300456179 /* soa.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863B42027A9DF00456179 /* ssu_external.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863B32027A9DF00456179 /* ssu_external.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863B62027A9E400456179 /* ssu.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863B52027A9E400456179 /* ssu.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863B82027A9F700456179 /* stats.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863B72027A9F700456179 /* stats.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863BA2027A9FD00456179 /* tcpmsg.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863B92027A9FD00456179 /* tcpmsg.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863BC2027AA0400456179 /* time.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863BB2027AA0300456179 /* time.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863BE2027AA0A00456179 /* timer.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863BD2027AA0A00456179 /* timer.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863C02027AA0F00456179 /* tkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863BF2027AA0F00456179 /* tkey.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863C22027AA1400456179 /* tsec.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863C12027AA1300456179 /* tsec.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863C42027AA1900456179 /* tsig.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863C32027AA1900456179 /* tsig.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863C62027AA2000456179 /* ttl.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863C52027AA2000456179 /* ttl.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863C82027AA2600456179 /* update.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863C72027AA2600456179 /* update.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863CA2027AA2B00456179 /* validator.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863C92027AA2B00456179 /* validator.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863CC2027AA3100456179 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863CB2027AA3000456179 /* version.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863CE2027AA3600456179 /* view.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863CD2027AA3600456179 /* view.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863D02027AA3C00456179 /* xfrin.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863CF2027AA3B00456179 /* xfrin.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863D22027AA4100456179 /* zone.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863D12027AA4100456179 /* zone.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863D42027AA4600456179 /* zonekey.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863D32027AA4600456179 /* zonekey.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863D62027AA4B00456179 /* zt.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863D52027AA4B00456179 /* zt.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ "; }; };
+		22D863D82027B03200456179 /* dighost.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863D72027B03200456179 /* dighost.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863DB2027B19A00456179 /* compat.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863DA2027B19A00456179 /* compat.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863DD2027B19F00456179 /* context.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863DC2027B19F00456179 /* context.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863DF2027B1A600456179 /* gai_strerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863DE2027B1A600456179 /* gai_strerror.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863E12027B1AD00456179 /* getaddrinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863E02027B1AD00456179 /* getaddrinfo.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863E32027B1B300456179 /* gethost.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863E22027B1B300456179 /* gethost.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863E52027B1B800456179 /* getipnode.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863E42027B1B800456179 /* getipnode.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863E72027B1BD00456179 /* getnameinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863E62027B1BD00456179 /* getnameinfo.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863E92027B1C200456179 /* getrrset.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863E82027B1C200456179 /* getrrset.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863EB2027B1C700456179 /* herror.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863EA2027B1C700456179 /* herror.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863ED2027B1CB00456179 /* lwbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863EC2027B1CB00456179 /* lwbuffer.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863EF2027B1D100456179 /* lwconfig.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863EE2027B1D100456179 /* lwconfig.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863F12027B1D800456179 /* lwinetaton.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863F02027B1D700456179 /* lwinetaton.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863F32027B1DE00456179 /* lwinetntop.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863F22027B1DE00456179 /* lwinetntop.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863F52027B1E600456179 /* lwinetpton.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863F42027B1E500456179 /* lwinetpton.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863F72027B1EA00456179 /* lwpacket.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863F62027B1EA00456179 /* lwpacket.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863F92027B1EF00456179 /* lwres_gabn.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863F82027B1EF00456179 /* lwres_gabn.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863FB2027B1F500456179 /* lwres_gnba.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863FA2027B1F500456179 /* lwres_gnba.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863FD2027B1FA00456179 /* lwres_grbn.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863FC2027B1FA00456179 /* lwres_grbn.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D863FF2027B20000456179 /* lwres_noop.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D863FE2027B20000456179 /* lwres_noop.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D864012027B20600456179 /* lwresutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D864002027B20600456179 /* lwresutil.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D864032027B20C00456179 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D864022027B20C00456179 /* print.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D864052027B21100456179 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D864042027B21000456179 /* version.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D864082027B30700456179 /* check.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D864072027B30700456179 /* check.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D8640A2027B30D00456179 /* getaddresses.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D864092027B30C00456179 /* getaddresses.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D8640C2027B31800456179 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8640B2027B31800456179 /* version.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D8640F2027B3C000456179 /* aclconf.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8640E2027B3C000456179 /* aclconf.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D864112027B3C900456179 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D864102027B3C900456179 /* log.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D864132027B3CF00456179 /* namedconf.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D864122027B3CE00456179 /* namedconf.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D864152027B3D300456179 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D864142027B3D300456179 /* parser.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D864172027B3DA00456179 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D864162027B3DA00456179 /* version.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
+		22D8641920287DDB00456179 /* libresolv.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D8641820287DDB00456179 /* libresolv.9.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +237,198 @@
 		229EC40520266417004E76C6 /* sys_event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sys_event.h; sourceTree = "<group>"; };
 		229EC406202668F6004E76C6 /* mptcp_client */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mptcp_client; path = sources/mptcp_client; sourceTree = "<group>"; };
 		229EC4072026694F004E76C6 /* conn_lib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = conn_lib.h; path = sources/mptcp_client/conn_lib.h; sourceTree = "<group>"; };
+		229EC40820276228004E76C6 /* conn_lib.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = conn_lib.c; path = sources/mptcp_client/conn_lib.c; sourceTree = "<group>"; };
+		22D8625420279D0300456179 /* assertions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = assertions.c; path = sources/bind9/lib/isc/assertions.c; sourceTree = SOURCE_ROOT; };
+		22D8625620279D0900456179 /* backtrace-emptytbl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "backtrace-emptytbl.c"; path = "sources/bind9/lib/isc/backtrace-emptytbl.c"; sourceTree = SOURCE_ROOT; };
+		22D8625820279D0E00456179 /* backtrace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = backtrace.c; path = sources/bind9/lib/isc/backtrace.c; sourceTree = SOURCE_ROOT; };
+		22D8625A20279D1600456179 /* base32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base32.c; path = sources/bind9/lib/isc/base32.c; sourceTree = SOURCE_ROOT; };
+		22D8625C20279D1C00456179 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base64.c; path = sources/bind9/lib/isc/base64.c; sourceTree = SOURCE_ROOT; };
+		22D8625E20279D2300456179 /* bitstring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bitstring.c; path = sources/bind9/lib/isc/bitstring.c; sourceTree = SOURCE_ROOT; };
+		22D8626020279D2900456179 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = buffer.c; path = sources/bind9/lib/isc/buffer.c; sourceTree = SOURCE_ROOT; };
+		22D8626220279D2F00456179 /* bufferlist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bufferlist.c; path = sources/bind9/lib/isc/bufferlist.c; sourceTree = SOURCE_ROOT; };
+		22D8626420279D3400456179 /* commandline.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = commandline.c; path = sources/bind9/lib/isc/commandline.c; sourceTree = SOURCE_ROOT; };
+		22D8626620279D3500456179 /* counter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = counter.c; path = sources/bind9/lib/isc/counter.c; sourceTree = SOURCE_ROOT; };
+		22D8626A20279D3D00456179 /* error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = error.c; path = sources/bind9/lib/isc/error.c; sourceTree = SOURCE_ROOT; };
+		22D8626C20279D4400456179 /* event.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = event.c; path = sources/bind9/lib/isc/event.c; sourceTree = SOURCE_ROOT; };
+		22D8626E20279D4C00456179 /* hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hash.c; path = sources/bind9/lib/isc/hash.c; sourceTree = SOURCE_ROOT; };
+		22D8627020279D5200456179 /* heap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = heap.c; path = sources/bind9/lib/isc/heap.c; sourceTree = SOURCE_ROOT; };
+		22D8627220279D5700456179 /* hex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hex.c; path = sources/bind9/lib/isc/hex.c; sourceTree = SOURCE_ROOT; };
+		22D8627420279D5C00456179 /* hmacmd5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hmacmd5.c; path = sources/bind9/lib/isc/hmacmd5.c; sourceTree = SOURCE_ROOT; };
+		22D8627620279D6200456179 /* hmacsha.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hmacsha.c; path = sources/bind9/lib/isc/hmacsha.c; sourceTree = SOURCE_ROOT; };
+		22D8627820279D6700456179 /* httpd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = httpd.c; path = sources/bind9/lib/isc/httpd.c; sourceTree = SOURCE_ROOT; };
+		22D8627A20279D7100456179 /* inet_aton.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = inet_aton.c; path = sources/bind9/lib/isc/inet_aton.c; sourceTree = SOURCE_ROOT; };
+		22D8627C20279D7800456179 /* inet_pton.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = inet_pton.c; path = sources/bind9/lib/isc/inet_pton.c; sourceTree = SOURCE_ROOT; };
+		22D8627E20279D7D00456179 /* iterated_hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = iterated_hash.c; path = sources/bind9/lib/isc/iterated_hash.c; sourceTree = SOURCE_ROOT; };
+		22D8628020279D8300456179 /* lex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lex.c; path = sources/bind9/lib/isc/lex.c; sourceTree = SOURCE_ROOT; };
+		22D8628220279D8800456179 /* lfsr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lfsr.c; path = sources/bind9/lib/isc/lfsr.c; sourceTree = SOURCE_ROOT; };
+		22D8628420279D8D00456179 /* lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lib.c; path = sources/bind9/lib/isc/lib.c; sourceTree = SOURCE_ROOT; };
+		22D8628620279D9300456179 /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = log.c; path = sources/bind9/lib/isc/log.c; sourceTree = SOURCE_ROOT; };
+		22D8628820279D9A00456179 /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5.c; path = sources/bind9/lib/isc/md5.c; sourceTree = SOURCE_ROOT; };
+		22D8628A20279DA300456179 /* mem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mem.c; path = sources/bind9/lib/isc/mem.c; sourceTree = SOURCE_ROOT; };
+		22D8628C20279DA900456179 /* mutexblock.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mutexblock.c; path = sources/bind9/lib/isc/mutexblock.c; sourceTree = SOURCE_ROOT; };
+		22D8628E20279DAD00456179 /* netaddr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = netaddr.c; path = sources/bind9/lib/isc/netaddr.c; sourceTree = SOURCE_ROOT; };
+		22D8629020279DB100456179 /* netscope.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = netscope.c; path = sources/bind9/lib/isc/netscope.c; sourceTree = SOURCE_ROOT; };
+		22D8629220279DB700456179 /* ondestroy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ondestroy.c; path = sources/bind9/lib/isc/ondestroy.c; sourceTree = SOURCE_ROOT; };
+		22D8629420279DBF00456179 /* parseint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = parseint.c; path = sources/bind9/lib/isc/parseint.c; sourceTree = SOURCE_ROOT; };
+		22D8629620279DC300456179 /* pool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pool.c; path = sources/bind9/lib/isc/pool.c; sourceTree = SOURCE_ROOT; };
+		22D8629820279DC800456179 /* portset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = portset.c; path = sources/bind9/lib/isc/portset.c; sourceTree = SOURCE_ROOT; };
+		22D8629A20279DD100456179 /* quota.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = quota.c; path = sources/bind9/lib/isc/quota.c; sourceTree = SOURCE_ROOT; };
+		22D8629C20279DD500456179 /* radix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = radix.c; path = sources/bind9/lib/isc/radix.c; sourceTree = SOURCE_ROOT; };
+		22D8629E20279DDA00456179 /* random.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = random.c; path = sources/bind9/lib/isc/random.c; sourceTree = SOURCE_ROOT; };
+		22D862A020279DE000456179 /* ratelimiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ratelimiter.c; path = sources/bind9/lib/isc/ratelimiter.c; sourceTree = SOURCE_ROOT; };
+		22D862A220279DE900456179 /* refcount.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = refcount.c; path = sources/bind9/lib/isc/refcount.c; sourceTree = SOURCE_ROOT; };
+		22D862A420279DF000456179 /* regex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = regex.c; path = sources/bind9/lib/isc/regex.c; sourceTree = SOURCE_ROOT; };
+		22D862A620279DF700456179 /* region.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = region.c; path = sources/bind9/lib/isc/region.c; sourceTree = SOURCE_ROOT; };
+		22D862A820279DFC00456179 /* result.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = result.c; path = sources/bind9/lib/isc/result.c; sourceTree = SOURCE_ROOT; };
+		22D862AA20279E0100456179 /* rwlock.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rwlock.c; path = sources/bind9/lib/isc/rwlock.c; sourceTree = SOURCE_ROOT; };
+		22D862AC20279E0600456179 /* safe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = safe.c; path = sources/bind9/lib/isc/safe.c; sourceTree = SOURCE_ROOT; };
+		22D862AE20279E0D00456179 /* serial.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = serial.c; path = sources/bind9/lib/isc/serial.c; sourceTree = SOURCE_ROOT; };
+		22D862B020279E1200456179 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = sources/bind9/lib/isc/sha1.c; sourceTree = SOURCE_ROOT; };
+		22D862B220279E1800456179 /* sha2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha2.c; path = sources/bind9/lib/isc/sha2.c; sourceTree = SOURCE_ROOT; };
+		22D862B420279E1D00456179 /* sockaddr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sockaddr.c; path = sources/bind9/lib/isc/sockaddr.c; sourceTree = SOURCE_ROOT; };
+		22D862B620279E2500456179 /* stats.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stats.c; path = sources/bind9/lib/isc/stats.c; sourceTree = SOURCE_ROOT; };
+		22D862B820279E2B00456179 /* string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = string.c; path = sources/bind9/lib/isc/string.c; sourceTree = SOURCE_ROOT; };
+		22D862BA20279E3100456179 /* strtoul.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = strtoul.c; path = sources/bind9/lib/isc/strtoul.c; sourceTree = SOURCE_ROOT; };
+		22D862BC20279E3600456179 /* symtab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = symtab.c; path = sources/bind9/lib/isc/symtab.c; sourceTree = SOURCE_ROOT; };
+		22D862BE20279E3C00456179 /* task.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = task.c; path = sources/bind9/lib/isc/task.c; sourceTree = SOURCE_ROOT; };
+		22D862C020279E4300456179 /* taskpool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = taskpool.c; path = sources/bind9/lib/isc/taskpool.c; sourceTree = SOURCE_ROOT; };
+		22D862C220279E5000456179 /* timer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = timer.c; path = sources/bind9/lib/isc/timer.c; sourceTree = SOURCE_ROOT; };
+		22D862C420279E5700456179 /* tm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tm.c; path = sources/bind9/lib/isc/tm.c; sourceTree = SOURCE_ROOT; };
+		22D862C620279E5E00456179 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = sources/bind9/lib/isc/version.c; sourceTree = SOURCE_ROOT; };
+		22D863052027A31400456179 /* app.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = app.c; path = sources/bind9/lib/isc/unix/app.c; sourceTree = SOURCE_ROOT; };
+		22D863072027A31A00456179 /* dir.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dir.c; path = sources/bind9/lib/isc/unix/dir.c; sourceTree = SOURCE_ROOT; };
+		22D863092027A32100456179 /* entropy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = entropy.c; path = sources/bind9/lib/isc/unix/entropy.c; sourceTree = SOURCE_ROOT; };
+		22D8630B2027A32700456179 /* errno2result.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = errno2result.c; path = sources/bind9/lib/isc/unix/errno2result.c; sourceTree = SOURCE_ROOT; };
+		22D8630D2027A32C00456179 /* file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = file.c; path = sources/bind9/lib/isc/unix/file.c; sourceTree = SOURCE_ROOT; };
+		22D8630F2027A33100456179 /* fsaccess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fsaccess.c; path = sources/bind9/lib/isc/unix/fsaccess.c; sourceTree = SOURCE_ROOT; };
+		22D863112027A33900456179 /* interfaceiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = interfaceiter.c; path = sources/bind9/lib/isc/unix/interfaceiter.c; sourceTree = SOURCE_ROOT; };
+		22D863132027A33F00456179 /* keyboard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = keyboard.c; path = sources/bind9/lib/isc/unix/keyboard.c; sourceTree = SOURCE_ROOT; };
+		22D863152027A34600456179 /* net.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = net.c; path = sources/bind9/lib/isc/unix/net.c; sourceTree = SOURCE_ROOT; };
+		22D863172027A34B00456179 /* os.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = os.c; path = sources/bind9/lib/isc/unix/os.c; sourceTree = SOURCE_ROOT; };
+		22D863192027A35300456179 /* resource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = resource.c; path = sources/bind9/lib/isc/unix/resource.c; sourceTree = SOURCE_ROOT; };
+		22D8631B2027A35800456179 /* socket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = socket.c; path = sources/bind9/lib/isc/unix/socket.c; sourceTree = SOURCE_ROOT; };
+		22D8631D2027A35F00456179 /* stdio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stdio.c; path = sources/bind9/lib/isc/unix/stdio.c; sourceTree = SOURCE_ROOT; };
+		22D8631F2027A36400456179 /* stdtime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stdtime.c; path = sources/bind9/lib/isc/unix/stdtime.c; sourceTree = SOURCE_ROOT; };
+		22D863212027A36900456179 /* strerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = strerror.c; path = sources/bind9/lib/isc/unix/strerror.c; sourceTree = SOURCE_ROOT; };
+		22D863232027A37000456179 /* syslog.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = syslog.c; path = sources/bind9/lib/isc/unix/syslog.c; sourceTree = SOURCE_ROOT; };
+		22D863252027A37500456179 /* time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = time.c; path = sources/bind9/lib/isc/unix/time.c; sourceTree = SOURCE_ROOT; };
+		22D863282027A6BE00456179 /* condition.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = condition.c; path = sources/bind9/lib/isc/nothreads/condition.c; sourceTree = SOURCE_ROOT; };
+		22D8632A2027A6C400456179 /* mutex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mutex.c; path = sources/bind9/lib/isc/nothreads/mutex.c; sourceTree = SOURCE_ROOT; };
+		22D8632C2027A6CA00456179 /* thread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = thread.c; path = sources/bind9/lib/isc/nothreads/thread.c; sourceTree = SOURCE_ROOT; };
+		22D8632F2027A73500456179 /* msgcat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = msgcat.c; path = sources/bind9/lib/isc/nls/msgcat.c; sourceTree = SOURCE_ROOT; };
+		22D863322027A78B00456179 /* nslookup.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = nslookup.c; path = sources/bind9/bin/dig/nslookup.c; sourceTree = SOURCE_ROOT; };
+		22D863352027A86300456179 /* acache.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = acache.c; path = sources/bind9/lib/dns/acache.c; sourceTree = SOURCE_ROOT; };
+		22D863372027A86900456179 /* acl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = acl.c; path = sources/bind9/lib/dns/acl.c; sourceTree = SOURCE_ROOT; };
+		22D863392027A86D00456179 /* adb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adb.c; path = sources/bind9/lib/dns/adb.c; sourceTree = SOURCE_ROOT; };
+		22D8633B2027A87300456179 /* byaddr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = byaddr.c; path = sources/bind9/lib/dns/byaddr.c; sourceTree = SOURCE_ROOT; };
+		22D8633D2027A87700456179 /* cache.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cache.c; path = sources/bind9/lib/dns/cache.c; sourceTree = SOURCE_ROOT; };
+		22D8633F2027A87E00456179 /* callbacks.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = callbacks.c; path = sources/bind9/lib/dns/callbacks.c; sourceTree = SOURCE_ROOT; };
+		22D863412027A88400456179 /* clientinfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = clientinfo.c; path = sources/bind9/lib/dns/clientinfo.c; sourceTree = SOURCE_ROOT; };
+		22D863432027A88A00456179 /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = compress.c; path = sources/bind9/lib/dns/compress.c; sourceTree = SOURCE_ROOT; };
+		22D863452027A88E00456179 /* db.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = db.c; path = sources/bind9/lib/dns/db.c; sourceTree = SOURCE_ROOT; };
+		22D863472027A89200456179 /* dbiterator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dbiterator.c; path = sources/bind9/lib/dns/dbiterator.c; sourceTree = SOURCE_ROOT; };
+		22D863492027A89600456179 /* dbtable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dbtable.c; path = sources/bind9/lib/dns/dbtable.c; sourceTree = SOURCE_ROOT; };
+		22D8634B2027A89B00456179 /* diff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = diff.c; path = sources/bind9/lib/dns/diff.c; sourceTree = SOURCE_ROOT; };
+		22D8634D2027A8A000456179 /* dispatch.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dispatch.c; path = sources/bind9/lib/dns/dispatch.c; sourceTree = SOURCE_ROOT; };
+		22D8634F2027A8A400456179 /* dlz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dlz.c; path = sources/bind9/lib/dns/dlz.c; sourceTree = SOURCE_ROOT; };
+		22D863512027A8A900456179 /* dns64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dns64.c; path = sources/bind9/lib/dns/dns64.c; sourceTree = SOURCE_ROOT; };
+		22D863532027A8AF00456179 /* dnssec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dnssec.c; path = sources/bind9/lib/dns/dnssec.c; sourceTree = SOURCE_ROOT; };
+		22D863552027A8B900456179 /* ds.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ds.c; path = sources/bind9/lib/dns/ds.c; sourceTree = SOURCE_ROOT; };
+		22D863572027A8BE00456179 /* dst_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dst_api.c; path = sources/bind9/lib/dns/dst_api.c; sourceTree = SOURCE_ROOT; };
+		22D863592027A8C400456179 /* dst_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dst_lib.c; path = sources/bind9/lib/dns/dst_lib.c; sourceTree = SOURCE_ROOT; };
+		22D8635B2027A8CD00456179 /* dst_parse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dst_parse.c; path = sources/bind9/lib/dns/dst_parse.c; sourceTree = SOURCE_ROOT; };
+		22D8635D2027A8D100456179 /* dst_result.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dst_result.c; path = sources/bind9/lib/dns/dst_result.c; sourceTree = SOURCE_ROOT; };
+		22D8635F2027A8D600456179 /* forward.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = forward.c; path = sources/bind9/lib/dns/forward.c; sourceTree = SOURCE_ROOT; };
+		22D863612027A8DC00456179 /* gssapi_link.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gssapi_link.c; path = sources/bind9/lib/dns/gssapi_link.c; sourceTree = SOURCE_ROOT; };
+		22D863632027A8E100456179 /* gssapictx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gssapictx.c; path = sources/bind9/lib/dns/gssapictx.c; sourceTree = SOURCE_ROOT; };
+		22D863652027A8E600456179 /* hmac_link.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hmac_link.c; path = sources/bind9/lib/dns/hmac_link.c; sourceTree = SOURCE_ROOT; };
+		22D863672027A8EB00456179 /* iptable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = iptable.c; path = sources/bind9/lib/dns/iptable.c; sourceTree = SOURCE_ROOT; };
+		22D863692027A8EF00456179 /* journal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = journal.c; path = sources/bind9/lib/dns/journal.c; sourceTree = SOURCE_ROOT; };
+		22D8636B2027A8F500456179 /* key.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = key.c; path = sources/bind9/lib/dns/key.c; sourceTree = SOURCE_ROOT; };
+		22D8636D2027A8FA00456179 /* keydata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = keydata.c; path = sources/bind9/lib/dns/keydata.c; sourceTree = SOURCE_ROOT; };
+		22D8636F2027A90000456179 /* keytable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = keytable.c; path = sources/bind9/lib/dns/keytable.c; sourceTree = SOURCE_ROOT; };
+		22D863712027A90400456179 /* lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lib.c; path = sources/bind9/lib/dns/lib.c; sourceTree = SOURCE_ROOT; };
+		22D863732027A90B00456179 /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = log.c; path = sources/bind9/lib/dns/log.c; sourceTree = SOURCE_ROOT; };
+		22D863752027A90F00456179 /* lookup.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lookup.c; path = sources/bind9/lib/dns/lookup.c; sourceTree = SOURCE_ROOT; };
+		22D863772027A91500456179 /* master.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = master.c; path = sources/bind9/lib/dns/master.c; sourceTree = SOURCE_ROOT; };
+		22D863792027A92000456179 /* masterdump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = masterdump.c; path = sources/bind9/lib/dns/masterdump.c; sourceTree = SOURCE_ROOT; };
+		22D8637B2027A92500456179 /* message.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = message.c; path = sources/bind9/lib/dns/message.c; sourceTree = SOURCE_ROOT; };
+		22D8637D2027A92A00456179 /* name.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = name.c; path = sources/bind9/lib/dns/name.c; sourceTree = SOURCE_ROOT; };
+		22D8637F2027A93100456179 /* ncache.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ncache.c; path = sources/bind9/lib/dns/ncache.c; sourceTree = SOURCE_ROOT; };
+		22D863812027A93A00456179 /* nsec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = nsec.c; path = sources/bind9/lib/dns/nsec.c; sourceTree = SOURCE_ROOT; };
+		22D863832027A94000456179 /* nsec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = nsec3.c; path = sources/bind9/lib/dns/nsec3.c; sourceTree = SOURCE_ROOT; };
+		22D863852027A94700456179 /* order.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = order.c; path = sources/bind9/lib/dns/order.c; sourceTree = SOURCE_ROOT; };
+		22D863872027A94C00456179 /* peer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = peer.c; path = sources/bind9/lib/dns/peer.c; sourceTree = SOURCE_ROOT; };
+		22D863892027A95200456179 /* portlist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = portlist.c; path = sources/bind9/lib/dns/portlist.c; sourceTree = SOURCE_ROOT; };
+		22D8638B2027A95800456179 /* private.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = private.c; path = sources/bind9/lib/dns/private.c; sourceTree = SOURCE_ROOT; };
+		22D8638D2027A95E00456179 /* rbt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rbt.c; path = sources/bind9/lib/dns/rbt.c; sourceTree = SOURCE_ROOT; };
+		22D8638F2027A96300456179 /* rbtdb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rbtdb.c; path = sources/bind9/lib/dns/rbtdb.c; sourceTree = SOURCE_ROOT; };
+		22D863912027A96B00456179 /* rbtdb64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rbtdb64.c; path = sources/bind9/lib/dns/rbtdb64.c; sourceTree = SOURCE_ROOT; };
+		22D863932027A97100456179 /* rcode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rcode.c; path = sources/bind9/lib/dns/rcode.c; sourceTree = SOURCE_ROOT; };
+		22D863952027A97700456179 /* rdata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdata.c; path = sources/bind9/lib/dns/rdata.c; sourceTree = SOURCE_ROOT; };
+		22D863972027A97D00456179 /* rdatalist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdatalist.c; path = sources/bind9/lib/dns/rdatalist.c; sourceTree = SOURCE_ROOT; };
+		22D863992027A98400456179 /* rdataset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdataset.c; path = sources/bind9/lib/dns/rdataset.c; sourceTree = SOURCE_ROOT; };
+		22D8639B2027A98A00456179 /* rdatasetiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdatasetiter.c; path = sources/bind9/lib/dns/rdatasetiter.c; sourceTree = SOURCE_ROOT; };
+		22D8639D2027A99000456179 /* rdataslab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdataslab.c; path = sources/bind9/lib/dns/rdataslab.c; sourceTree = SOURCE_ROOT; };
+		22D8639F2027A99600456179 /* request.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = request.c; path = sources/bind9/lib/dns/request.c; sourceTree = SOURCE_ROOT; };
+		22D863A12027A99C00456179 /* resolver.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = resolver.c; path = sources/bind9/lib/dns/resolver.c; sourceTree = SOURCE_ROOT; };
+		22D863A32027A9A200456179 /* result.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = result.c; path = sources/bind9/lib/dns/result.c; sourceTree = SOURCE_ROOT; };
+		22D863A52027A9A700456179 /* rootns.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rootns.c; path = sources/bind9/lib/dns/rootns.c; sourceTree = SOURCE_ROOT; };
+		22D863A72027A9AC00456179 /* rpz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rpz.c; path = sources/bind9/lib/dns/rpz.c; sourceTree = SOURCE_ROOT; };
+		22D863A92027A9B100456179 /* rriterator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rriterator.c; path = sources/bind9/lib/dns/rriterator.c; sourceTree = SOURCE_ROOT; };
+		22D863AB2027A9B700456179 /* sdb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sdb.c; path = sources/bind9/lib/dns/sdb.c; sourceTree = SOURCE_ROOT; };
+		22D863AD2027A9BD00456179 /* sdlz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sdlz.c; path = sources/bind9/lib/dns/sdlz.c; sourceTree = SOURCE_ROOT; };
+		22D863AF2027A9C300456179 /* soa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = soa.c; path = sources/bind9/lib/dns/soa.c; sourceTree = SOURCE_ROOT; };
+		22D863B32027A9DF00456179 /* ssu_external.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssu_external.c; path = sources/bind9/lib/dns/ssu_external.c; sourceTree = SOURCE_ROOT; };
+		22D863B52027A9E400456179 /* ssu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssu.c; path = sources/bind9/lib/dns/ssu.c; sourceTree = SOURCE_ROOT; };
+		22D863B72027A9F700456179 /* stats.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stats.c; path = sources/bind9/lib/dns/stats.c; sourceTree = SOURCE_ROOT; };
+		22D863B92027A9FD00456179 /* tcpmsg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tcpmsg.c; path = sources/bind9/lib/dns/tcpmsg.c; sourceTree = SOURCE_ROOT; };
+		22D863BB2027AA0300456179 /* time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = time.c; path = sources/bind9/lib/dns/time.c; sourceTree = SOURCE_ROOT; };
+		22D863BD2027AA0A00456179 /* timer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = timer.c; path = sources/bind9/lib/dns/timer.c; sourceTree = SOURCE_ROOT; };
+		22D863BF2027AA0F00456179 /* tkey.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tkey.c; path = sources/bind9/lib/dns/tkey.c; sourceTree = SOURCE_ROOT; };
+		22D863C12027AA1300456179 /* tsec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tsec.c; path = sources/bind9/lib/dns/tsec.c; sourceTree = SOURCE_ROOT; };
+		22D863C32027AA1900456179 /* tsig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tsig.c; path = sources/bind9/lib/dns/tsig.c; sourceTree = SOURCE_ROOT; };
+		22D863C52027AA2000456179 /* ttl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ttl.c; path = sources/bind9/lib/dns/ttl.c; sourceTree = SOURCE_ROOT; };
+		22D863C72027AA2600456179 /* update.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = update.c; path = sources/bind9/lib/dns/update.c; sourceTree = SOURCE_ROOT; };
+		22D863C92027AA2B00456179 /* validator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = validator.c; path = sources/bind9/lib/dns/validator.c; sourceTree = SOURCE_ROOT; };
+		22D863CB2027AA3000456179 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = sources/bind9/lib/dns/version.c; sourceTree = SOURCE_ROOT; };
+		22D863CD2027AA3600456179 /* view.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = view.c; path = sources/bind9/lib/dns/view.c; sourceTree = SOURCE_ROOT; };
+		22D863CF2027AA3B00456179 /* xfrin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xfrin.c; path = sources/bind9/lib/dns/xfrin.c; sourceTree = SOURCE_ROOT; };
+		22D863D12027AA4100456179 /* zone.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zone.c; path = sources/bind9/lib/dns/zone.c; sourceTree = SOURCE_ROOT; };
+		22D863D32027AA4600456179 /* zonekey.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zonekey.c; path = sources/bind9/lib/dns/zonekey.c; sourceTree = SOURCE_ROOT; };
+		22D863D52027AA4B00456179 /* zt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zt.c; path = sources/bind9/lib/dns/zt.c; sourceTree = SOURCE_ROOT; };
+		22D863D72027B03200456179 /* dighost.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dighost.c; path = sources/bind9/bin/dig/dighost.c; sourceTree = SOURCE_ROOT; };
+		22D863DA2027B19A00456179 /* compat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = compat.c; path = sources/bind9/lib/lwres/compat.c; sourceTree = SOURCE_ROOT; };
+		22D863DC2027B19F00456179 /* context.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = context.c; path = sources/bind9/lib/lwres/context.c; sourceTree = SOURCE_ROOT; };
+		22D863DE2027B1A600456179 /* gai_strerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gai_strerror.c; path = sources/bind9/lib/lwres/gai_strerror.c; sourceTree = SOURCE_ROOT; };
+		22D863E02027B1AD00456179 /* getaddrinfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = getaddrinfo.c; path = sources/bind9/lib/lwres/getaddrinfo.c; sourceTree = SOURCE_ROOT; };
+		22D863E22027B1B300456179 /* gethost.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gethost.c; path = sources/bind9/lib/lwres/gethost.c; sourceTree = SOURCE_ROOT; };
+		22D863E42027B1B800456179 /* getipnode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = getipnode.c; path = sources/bind9/lib/lwres/getipnode.c; sourceTree = SOURCE_ROOT; };
+		22D863E62027B1BD00456179 /* getnameinfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = getnameinfo.c; path = sources/bind9/lib/lwres/getnameinfo.c; sourceTree = SOURCE_ROOT; };
+		22D863E82027B1C200456179 /* getrrset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = getrrset.c; path = sources/bind9/lib/lwres/getrrset.c; sourceTree = SOURCE_ROOT; };
+		22D863EA2027B1C700456179 /* herror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = herror.c; path = sources/bind9/lib/lwres/herror.c; sourceTree = SOURCE_ROOT; };
+		22D863EC2027B1CB00456179 /* lwbuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lwbuffer.c; path = sources/bind9/lib/lwres/lwbuffer.c; sourceTree = SOURCE_ROOT; };
+		22D863EE2027B1D100456179 /* lwconfig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lwconfig.c; path = sources/bind9/lib/lwres/lwconfig.c; sourceTree = SOURCE_ROOT; };
+		22D863F02027B1D700456179 /* lwinetaton.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lwinetaton.c; path = sources/bind9/lib/lwres/lwinetaton.c; sourceTree = SOURCE_ROOT; };
+		22D863F22027B1DE00456179 /* lwinetntop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lwinetntop.c; path = sources/bind9/lib/lwres/lwinetntop.c; sourceTree = SOURCE_ROOT; };
+		22D863F42027B1E500456179 /* lwinetpton.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lwinetpton.c; path = sources/bind9/lib/lwres/lwinetpton.c; sourceTree = SOURCE_ROOT; };
+		22D863F62027B1EA00456179 /* lwpacket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lwpacket.c; path = sources/bind9/lib/lwres/lwpacket.c; sourceTree = SOURCE_ROOT; };
+		22D863F82027B1EF00456179 /* lwres_gabn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lwres_gabn.c; path = sources/bind9/lib/lwres/lwres_gabn.c; sourceTree = SOURCE_ROOT; };
+		22D863FA2027B1F500456179 /* lwres_gnba.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lwres_gnba.c; path = sources/bind9/lib/lwres/lwres_gnba.c; sourceTree = SOURCE_ROOT; };
+		22D863FC2027B1FA00456179 /* lwres_grbn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lwres_grbn.c; path = sources/bind9/lib/lwres/lwres_grbn.c; sourceTree = SOURCE_ROOT; };
+		22D863FE2027B20000456179 /* lwres_noop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lwres_noop.c; path = sources/bind9/lib/lwres/lwres_noop.c; sourceTree = SOURCE_ROOT; };
+		22D864002027B20600456179 /* lwresutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lwresutil.c; path = sources/bind9/lib/lwres/lwresutil.c; sourceTree = SOURCE_ROOT; };
+		22D864022027B20C00456179 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = print.c; path = sources/bind9/lib/lwres/print.c; sourceTree = SOURCE_ROOT; };
+		22D864042027B21000456179 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = sources/bind9/lib/lwres/version.c; sourceTree = SOURCE_ROOT; };
+		22D864072027B30700456179 /* check.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = check.c; path = sources/bind9/lib/bind9/check.c; sourceTree = SOURCE_ROOT; };
+		22D864092027B30C00456179 /* getaddresses.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = getaddresses.c; path = sources/bind9/lib/bind9/getaddresses.c; sourceTree = SOURCE_ROOT; };
+		22D8640B2027B31800456179 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = sources/bind9/lib/bind9/version.c; sourceTree = SOURCE_ROOT; };
+		22D8640E2027B3C000456179 /* aclconf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = aclconf.c; path = sources/bind9/lib/isccfg/aclconf.c; sourceTree = SOURCE_ROOT; };
+		22D864102027B3C900456179 /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = log.c; path = sources/bind9/lib/isccfg/log.c; sourceTree = SOURCE_ROOT; };
+		22D864122027B3CE00456179 /* namedconf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = namedconf.c; path = sources/bind9/lib/isccfg/namedconf.c; sourceTree = SOURCE_ROOT; };
+		22D864142027B3D300456179 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = parser.c; path = sources/bind9/lib/isccfg/parser.c; sourceTree = SOURCE_ROOT; };
+		22D864162027B3DA00456179 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = sources/bind9/lib/isccfg/version.c; sourceTree = SOURCE_ROOT; };
+		22D8641820287DDB00456179 /* libresolv.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.9.tbd; path = usr/lib/libresolv.9.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +436,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22D8641920287DDB00456179 /* libresolv.9.tbd in Frameworks */,
 				229EC3EF2025B810004E76C6 /* ios_system.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,6 +447,8 @@
 		229EC3D120249304004E76C6 = {
 			isa = PBXGroup;
 			children = (
+				22D8625220279C4800456179 /* bind9 */,
+				229EC40820276228004E76C6 /* conn_lib.c */,
 				229EC3EA20259991004E76C6 /* ip_var.h */,
 				229EC3F02025BA61004E76C6 /* sys_socket.h */,
 				229EC3F12025FC6F004E76C6 /* netinet_in.h */,
@@ -98,6 +484,7 @@
 		229EC3ED2025B810004E76C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				22D8641820287DDB00456179 /* libresolv.9.tbd */,
 				229EC3EE2025B810004E76C6 /* ios_system.framework */,
 			);
 			name = Frameworks;
@@ -113,6 +500,275 @@
 				229EC3FD20265981004E76C6 /* sourceroute.c */,
 			);
 			name = netcat;
+			sourceTree = "<group>";
+		};
+		22D8625220279C4800456179 /* bind9 */ = {
+			isa = PBXGroup;
+			children = (
+				22D8640D2027B3B200456179 /* isccfg */,
+				22D864062027B2FC00456179 /* bind9 */,
+				22D863D92027B18800456179 /* lwres */,
+				22D863342027A85200456179 /* dns */,
+				22D863312027A76700456179 /* dig */,
+				22D8625320279C5200456179 /* isc */,
+			);
+			path = bind9;
+			sourceTree = "<group>";
+		};
+		22D8625320279C5200456179 /* isc */ = {
+			isa = PBXGroup;
+			children = (
+				22D8632E2027A72800456179 /* nls */,
+				22D863272027A6A800456179 /* nothreads */,
+				22D863042027A30500456179 /* unix */,
+				22D8625420279D0300456179 /* assertions.c */,
+				22D8625620279D0900456179 /* backtrace-emptytbl.c */,
+				22D8625820279D0E00456179 /* backtrace.c */,
+				22D8625A20279D1600456179 /* base32.c */,
+				22D8625C20279D1C00456179 /* base64.c */,
+				22D8625E20279D2300456179 /* bitstring.c */,
+				22D8626020279D2900456179 /* buffer.c */,
+				22D8626220279D2F00456179 /* bufferlist.c */,
+				22D8626420279D3400456179 /* commandline.c */,
+				22D8626620279D3500456179 /* counter.c */,
+				22D8626A20279D3D00456179 /* error.c */,
+				22D8626C20279D4400456179 /* event.c */,
+				22D8626E20279D4C00456179 /* hash.c */,
+				22D8627020279D5200456179 /* heap.c */,
+				22D8627220279D5700456179 /* hex.c */,
+				22D8627420279D5C00456179 /* hmacmd5.c */,
+				22D8627620279D6200456179 /* hmacsha.c */,
+				22D8627820279D6700456179 /* httpd.c */,
+				22D8627A20279D7100456179 /* inet_aton.c */,
+				22D8627C20279D7800456179 /* inet_pton.c */,
+				22D8627E20279D7D00456179 /* iterated_hash.c */,
+				22D8628020279D8300456179 /* lex.c */,
+				22D8628220279D8800456179 /* lfsr.c */,
+				22D8628420279D8D00456179 /* lib.c */,
+				22D8628620279D9300456179 /* log.c */,
+				22D8628820279D9A00456179 /* md5.c */,
+				22D8628A20279DA300456179 /* mem.c */,
+				22D8628C20279DA900456179 /* mutexblock.c */,
+				22D8628E20279DAD00456179 /* netaddr.c */,
+				22D8629020279DB100456179 /* netscope.c */,
+				22D8629220279DB700456179 /* ondestroy.c */,
+				22D8629420279DBF00456179 /* parseint.c */,
+				22D8629620279DC300456179 /* pool.c */,
+				22D8629820279DC800456179 /* portset.c */,
+				22D8629A20279DD100456179 /* quota.c */,
+				22D8629C20279DD500456179 /* radix.c */,
+				22D8629E20279DDA00456179 /* random.c */,
+				22D862A020279DE000456179 /* ratelimiter.c */,
+				22D862A220279DE900456179 /* refcount.c */,
+				22D862A420279DF000456179 /* regex.c */,
+				22D862A620279DF700456179 /* region.c */,
+				22D862A820279DFC00456179 /* result.c */,
+				22D862AA20279E0100456179 /* rwlock.c */,
+				22D862AC20279E0600456179 /* safe.c */,
+				22D862AE20279E0D00456179 /* serial.c */,
+				22D862B020279E1200456179 /* sha1.c */,
+				22D862B220279E1800456179 /* sha2.c */,
+				22D862B420279E1D00456179 /* sockaddr.c */,
+				22D862B620279E2500456179 /* stats.c */,
+				22D862B820279E2B00456179 /* string.c */,
+				22D862BA20279E3100456179 /* strtoul.c */,
+				22D862BC20279E3600456179 /* symtab.c */,
+				22D862BE20279E3C00456179 /* task.c */,
+				22D862C020279E4300456179 /* taskpool.c */,
+				22D862C220279E5000456179 /* timer.c */,
+				22D862C420279E5700456179 /* tm.c */,
+				22D862C620279E5E00456179 /* version.c */,
+			);
+			path = isc;
+			sourceTree = "<group>";
+		};
+		22D863042027A30500456179 /* unix */ = {
+			isa = PBXGroup;
+			children = (
+				22D863072027A31A00456179 /* dir.c */,
+				22D863052027A31400456179 /* app.c */,
+				22D863092027A32100456179 /* entropy.c */,
+				22D8630B2027A32700456179 /* errno2result.c */,
+				22D8630D2027A32C00456179 /* file.c */,
+				22D8630F2027A33100456179 /* fsaccess.c */,
+				22D863112027A33900456179 /* interfaceiter.c */,
+				22D863132027A33F00456179 /* keyboard.c */,
+				22D863152027A34600456179 /* net.c */,
+				22D863172027A34B00456179 /* os.c */,
+				22D863192027A35300456179 /* resource.c */,
+				22D8631B2027A35800456179 /* socket.c */,
+				22D8631D2027A35F00456179 /* stdio.c */,
+				22D8631F2027A36400456179 /* stdtime.c */,
+				22D863212027A36900456179 /* strerror.c */,
+				22D863232027A37000456179 /* syslog.c */,
+				22D863252027A37500456179 /* time.c */,
+			);
+			path = unix;
+			sourceTree = "<group>";
+		};
+		22D863272027A6A800456179 /* nothreads */ = {
+			isa = PBXGroup;
+			children = (
+				22D863282027A6BE00456179 /* condition.c */,
+				22D8632A2027A6C400456179 /* mutex.c */,
+				22D8632C2027A6CA00456179 /* thread.c */,
+			);
+			path = nothreads;
+			sourceTree = "<group>";
+		};
+		22D8632E2027A72800456179 /* nls */ = {
+			isa = PBXGroup;
+			children = (
+				22D8632F2027A73500456179 /* msgcat.c */,
+			);
+			path = nls;
+			sourceTree = "<group>";
+		};
+		22D863312027A76700456179 /* dig */ = {
+			isa = PBXGroup;
+			children = (
+				22D863D72027B03200456179 /* dighost.c */,
+				22D863322027A78B00456179 /* nslookup.c */,
+			);
+			path = dig;
+			sourceTree = "<group>";
+		};
+		22D863342027A85200456179 /* dns */ = {
+			isa = PBXGroup;
+			children = (
+				22D863352027A86300456179 /* acache.c */,
+				22D863372027A86900456179 /* acl.c */,
+				22D863392027A86D00456179 /* adb.c */,
+				22D8633B2027A87300456179 /* byaddr.c */,
+				22D8633D2027A87700456179 /* cache.c */,
+				22D8633F2027A87E00456179 /* callbacks.c */,
+				22D863412027A88400456179 /* clientinfo.c */,
+				22D863432027A88A00456179 /* compress.c */,
+				22D863452027A88E00456179 /* db.c */,
+				22D863472027A89200456179 /* dbiterator.c */,
+				22D863492027A89600456179 /* dbtable.c */,
+				22D8634B2027A89B00456179 /* diff.c */,
+				22D8634D2027A8A000456179 /* dispatch.c */,
+				22D8634F2027A8A400456179 /* dlz.c */,
+				22D863512027A8A900456179 /* dns64.c */,
+				22D863532027A8AF00456179 /* dnssec.c */,
+				22D863552027A8B900456179 /* ds.c */,
+				22D863572027A8BE00456179 /* dst_api.c */,
+				22D863592027A8C400456179 /* dst_lib.c */,
+				22D8635B2027A8CD00456179 /* dst_parse.c */,
+				22D8635D2027A8D100456179 /* dst_result.c */,
+				22D8635F2027A8D600456179 /* forward.c */,
+				22D863612027A8DC00456179 /* gssapi_link.c */,
+				22D863632027A8E100456179 /* gssapictx.c */,
+				22D863652027A8E600456179 /* hmac_link.c */,
+				22D863672027A8EB00456179 /* iptable.c */,
+				22D863692027A8EF00456179 /* journal.c */,
+				22D8636B2027A8F500456179 /* key.c */,
+				22D8636D2027A8FA00456179 /* keydata.c */,
+				22D8636F2027A90000456179 /* keytable.c */,
+				22D863712027A90400456179 /* lib.c */,
+				22D863732027A90B00456179 /* log.c */,
+				22D863752027A90F00456179 /* lookup.c */,
+				22D863772027A91500456179 /* master.c */,
+				22D863792027A92000456179 /* masterdump.c */,
+				22D8637B2027A92500456179 /* message.c */,
+				22D8637F2027A93100456179 /* ncache.c */,
+				22D863812027A93A00456179 /* nsec.c */,
+				22D863832027A94000456179 /* nsec3.c */,
+				22D863852027A94700456179 /* order.c */,
+				22D863872027A94C00456179 /* peer.c */,
+				22D863892027A95200456179 /* portlist.c */,
+				22D8638B2027A95800456179 /* private.c */,
+				22D8638D2027A95E00456179 /* rbt.c */,
+				22D8638F2027A96300456179 /* rbtdb.c */,
+				22D863912027A96B00456179 /* rbtdb64.c */,
+				22D863932027A97100456179 /* rcode.c */,
+				22D863952027A97700456179 /* rdata.c */,
+				22D863972027A97D00456179 /* rdatalist.c */,
+				22D863992027A98400456179 /* rdataset.c */,
+				22D8639B2027A98A00456179 /* rdatasetiter.c */,
+				22D8639D2027A99000456179 /* rdataslab.c */,
+				22D8639F2027A99600456179 /* request.c */,
+				22D863A12027A99C00456179 /* resolver.c */,
+				22D863A32027A9A200456179 /* result.c */,
+				22D863A52027A9A700456179 /* rootns.c */,
+				22D8637D2027A92A00456179 /* name.c */,
+				22D863A72027A9AC00456179 /* rpz.c */,
+				22D863A92027A9B100456179 /* rriterator.c */,
+				22D863AB2027A9B700456179 /* sdb.c */,
+				22D863AD2027A9BD00456179 /* sdlz.c */,
+				22D863AF2027A9C300456179 /* soa.c */,
+				22D863B32027A9DF00456179 /* ssu_external.c */,
+				22D863B52027A9E400456179 /* ssu.c */,
+				22D863B72027A9F700456179 /* stats.c */,
+				22D863B92027A9FD00456179 /* tcpmsg.c */,
+				22D863BB2027AA0300456179 /* time.c */,
+				22D863BD2027AA0A00456179 /* timer.c */,
+				22D863BF2027AA0F00456179 /* tkey.c */,
+				22D863C12027AA1300456179 /* tsec.c */,
+				22D863C32027AA1900456179 /* tsig.c */,
+				22D863C52027AA2000456179 /* ttl.c */,
+				22D863C72027AA2600456179 /* update.c */,
+				22D863C92027AA2B00456179 /* validator.c */,
+				22D863CB2027AA3000456179 /* version.c */,
+				22D863CD2027AA3600456179 /* view.c */,
+				22D863CF2027AA3B00456179 /* xfrin.c */,
+				22D863D12027AA4100456179 /* zone.c */,
+				22D863D32027AA4600456179 /* zonekey.c */,
+				22D863D52027AA4B00456179 /* zt.c */,
+			);
+			path = dns;
+			sourceTree = "<group>";
+		};
+		22D863D92027B18800456179 /* lwres */ = {
+			isa = PBXGroup;
+			children = (
+				22D863DA2027B19A00456179 /* compat.c */,
+				22D863DC2027B19F00456179 /* context.c */,
+				22D863DE2027B1A600456179 /* gai_strerror.c */,
+				22D863E02027B1AD00456179 /* getaddrinfo.c */,
+				22D863E22027B1B300456179 /* gethost.c */,
+				22D863E42027B1B800456179 /* getipnode.c */,
+				22D863E62027B1BD00456179 /* getnameinfo.c */,
+				22D863E82027B1C200456179 /* getrrset.c */,
+				22D863EA2027B1C700456179 /* herror.c */,
+				22D863EC2027B1CB00456179 /* lwbuffer.c */,
+				22D863EE2027B1D100456179 /* lwconfig.c */,
+				22D863F02027B1D700456179 /* lwinetaton.c */,
+				22D863F22027B1DE00456179 /* lwinetntop.c */,
+				22D863F42027B1E500456179 /* lwinetpton.c */,
+				22D863F62027B1EA00456179 /* lwpacket.c */,
+				22D863F82027B1EF00456179 /* lwres_gabn.c */,
+				22D863FA2027B1F500456179 /* lwres_gnba.c */,
+				22D863FC2027B1FA00456179 /* lwres_grbn.c */,
+				22D863FE2027B20000456179 /* lwres_noop.c */,
+				22D864002027B20600456179 /* lwresutil.c */,
+				22D864022027B20C00456179 /* print.c */,
+				22D864042027B21000456179 /* version.c */,
+			);
+			path = lwres;
+			sourceTree = "<group>";
+		};
+		22D864062027B2FC00456179 /* bind9 */ = {
+			isa = PBXGroup;
+			children = (
+				22D864072027B30700456179 /* check.c */,
+				22D864092027B30C00456179 /* getaddresses.c */,
+				22D8640B2027B31800456179 /* version.c */,
+			);
+			path = bind9;
+			sourceTree = "<group>";
+		};
+		22D8640D2027B3B200456179 /* isccfg */ = {
+			isa = PBXGroup;
+			children = (
+				22D8640E2027B3C000456179 /* aclconf.c */,
+				22D864102027B3C900456179 /* log.c */,
+				22D864122027B3CE00456179 /* namedconf.c */,
+				22D864142027B3D300456179 /* parser.c */,
+				22D864162027B3DA00456179 /* version.c */,
+			);
+			path = isccfg;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,12 +827,202 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22D863CC2027AA3100456179 /* version.c in Sources */,
+				22D862F220279F9100456179 /* regex.c in Sources */,
+				22D863F72027B1EA00456179 /* lwpacket.c in Sources */,
+				22D862FA20279F9100456179 /* sockaddr.c in Sources */,
+				22D863292027A6BE00456179 /* condition.c in Sources */,
+				22D863B02027A9C300456179 /* soa.c in Sources */,
+				22D862EE20279F9100456179 /* radix.c in Sources */,
+				22D862E720279F9100456179 /* netaddr.c in Sources */,
+				22D863702027A90000456179 /* keytable.c in Sources */,
+				22D863402027A87E00456179 /* callbacks.c in Sources */,
+				22D862E920279F9100456179 /* ondestroy.c in Sources */,
+				22D8636E2027A8FA00456179 /* keydata.c in Sources */,
+				22D864082027B30700456179 /* check.c in Sources */,
+				22D864152027B3D300456179 /* parser.c in Sources */,
+				22D8630220279F9100456179 /* tm.c in Sources */,
+				22D863422027A88400456179 /* clientinfo.c in Sources */,
+				22D862E420279F9100456179 /* md5.c in Sources */,
+				22D863A42027A9A200456179 /* result.c in Sources */,
+				22D8637E2027A92A00456179 /* name.c in Sources */,
+				22D863122027A33900456179 /* interfaceiter.c in Sources */,
+				22D862F720279F9100456179 /* serial.c in Sources */,
+				22D8630020279F9100456179 /* taskpool.c in Sources */,
+				22D863142027A33F00456179 /* keyboard.c in Sources */,
+				22D862FB20279F9100456179 /* stats.c in Sources */,
+				22D862D220279F9100456179 /* bufferlist.c in Sources */,
+				22D862CB20279F9100456179 /* assertions.c in Sources */,
+				22D863882027A94C00456179 /* peer.c in Sources */,
+				22D862FF20279F9100456179 /* task.c in Sources */,
+				22D863E92027B1C200456179 /* getrrset.c in Sources */,
+				22D862EF20279F9100456179 /* random.c in Sources */,
+				22D863C22027AA1400456179 /* tsec.c in Sources */,
+				22D863EF2027B1D100456179 /* lwconfig.c in Sources */,
+				22D862E520279F9100456179 /* mem.c in Sources */,
+				22D863682027A8EB00456179 /* iptable.c in Sources */,
+				22D862C820279ECD00456179 /* ping.c in Sources */,
+				22D862EC20279F9100456179 /* portset.c in Sources */,
+				22D8637C2027A92500456179 /* message.c in Sources */,
+				22D863CA2027AA2B00456179 /* validator.c in Sources */,
+				22D8638A2027A95200456179 /* portlist.c in Sources */,
+				22D863362027A86300456179 /* acache.c in Sources */,
+				22D863382027A86900456179 /* acl.c in Sources */,
 				229EC3FF20265981004E76C6 /* netcat.c in Sources */,
-				229EC3EC20259A53004E76C6 /* ping.c in Sources */,
+				22D863A82027A9AC00456179 /* rpz.c in Sources */,
+				22D862E620279F9100456179 /* mutexblock.c in Sources */,
+				22D863DD2027B19F00456179 /* context.c in Sources */,
+				22D863CE2027AA3600456179 /* view.c in Sources */,
+				22D862F020279F9100456179 /* ratelimiter.c in Sources */,
+				22D8635A2027A8C500456179 /* dst_lib.c in Sources */,
+				22D862F520279F9100456179 /* rwlock.c in Sources */,
+				22D862F920279F9100456179 /* sha2.c in Sources */,
+				22D8632B2027A6C400456179 /* mutex.c in Sources */,
+				22D862D320279F9100456179 /* commandline.c in Sources */,
+				22D862FD20279F9100456179 /* strtoul.c in Sources */,
+				22D863482027A89200456179 /* dbiterator.c in Sources */,
+				22D862D620279F9100456179 /* event.c in Sources */,
+				22D863822027A93A00456179 /* nsec.c in Sources */,
+				22D863562027A8B900456179 /* ds.c in Sources */,
+				22D863D42027AA4600456179 /* zonekey.c in Sources */,
+				22D862DB20279F9100456179 /* hmacsha.c in Sources */,
+				22D8632D2027A6CA00456179 /* thread.c in Sources */,
+				22D863ED2027B1CB00456179 /* lwbuffer.c in Sources */,
+				22D863E32027B1B300456179 /* gethost.c in Sources */,
+				22D8640A2027B30D00456179 /* getaddresses.c in Sources */,
+				22D862CD20279F9100456179 /* backtrace.c in Sources */,
+				22D862F620279F9100456179 /* safe.c in Sources */,
+				22D864032027B20C00456179 /* print.c in Sources */,
+				22D863F32027B1DE00456179 /* lwinetntop.c in Sources */,
 				229EC40020265981004E76C6 /* socks.c in Sources */,
+				22D862FE20279F9100456179 /* symtab.c in Sources */,
+				22D863E72027B1BD00456179 /* getnameinfo.c in Sources */,
+				22D8634A2027A89600456179 /* dbtable.c in Sources */,
+				22D864052027B21100456179 /* version.c in Sources */,
 				229EC3FE20265981004E76C6 /* atomicio.c in Sources */,
+				22D8631A2027A35300456179 /* resource.c in Sources */,
+				22D8630320279F9100456179 /* version.c in Sources */,
+				22D863F52027B1E600456179 /* lwinetpton.c in Sources */,
+				22D863642027A8E200456179 /* gssapictx.c in Sources */,
+				22D8639C2027A98A00456179 /* rdatasetiter.c in Sources */,
+				22D863782027A91500456179 /* master.c in Sources */,
+				22D863AA2027A9B200456179 /* rriterator.c in Sources */,
+				22D863962027A97700456179 /* rdata.c in Sources */,
+				22D862E820279F9100456179 /* netscope.c in Sources */,
+				22D862ED20279F9100456179 /* quota.c in Sources */,
+				22D863C62027AA2000456179 /* ttl.c in Sources */,
+				22D862D820279F9100456179 /* heap.c in Sources */,
+				22D863802027A93100456179 /* ncache.c in Sources */,
+				22D863332027A78B00456179 /* nslookup.c in Sources */,
+				22D863FB2027B1F500456179 /* lwres_gnba.c in Sources */,
+				22D863622027A8DC00456179 /* gssapi_link.c in Sources */,
+				22D8636A2027A8F000456179 /* journal.c in Sources */,
+				22D863222027A36900456179 /* strerror.c in Sources */,
+				22D8633C2027A87300456179 /* byaddr.c in Sources */,
+				22D862D920279F9100456179 /* hex.c in Sources */,
+				22D863B42027A9DF00456179 /* ssu_external.c in Sources */,
+				22D863582027A8BE00456179 /* dst_api.c in Sources */,
+				22D8635C2027A8CD00456179 /* dst_parse.c in Sources */,
+				22D8638C2027A95800456179 /* private.c in Sources */,
+				22D863D62027AA4B00456179 /* zt.c in Sources */,
+				22D863722027A90400456179 /* lib.c in Sources */,
+				22D863FF2027B20000456179 /* lwres_noop.c in Sources */,
+				22D8634E2027A8A000456179 /* dispatch.c in Sources */,
+				22D862E220279F9100456179 /* lib.c in Sources */,
+				22D862D120279F9100456179 /* buffer.c in Sources */,
+				22D862DC20279F9100456179 /* httpd.c in Sources */,
+				22D862DD20279F9100456179 /* inet_aton.c in Sources */,
+				22D862D420279F9100456179 /* counter.c in Sources */,
+				22D8631C2027A35800456179 /* socket.c in Sources */,
+				22D8636C2027A8F600456179 /* key.c in Sources */,
+				22D863BA2027A9FD00456179 /* tcpmsg.c in Sources */,
+				22D863E52027B1B800456179 /* getipnode.c in Sources */,
+				22D863BC2027AA0400456179 /* time.c in Sources */,
+				22D863242027A37000456179 /* syslog.c in Sources */,
+				22D862D020279F9100456179 /* bitstring.c in Sources */,
+				22D862EB20279F9100456179 /* pool.c in Sources */,
+				22D8630E2027A32C00456179 /* file.c in Sources */,
+				22D8639E2027A99000456179 /* rdataslab.c in Sources */,
+				22D862F820279F9100456179 /* sha1.c in Sources */,
+				22D862EA20279F9100456179 /* parseint.c in Sources */,
+				22D863AE2027A9BD00456179 /* sdlz.c in Sources */,
+				22D863662027A8E600456179 /* hmac_link.c in Sources */,
+				22D863FD2027B1FA00456179 /* lwres_grbn.c in Sources */,
+				22D863F12027B1D800456179 /* lwinetaton.c in Sources */,
+				22D862D520279F9100456179 /* error.c in Sources */,
+				22D863982027A97D00456179 /* rdatalist.c in Sources */,
+				22D8630120279F9100456179 /* timer.c in Sources */,
+				22D863862027A94700456179 /* order.c in Sources */,
+				22D864112027B3C900456179 /* log.c in Sources */,
+				22D863942027A97200456179 /* rcode.c in Sources */,
+				22D863502027A8A400456179 /* dlz.c in Sources */,
+				22D863602027A8D600456179 /* forward.c in Sources */,
+				22D863462027A88E00456179 /* db.c in Sources */,
+				22D863AC2027A9B700456179 /* sdb.c in Sources */,
+				22D863842027A94000456179 /* nsec3.c in Sources */,
+				22D8635E2027A8D100456179 /* dst_result.c in Sources */,
+				22D862CE20279F9100456179 /* base32.c in Sources */,
+				22D862FC20279F9100456179 /* string.c in Sources */,
+				22D863E12027B1AD00456179 /* getaddrinfo.c in Sources */,
+				22D863762027A90F00456179 /* lookup.c in Sources */,
+				22D862E120279F9100456179 /* lfsr.c in Sources */,
+				22D863902027A96400456179 /* rbtdb.c in Sources */,
+				22D8634C2027A89B00456179 /* diff.c in Sources */,
+				22D863DF2027B1A600456179 /* gai_strerror.c in Sources */,
+				22D863202027A36400456179 /* stdtime.c in Sources */,
+				22D862D720279F9100456179 /* hash.c in Sources */,
+				22D864172027B3DA00456179 /* version.c in Sources */,
+				22D863082027A31A00456179 /* dir.c in Sources */,
+				22D863102027A33100456179 /* fsaccess.c in Sources */,
 				229EC40120265981004E76C6 /* sourceroute.c in Sources */,
+				22D8630A2027A32200456179 /* entropy.c in Sources */,
+				22D863EB2027B1C700456179 /* herror.c in Sources */,
+				22D8638E2027A95E00456179 /* rbt.c in Sources */,
+				22D864132027B3CF00456179 /* namedconf.c in Sources */,
+				22D863922027A96C00456179 /* rbtdb64.c in Sources */,
+				22D863D82027B03200456179 /* dighost.c in Sources */,
+				22D862E320279F9100456179 /* log.c in Sources */,
+				22D862CC20279F9100456179 /* backtrace-emptytbl.c in Sources */,
+				22D863DB2027B19A00456179 /* compat.c in Sources */,
+				22D8630C2027A32700456179 /* errno2result.c in Sources */,
+				22D863D02027AA3C00456179 /* xfrin.c in Sources */,
+				22D8631E2027A35F00456179 /* stdio.c in Sources */,
+				22D862F420279F9100456179 /* result.c in Sources */,
+				22D863BE2027AA0A00456179 /* timer.c in Sources */,
+				22D863062027A31400456179 /* app.c in Sources */,
+				22D863C02027AA0F00456179 /* tkey.c in Sources */,
+				22D863C42027AA1900456179 /* tsig.c in Sources */,
+				22D862CF20279F9100456179 /* base64.c in Sources */,
+				22D863F92027B1EF00456179 /* lwres_gabn.c in Sources */,
+				22D8640C2027B31800456179 /* version.c in Sources */,
+				22D863262027A37500456179 /* time.c in Sources */,
+				22D8633A2027A86D00456179 /* adb.c in Sources */,
 				229EC3F320264FCB004E76C6 /* gmt2local.c in Sources */,
+				22D862F120279F9100456179 /* refcount.c in Sources */,
+				22D863A62027A9A700456179 /* rootns.c in Sources */,
+				22D863302027A73500456179 /* msgcat.c in Sources */,
+				22D863182027A34B00456179 /* os.c in Sources */,
+				22D8639A2027A98400456179 /* rdataset.c in Sources */,
+				22D863B62027A9E400456179 /* ssu.c in Sources */,
+				22D863542027A8B000456179 /* dnssec.c in Sources */,
+				22D864012027B20600456179 /* lwresutil.c in Sources */,
+				22D862DF20279F9100456179 /* iterated_hash.c in Sources */,
+				22D8640F2027B3C000456179 /* aclconf.c in Sources */,
+				22D863A02027A99700456179 /* request.c in Sources */,
+				22D863A22027A99D00456179 /* resolver.c in Sources */,
+				22D863742027A90B00456179 /* log.c in Sources */,
+				22D8633E2027A87800456179 /* cache.c in Sources */,
+				22D862DE20279F9100456179 /* inet_pton.c in Sources */,
+				22D863442027A88A00456179 /* compress.c in Sources */,
+				22D862F320279F9100456179 /* region.c in Sources */,
+				22D863162027A34600456179 /* net.c in Sources */,
+				22D862DA20279F9100456179 /* hmacmd5.c in Sources */,
+				22D863D22027AA4100456179 /* zone.c in Sources */,
+				22D862E020279F9100456179 /* lex.c in Sources */,
+				22D863B82027A9F700456179 /* stats.c in Sources */,
+				22D863522027A8A900456179 /* dns64.c in Sources */,
+				22D863C82027AA2600456179 /* update.c in Sources */,
+				22D8637A2027A92100456179 /* masterdump.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
