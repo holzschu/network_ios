@@ -49,7 +49,7 @@
 
 static void
 print_lock(const char *operation, isc_rwlock_t *rwl, isc_rwlocktype_t type) {
-	fprintf(stderr,
+	fprintf(thread_stderr,
 		isc_msgcat_get(isc_msgcat, ISC_MSGSET_RWLOCK,
 			       ISC_MSG_PRINTLOCK,
 			       "rwlock %p thread %lu %s(%s): %s, %u active, "

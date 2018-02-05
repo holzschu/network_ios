@@ -373,7 +373,7 @@ isc_logconfig_create(isc_log_t *lctx, isc_logconfig_t **lcfgp) {
 	}
 
 	if (result == ISC_R_SUCCESS) {
-		destination.file.stream = stderr;
+		destination.file.stream = thread_stderr;
 		destination.file.name = NULL;
 		destination.file.versions = ISC_LOG_ROLLNEVER;
 		destination.file.maximum_size = 0;
@@ -392,7 +392,7 @@ isc_logconfig_create(isc_log_t *lctx, isc_logconfig_t **lcfgp) {
 		 */
 		default_channel.channel = ISC_LIST_HEAD(lcfg->channels);
 
-		destination.file.stream = stderr;
+		destination.file.stream = thread_stderr;
 		destination.file.name = NULL;
 		destination.file.versions = ISC_LOG_ROLLNEVER;
 		destination.file.maximum_size = 0;

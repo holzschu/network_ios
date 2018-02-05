@@ -136,5 +136,5 @@ default_callback(const char *file, int line, isc_assertiontype_t type,
 			}
 		}
 	}
-	fflush(stderr);
+	fflush(thread_stderr);
 }

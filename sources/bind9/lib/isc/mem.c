@@ -1070,7 +1070,7 @@ destroy(isc__mem_t *ctx) {
 		if (ctx->checkfree) {
 			for (i = 0; i <= ctx->max_size; i++) {
 				if (!ISC_LIST_EMPTY(ctx->debuglist[i]))
-					print_active(ctx, stderr);
+					print_active(ctx, thread_stderr);
 				INSIST(ISC_LIST_EMPTY(ctx->debuglist[i]));
 			}
 		} else {
@@ -1094,7 +1094,7 @@ destroy(isc__mem_t *ctx) {
 		for (i = 0; i <= ctx->max_size; i++) {
 #if ISC_MEM_TRACKLINES
 			if (ctx->stats[i].gets != 0U)
-				print_active(ctx, stderr);
+				print_active(ctx, thread_stderr);
 #endif
 			INSIST(ctx->stats[i].gets == 0U);
 		}
@@ -1241,7 +1241,7 @@ isc__mem_destroy(isc_mem_t **ctxp) {
 	MCTXLOCK(ctx, &ctx->lock);
 #if ISC_MEM_TRACKLINES
 	if (ctx->references != 1)
-		print_active(ctx, stderr);
+		print_active(ctx, thread_stderr);
 #endif
 	REQUIRE(ctx->references == 1);
 	ctx->references--;

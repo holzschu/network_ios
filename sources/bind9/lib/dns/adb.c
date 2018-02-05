@@ -4162,7 +4162,7 @@ dns_adb_flush(dns_adb_t *adb) {
 		RUNTIME_CHECK(cleanup_entries(adb, i, INT_MAX) == ISC_FALSE);
 
 #ifdef DUMP_ADB_AFTER_CLEANING
-	dump_adb(adb, stdout, ISC_TRUE, INT_MAX);
+	dump_adb(adb, thread_stdout, ISC_TRUE, INT_MAX);
 #endif
 
 	UNLOCK(&adb->lock);

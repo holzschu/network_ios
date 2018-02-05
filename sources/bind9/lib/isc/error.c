@@ -88,9 +88,9 @@ default_unexpected_callback(const char *file, int line, const char *format,
 			    va_list args)
 {
 	fprintf(thread_stderr, "%s:%d: ", file, line);
-	vfprintf(stderr, format, args);
+	vfprintf(thread_stderr, format, args);
 	fprintf(thread_stderr, "\n");
-	fflush(stderr);
+	fflush(thread_stderr);
 }
 
 static void
@@ -100,7 +100,7 @@ default_fatal_callback(const char *file, int line, const char *format,
 	fprintf(thread_stderr, "%s:%d: %s: ", file, line,
 		isc_msgcat_get(isc_msgcat, ISC_MSGSET_GENERAL,
 			       ISC_MSG_FATALERROR, "fatal error"));
-	vfprintf(stderr, format, args);
+	vfprintf(thread_stderr, format, args);
 	fprintf(thread_stderr, "\n");
-	fflush(stderr);
+	fflush(thread_stderr);
 }

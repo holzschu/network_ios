@@ -2879,7 +2879,7 @@ isc__socket_close(isc_socket_t *sock0) {
 	int fd;
 	isc__socketmgr_t *manager;
 
-	fflush(stdout);
+	fflush(thread_stdout);
 	REQUIRE(VALID_SOCKET(sock));
 
 	LOCK(&sock->lock);

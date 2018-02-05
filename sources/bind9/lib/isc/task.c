@@ -1550,7 +1550,7 @@ isc__taskmgr_destroy(isc_taskmgr_t **managerp) {
 		(void)isc__taskmgr_dispatch((isc_taskmgr_t *)manager);
 #ifdef BIND9
 	if (!ISC_LIST_EMPTY(manager->tasks))
-		isc_mem_printallactive(stderr);
+		isc_mem_printallactive(thread_stderr);
 #endif
 	INSIST(ISC_LIST_EMPTY(manager->tasks));
 #ifdef USE_SHARED_MANAGER

@@ -51,7 +51,7 @@ stdio_error_warn_callback(dns_rdatacallbacks_t *callbacks,
 	UNUSED(callbacks);
 
 	va_start(ap, fmt);
-	vfprintf(stderr, fmt, ap);
+	vfprintf(thread_stderr, fmt, ap);
 	va_end(ap);
 	fprintf(thread_stderr, "\n");
 }
