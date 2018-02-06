@@ -1292,7 +1292,7 @@ ping_main(int argc, char *const *argv)
 			if (ntransmitted - nreceived - 1 > nmissedmax) {
 				nmissedmax = ntransmitted - nreceived - 1;
 				if (options & F_MISSED)
-					(void)write(STDOUT_FILENO, &BBELL, 1);
+					(void)write(fileno(thread_stdout), &BBELL, 1);
 				if (!(options & F_QUIET)) {
 					fprintf(thread_stdout, "Request timeout for icmp_seq %u\n",
 					       (uint16_t)(ntransmitted - 2));
@@ -1452,7 +1452,7 @@ pinger(void)
 	ntransmitted++;
 	sntransmitted++;
 	if (!(options & F_QUIET) && options & F_FLOOD)
-		(void)write(STDOUT_FILENO, &DOT, 1);
+		(void)write(fileno(thread_stdout), &DOT, 1);
 }
 
 /*
@@ -1544,7 +1544,7 @@ pr_pack(char *buf, int cc, struct sockaddr_in *from, struct timeval *tv,
 		}
 
 		if (options & F_FLOOD)
-			(void)write(STDOUT_FILENO, &BSPACE, 1);
+			(void)write(fileno(thread_stdout), &BSPACE, 1);
 		else {
 			int seq_sent_len = send_len;
 			int seq_datalen = datalen;
@@ -1572,7 +1572,7 @@ pr_pack(char *buf, int cc, struct sockaddr_in *from, struct timeval *tv,
 				(void)fprintf(thread_stdout, " (DUP!)");
 			}
 			if (options & F_AUDIBLE)
-				(void)write(STDOUT_FILENO, &BBELL, 1);
+				(void)write(fileno(thread_stdout), &BBELL, 1);
 			if (options & F_MASK) {
 				/* Just prentend this cast isn't ugly */
 				(void)fprintf(thread_stdout, " mask=%s",
