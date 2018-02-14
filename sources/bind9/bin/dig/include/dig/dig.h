@@ -384,25 +384,35 @@ printrdataset(dns_name_t *owner_name, dns_rdataset_t *rdataset,
 	      isc_buffer_t *target);
 #endif
 
-isc_result_t
-printmessage(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers);
+// isc_result_t printmessage(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers);
+isc_result_t dig_printmessage(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers);
+isc_result_t host_printmessage(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers);
+isc_result_t nslookup_printmessage(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers);
 /*%<
  * Print the final result of the lookup.
  */
 
-void
-received(int bytes, isc_sockaddr_t *from, dig_query_t *query);
+// void received(int bytes, isc_sockaddr_t *from, dig_query_t *query);
+void dig_received(int bytes, isc_sockaddr_t *from, dig_query_t *query);
+void host_received(int bytes, isc_sockaddr_t *from, dig_query_t *query);
+void nslookup_received(int bytes, isc_sockaddr_t *from, dig_query_t *query);
 /*%<
  * Print a message about where and when the response
  * was received from, like the final comment in the
  * output of "dig".
  */
 
-void
-trying(char *frm, dig_lookup_t *lookup);
+// Callback, 3 different versions
+// void trying(char *frm, dig_lookup_t *lookup);
+void dig_trying(char *frm, dig_lookup_t *lookup);
+void host_trying(char *frm, dig_lookup_t *lookup);
+void nslookup_trying(char *frm, dig_lookup_t *lookup);
 
-void
-dighost_shutdown(void);
+// Callback, 3 different versions
+// void dighost_shutdown(void);
+void dig_dighost_shutdown(void);
+void host_dighost_shutdown(void);
+void nslookup_dighost_shutdown(void);
 
 char *
 next_token(char **stringp, const char *delim);

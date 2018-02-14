@@ -1481,7 +1481,10 @@ check_if_done(void) {
 		INSIST(sockcount == 0);
 		INSIST(recvcount == 0);
 		debug("shutting down");
-		dighost_shutdown();
+        if (strcmp(progname, "dig") == 0) dig_dighost_shutdown();
+        else if (strcmp(progname, "host") == 0) host_dighost_shutdown();
+        else if (strcmp(progname, "nslookup") == 0) nslookup_dighost_shutdown();
+		// dighost_shutdown();
 	}
 }
 
@@ -2223,7 +2226,10 @@ setup_lookup(dig_lookup_t *lookup) {
 		}
 	}
 	dns_name_format(lookup->name, store, sizeof(store));
-	trying(store, lookup);
+    // trying(store, lookup);
+    if (strcmp(progname, "dig") == 0) dig_trying(store, lookup);
+    else if (strcmp(progname, "host") == 0) host_trying(store, lookup);
+    else if (strcmp(progname, "nslookup") == 0) nslookup_trying(store, lookup);
 	INSIST(dns_name_isabsolute(lookup->name));
 
 	isc_random_get(&id);
@@ -2384,8 +2390,14 @@ setup_lookup(dig_lookup_t *lookup) {
 	/* XXX qrflag, print_query, etc... */
 	if (!ISC_LIST_EMPTY(lookup->q) && qr) {
 		extrabytes = 0;
-		printmessage(ISC_LIST_HEAD(lookup->q), lookup->sendmsg,
-			     ISC_TRUE);
+		//printmessage(ISC_LIST_HEAD(lookup->q), lookup->sendmsg,
+		//	     ISC_TRUE);
+        if (strcmp(progname, "dig") == 0)
+            dig_printmessage(ISC_LIST_HEAD(lookup->q), lookup->sendmsg, ISC_TRUE);
+        else if (strcmp(progname, "host") == 0)
+            host_printmessage(ISC_LIST_HEAD(lookup->q), lookup->sendmsg, ISC_TRUE);
+        else if (strcmp(progname, "nslookup") == 0)
+            nslookup_printmessage(ISC_LIST_HEAD(lookup->q), lookup->sendmsg, ISC_TRUE);
 	}
 	return (ISC_TRUE);
 }
@@ -3141,7 +3153,13 @@ check_for_more_data(dig_query_t *query, dns_message_t *msg,
 	launch_next_query(query, ISC_FALSE);
 	return (ISC_FALSE);
  doexit:
-	received(sevent->n, &sevent->address, query);
+	// received(sevent->n, &sevent->address, query);
+    if (strcmp(progname, "dig") == 0)
+        dig_received(sevent->n, &sevent->address, query);
+    else if (strcmp(progname, "host") == 0)
+        host_received(sevent->n, &sevent->address, query);
+    else if (strcmp(progname, "nslookup") == 0)
+        nslookup_received(sevent->n, &sevent->address, query);
 	return (ISC_TRUE);
 }
 
@@ -3510,21 +3528,47 @@ recv_done(isc_task_t *task, isc_event_t *event) {
 		if (msg->rcode == dns_rcode_nxdomain &&
 		    (l->origin != NULL || l->need_search)) {
 			if (!next_origin(query->lookup) || showsearch) {
-				printmessage(query, msg, ISC_TRUE);
-				received(b->used, &sevent->address, query);
+				// printmessage(query, msg, ISC_TRUE);
+                // received(b->used, &sevent->address, query);
+                if (strcmp(progname, "dig") == 0) {
+                    dig_printmessage(query, msg, ISC_TRUE);
+                    dig_received(b->used, &sevent->address, query);
+                } else if (strcmp(progname, "host") == 0) {
+                    host_printmessage(query, msg, ISC_TRUE);
+                    host_received(b->used, &sevent->address, query);
+                } else if (strcmp(progname, "nslookup") == 0) {
+                    nslookup_printmessage(query, msg, ISC_TRUE);
+                    nslookup_received(b->used, &sevent->address, query);
+                }
 			}
 		} else if (!l->trace && !l->ns_search_only) {
 #ifdef DIG_SIGCHASE
-			if (!do_sigchase)
+            if (!do_sigchase) {
 #endif
-				printmessage(query, msg, ISC_TRUE);
+                // printmessage(query, msg, ISC_TRUE);
+                if (strcmp(progname, "dig") == 0)
+                    dig_printmessage(query, msg, ISC_TRUE);
+                else if (strcmp(progname, "host") == 0)
+                    host_printmessage(query, msg, ISC_TRUE);
+                else if (strcmp(progname, "nslookup") == 0)
+                    nslookup_printmessage(query, msg, ISC_TRUE);
+#ifdef DIG_SIGCHASE
+            }
+#endif
 		} else if (l->trace) {
 			int nl = 0;
 			int count = msg->counts[DNS_SECTION_ANSWER];
 
 			debug("in TRACE code");
-			if (!l->ns_search_only)
-				printmessage(query, msg, ISC_TRUE);
+            if (!l->ns_search_only) {
+                // printmessage(query, msg, ISC_TRUE);
+                if (strcmp(progname, "dig") == 0)
+                    dig_printmessage(query, msg, ISC_TRUE);
+                else if (strcmp(progname, "host") == 0)
+                    host_printmessage(query, msg, ISC_TRUE);
+                else if (strcmp(progname, "nslookup") == 0)
+                    nslookup_printmessage(query, msg, ISC_TRUE);
+            }
 
 			l->rdtype = l->qrdtype;
 			if (l->trace_root || (l->ns_search_only && count > 0)) {
@@ -3556,9 +3600,18 @@ recv_done(isc_task_t *task, isc_event_t *event) {
 				usesearch = ISC_FALSE;
 			} else
 #ifdef DIG_SIGCHASE
-				if (!do_sigchase)
+                if (!do_sigchase) {
 #endif
-				printmessage(query, msg, ISC_TRUE);
+            // printmessage(query, msg, ISC_TRUE);
+            if (strcmp(progname, "dig") == 0)
+                dig_printmessage(query, msg, ISC_TRUE);
+            else if (strcmp(progname, "host") == 0)
+                host_printmessage(query, msg, ISC_TRUE);
+            else if (strcmp(progname, "nslookup") == 0)
+                nslookup_printmessage(query, msg, ISC_TRUE);
+#ifdef DIG_SIGCHASE
+                }
+#endif
 		}
 #ifdef DIG_SIGCHASE
 		if (do_sigchase) {
@@ -3630,9 +3683,20 @@ recv_done(isc_task_t *task, isc_event_t *event) {
 		if (msg->rcode == dns_rcode_noerror || l->origin == NULL) {
 
 #ifdef DIG_SIGCHASE
-			if (!l->sigchase)
+            if (!l->sigchase) {
 #endif
-				received(b->used, &sevent->address, query);
+				// received(b->used, &sevent->address, query);
+            if (strcmp(progname, "dig") == 0) {
+                dig_received(b->used, &sevent->address, query);
+            } else if (strcmp(progname, "host") == 0) {
+                host_received(b->used, &sevent->address, query);
+            } else if (strcmp(progname, "nslookup") == 0) {
+                nslookup_received(b->used, &sevent->address, query);
+            }
+#ifdef DIG_SIGCHASE
+            }
+#endif
+
 		}
 
 		if (!query->lookup->ns_search_only)

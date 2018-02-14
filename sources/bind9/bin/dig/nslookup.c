@@ -156,7 +156,7 @@ rcode_totext(dns_rcode_t rcode)
 }
 
 void
-dighost_shutdown(void) {
+nslookup_dighost_shutdown(void) {
 	isc_event_t *event = global_event;
 
 	flush_lookup_list();
@@ -396,7 +396,7 @@ detailsection(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers,
 }
 
 void
-received(int bytes, isc_sockaddr_t *from, dig_query_t *query)
+nslookup_received(int bytes, isc_sockaddr_t *from, dig_query_t *query)
 {
 	UNUSED(bytes);
 	UNUSED(from);
@@ -404,14 +404,14 @@ received(int bytes, isc_sockaddr_t *from, dig_query_t *query)
 }
 
 void
-trying(char *frm, dig_lookup_t *lookup) {
+nslookup_trying(char *frm, dig_lookup_t *lookup) {
 	UNUSED(frm);
 	UNUSED(lookup);
 
 }
 
 isc_result_t
-printmessage(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers) {
+nslookup_printmessage(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers) {
 	char servtext[ISC_SOCKADDR_FORMATSIZE];
 
 	/* I've we've gotten this far, we've reached a server. */

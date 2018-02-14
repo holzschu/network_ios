@@ -242,7 +242,7 @@ help(void) {
  * Callback from dighost.c to print the received message.
  */
 void
-received(int bytes, isc_sockaddr_t *from, dig_query_t *query) {
+dig_received(int bytes, isc_sockaddr_t *from, dig_query_t *query) {
 	isc_uint64_t diff;
 	time_t tnow;
 	struct tm tmnow;
@@ -294,7 +294,7 @@ received(int bytes, isc_sockaddr_t *from, dig_query_t *query) {
  * XXX print_trying
  */
 void
-trying(char *frm, dig_lookup_t *lookup) {
+dig_trying(char *frm, dig_lookup_t *lookup) {
 	UNUSED(frm);
 	UNUSED(lookup);
 }
@@ -436,7 +436,7 @@ printrdataset(dns_name_t *owner_name, dns_rdataset_t *rdataset,
  * Callback from dighost.c to print the reply from a server
  */
 isc_result_t
-printmessage(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers) {
+dig_printmessage(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers) {
 	isc_result_t result;
 	dns_messagetextflag_t flags;
 	isc_buffer_t *buf = NULL;
@@ -1559,7 +1559,9 @@ parse_args(isc_boolean_t is_batchfile, isc_boolean_t config_only,
 		 * Treat ${HOME}/.digrc as a special batchfile
 		 */
 		INSIST(batchfp == NULL);
-		homedir = getenv("HOME");
+        homedir = getenv("DIG_HOME");  // iOS: no write access to $HOME
+        if (homedir == NULL) homedir = getenv("HOME");
+
 		if (homedir != NULL) {
 			unsigned int n;
 			n = snprintf(rcfile, sizeof(rcfile), "%s/.digrc",
@@ -1810,7 +1812,7 @@ parse_args(isc_boolean_t is_batchfile, isc_boolean_t config_only,
  * for real if there's nothing in the batch file to read.
  */
 void
-dighost_shutdown(void) {
+dig_dighost_shutdown(void) {
 	char batchline[MXNAME];
 	int bargc;
 	char *bargv[16];

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		223A3E2B20343AA1004C9F62 /* dig.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E2A20343AA1004C9F62 /* dig.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/"; }; };
+		223A3E2D20346C2B004C9F62 /* host.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E2C20346C2B004C9F62 /* host.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/"; }; };
 		229EC3EF2025B810004E76C6 /* ios_system.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 229EC3EE2025B810004E76C6 /* ios_system.framework */; };
 		229EC3F320264FCB004E76C6 /* gmt2local.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F220264FCB004E76C6 /* gmt2local.c */; };
 		229EC3FE20265981004E76C6 /* atomicio.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F920265980004E76C6 /* atomicio.c */; };
@@ -220,6 +222,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		223A3E2A20343AA1004C9F62 /* dig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dig.c; path = sources/bind9/bin/dig/dig.c; sourceTree = SOURCE_ROOT; };
+		223A3E2C20346C2B004C9F62 /* host.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = host.c; path = sources/bind9/bin/dig/host.c; sourceTree = SOURCE_ROOT; };
 		229EC3DA20249305004E76C6 /* libnetwork_ios.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnetwork_ios.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		229EC3EA20259991004E76C6 /* ip_var.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ip_var.h; sourceTree = "<group>"; };
 		229EC3EB20259A53004E76C6 /* ping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ping.c; path = sources/ping.c; sourceTree = "<group>"; };
@@ -627,6 +631,8 @@
 		22D863312027A76700456179 /* dig */ = {
 			isa = PBXGroup;
 			children = (
+				223A3E2A20343AA1004C9F62 /* dig.c */,
+				223A3E2C20346C2B004C9F62 /* host.c */,
 				22D863D72027B03200456179 /* dighost.c */,
 				22D863322027A78B00456179 /* nslookup.c */,
 			);
@@ -898,6 +904,7 @@
 				22D862FE20279F9100456179 /* symtab.c in Sources */,
 				22D863E72027B1BD00456179 /* getnameinfo.c in Sources */,
 				22D8634A2027A89600456179 /* dbtable.c in Sources */,
+				223A3E2D20346C2B004C9F62 /* host.c in Sources */,
 				22D864052027B21100456179 /* version.c in Sources */,
 				229EC3FE20265981004E76C6 /* atomicio.c in Sources */,
 				22D8631A2027A35300456179 /* resource.c in Sources */,
@@ -1006,6 +1013,7 @@
 				22D863B62027A9E400456179 /* ssu.c in Sources */,
 				22D863542027A8B000456179 /* dnssec.c in Sources */,
 				22D864012027B20600456179 /* lwresutil.c in Sources */,
+				223A3E2B20343AA1004C9F62 /* dig.c in Sources */,
 				22D862DF20279F9100456179 /* iterated_hash.c in Sources */,
 				22D8640F2027B3C000456179 /* aclconf.c in Sources */,
 				22D863A02027A99700456179 /* request.c in Sources */,

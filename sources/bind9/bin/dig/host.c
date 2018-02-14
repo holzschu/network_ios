@@ -171,12 +171,12 @@ show_usage(void) {
 }
 
 void
-dighost_shutdown(void) {
+host_dighost_shutdown(void) {
 	isc_app_shutdown();
 }
 
 void
-received(int bytes, isc_sockaddr_t *from, dig_query_t *query) {
+host_received(int bytes, isc_sockaddr_t *from, dig_query_t *query) {
 	isc_time_t now;
 	int diff;
 
@@ -191,7 +191,7 @@ received(int bytes, isc_sockaddr_t *from, dig_query_t *query) {
 }
 
 void
-trying(char *frm, dig_lookup_t *lookup) {
+host_trying(char *frm, dig_lookup_t *lookup) {
 	UNUSED(lookup);
 
 	if (!short_form)
@@ -416,7 +416,7 @@ chase_cnamechain(dns_message_t *msg, dns_name_t *qname) {
 }
 
 isc_result_t
-printmessage(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers) {
+host_printmessage(dig_query_t *query, dns_message_t *msg, isc_boolean_t headers) {
 	isc_boolean_t did_flag = ISC_FALSE;
 	dns_rdataset_t *opt, *tsig = NULL;
 	dns_name_t *tsigname;
