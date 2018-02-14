@@ -13,7 +13,7 @@ curl -OL $HHROOT/ios_system/releases/download/v$IOS_SYSTEM_VER/smallRelease.tar.
 )
 
 echo "Downloading header file:"
-curl -OL $HHROOT/ios_system/blob/master/ios_error.h
+curl -OL https://raw.githubusercontent.com/holzschu/ios_system/master/ios_error.h
 
 
 
