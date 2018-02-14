@@ -277,7 +277,7 @@
 		229EC3DA20249305004E76C6 /* libnetwork_ios.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnetwork_ios.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		229EC3EA20259991004E76C6 /* ip_var.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ip_var.h; sourceTree = "<group>"; };
 		229EC3EB20259A53004E76C6 /* ping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ping.c; path = sources/ping.c; sourceTree = "<group>"; };
-		229EC3EE2025B810004E76C6 /* ios_system.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ios_system.framework; path = ../../ios_system/release/ios_system.framework; sourceTree = "<group>"; };
+		229EC3EE2025B810004E76C6 /* ios_system.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ios_system.framework; path = Frameworks/ios_system.framework; sourceTree = "<group>"; };
 		229EC3F02025BA61004E76C6 /* sys_socket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sys_socket.h; sourceTree = "<group>"; };
 		229EC3F12025FC6F004E76C6 /* netinet_in.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = netinet_in.h; sourceTree = "<group>"; };
 		229EC3F220264FCB004E76C6 /* gmt2local.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gmt2local.c; path = sources/gmt2local.c; sourceTree = "<group>"; };
