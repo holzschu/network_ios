@@ -9,6 +9,28 @@
 /* Begin PBXBuildFile section */
 		223A3E2B20343AA1004C9F62 /* dig.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E2A20343AA1004C9F62 /* dig.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/"; }; };
 		223A3E2D20346C2B004C9F62 /* host.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E2C20346C2B004C9F62 /* host.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/"; }; };
+		223A3E3D20349E61004C9F62 /* forward.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E3020349E60004C9F62 /* forward.c */; };
+		223A3E3E20349E61004C9F62 /* encrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E3120349E60004C9F62 /* encrypt.c */; };
+		223A3E3F20349E61004C9F62 /* genget.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E3220349E60004C9F62 /* genget.c */; };
+		223A3E4120349E61004C9F62 /* rsaencpwd.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E3420349E60004C9F62 /* rsaencpwd.c */; };
+		223A3E4220349E61004C9F62 /* kerberos5.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E3520349E60004C9F62 /* kerberos5.c */; };
+		223A3E4320349E61004C9F62 /* misc.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E3620349E60004C9F62 /* misc.c */; };
+		223A3E4420349E61004C9F62 /* kerberos.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E3720349E60004C9F62 /* kerberos.c */; };
+		223A3E4520349E61004C9F62 /* read_password.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E3820349E60004C9F62 /* read_password.c */; };
+		223A3E4620349E61004C9F62 /* krb4encpwd.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E3920349E61004C9F62 /* krb4encpwd.c */; };
+		223A3E4720349E61004C9F62 /* getent.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E3A20349E61004C9F62 /* getent.c */; };
+		223A3E4820349E61004C9F62 /* enc_des.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E3B20349E61004C9F62 /* enc_des.c */; };
+		223A3E542034A10E004C9F62 /* ring.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E4A2034A10E004C9F62 /* ring.c */; };
+		223A3E552034A10E004C9F62 /* authenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E4B2034A10E004C9F62 /* authenc.c */; };
+		223A3E562034A10E004C9F62 /* utilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E4C2034A10E004C9F62 /* utilities.c */; };
+		223A3E572034A10E004C9F62 /* telnet.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E4D2034A10E004C9F62 /* telnet.c */; settings = {COMPILER_FLAGS = "-DUSE_TERMIO -I sources/"; }; };
+		223A3E582034A10E004C9F62 /* terminal.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E4E2034A10E004C9F62 /* terminal.c */; };
+		223A3E592034A10E004C9F62 /* tn3270.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E4F2034A10E004C9F62 /* tn3270.c */; };
+		223A3E5A2034A10E004C9F62 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E502034A10E004C9F62 /* main.c */; };
+		223A3E5B2034A10E004C9F62 /* commands.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E512034A10E004C9F62 /* commands.c */; };
+		223A3E5C2034A10E004C9F62 /* network.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E522034A10E004C9F62 /* network.c */; };
+		223A3E5D2034A10E004C9F62 /* sys_bsd.c in Sources */ = {isa = PBXBuildFile; fileRef = 223A3E532034A10E004C9F62 /* sys_bsd.c */; };
+		223A3E632034A369004C9F62 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 223A3E622034A369004C9F62 /* libcurses.tbd */; };
 		229EC3EF2025B810004E76C6 /* ios_system.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 229EC3EE2025B810004E76C6 /* ios_system.framework */; };
 		229EC3F320264FCB004E76C6 /* gmt2local.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F220264FCB004E76C6 /* gmt2local.c */; };
 		229EC3FE20265981004E76C6 /* atomicio.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F920265980004E76C6 /* atomicio.c */; };
@@ -224,6 +246,34 @@
 /* Begin PBXFileReference section */
 		223A3E2A20343AA1004C9F62 /* dig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dig.c; path = sources/bind9/bin/dig/dig.c; sourceTree = SOURCE_ROOT; };
 		223A3E2C20346C2B004C9F62 /* host.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = host.c; path = sources/bind9/bin/dig/host.c; sourceTree = SOURCE_ROOT; };
+		223A3E3020349E60004C9F62 /* forward.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = forward.c; path = sources/libtelnet/forward.c; sourceTree = "<group>"; };
+		223A3E3120349E60004C9F62 /* encrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = encrypt.c; path = sources/libtelnet/encrypt.c; sourceTree = "<group>"; };
+		223A3E3220349E60004C9F62 /* genget.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = genget.c; path = sources/libtelnet/genget.c; sourceTree = "<group>"; };
+		223A3E3320349E60004C9F62 /* pk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pk.c; path = sources/libtelnet/pk.c; sourceTree = "<group>"; };
+		223A3E3420349E60004C9F62 /* rsaencpwd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rsaencpwd.c; path = sources/libtelnet/rsaencpwd.c; sourceTree = "<group>"; };
+		223A3E3520349E60004C9F62 /* kerberos5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kerberos5.c; path = sources/libtelnet/kerberos5.c; sourceTree = "<group>"; };
+		223A3E3620349E60004C9F62 /* misc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = misc.c; path = sources/libtelnet/misc.c; sourceTree = "<group>"; };
+		223A3E3720349E60004C9F62 /* kerberos.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kerberos.c; path = sources/libtelnet/kerberos.c; sourceTree = "<group>"; };
+		223A3E3820349E60004C9F62 /* read_password.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = read_password.c; path = sources/libtelnet/read_password.c; sourceTree = "<group>"; };
+		223A3E3920349E61004C9F62 /* krb4encpwd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = krb4encpwd.c; path = sources/libtelnet/krb4encpwd.c; sourceTree = "<group>"; };
+		223A3E3A20349E61004C9F62 /* getent.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = getent.c; path = sources/libtelnet/getent.c; sourceTree = "<group>"; };
+		223A3E3B20349E61004C9F62 /* enc_des.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = enc_des.c; path = sources/libtelnet/enc_des.c; sourceTree = "<group>"; };
+		223A3E3C20349E61004C9F62 /* sra.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sra.c; path = sources/libtelnet/sra.c; sourceTree = "<group>"; };
+		223A3E4A2034A10E004C9F62 /* ring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ring.c; path = sources/telnet/ring.c; sourceTree = "<group>"; };
+		223A3E4B2034A10E004C9F62 /* authenc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = authenc.c; path = sources/telnet/authenc.c; sourceTree = "<group>"; };
+		223A3E4C2034A10E004C9F62 /* utilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utilities.c; path = sources/telnet/utilities.c; sourceTree = "<group>"; };
+		223A3E4D2034A10E004C9F62 /* telnet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = telnet.c; path = sources/telnet/telnet.c; sourceTree = "<group>"; };
+		223A3E4E2034A10E004C9F62 /* terminal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = terminal.c; path = sources/telnet/terminal.c; sourceTree = "<group>"; };
+		223A3E4F2034A10E004C9F62 /* tn3270.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tn3270.c; path = sources/telnet/tn3270.c; sourceTree = "<group>"; };
+		223A3E502034A10E004C9F62 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = sources/telnet/main.c; sourceTree = "<group>"; };
+		223A3E512034A10E004C9F62 /* commands.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = commands.c; path = sources/telnet/commands.c; sourceTree = "<group>"; };
+		223A3E522034A10E004C9F62 /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = network.c; path = sources/telnet/network.c; sourceTree = "<group>"; };
+		223A3E532034A10E004C9F62 /* sys_bsd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sys_bsd.c; path = sources/telnet/sys_bsd.c; sourceTree = "<group>"; };
+		223A3E5E2034A173004C9F62 /* arpa_telnet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = arpa_telnet.h; path = sources/arpa_telnet.h; sourceTree = "<group>"; };
+		223A3E5F2034A24D004C9F62 /* curses.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = curses.h; path = sources/curses.h; sourceTree = "<group>"; };
+		223A3E602034A284004C9F62 /* unctrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = unctrl.h; path = sources/unctrl.h; sourceTree = "<group>"; };
+		223A3E612034A2C7004C9F62 /* term.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = term.h; path = sources/term.h; sourceTree = "<group>"; };
+		223A3E622034A369004C9F62 /* libcurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurses.tbd; path = usr/lib/libcurses.tbd; sourceTree = SDKROOT; };
 		229EC3DA20249305004E76C6 /* libnetwork_ios.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnetwork_ios.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		229EC3EA20259991004E76C6 /* ip_var.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ip_var.h; sourceTree = "<group>"; };
 		229EC3EB20259A53004E76C6 /* ping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ping.c; path = sources/ping.c; sourceTree = "<group>"; };
@@ -440,6 +490,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				223A3E632034A369004C9F62 /* libcurses.tbd in Frameworks */,
 				22D8641920287DDB00456179 /* libresolv.9.tbd in Frameworks */,
 				229EC3EF2025B810004E76C6 /* ios_system.framework in Frameworks */,
 			);
@@ -448,9 +499,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		223A3E2E20348025004C9F62 /* telnet */ = {
+			isa = PBXGroup;
+			children = (
+				223A3E4B2034A10E004C9F62 /* authenc.c */,
+				223A3E512034A10E004C9F62 /* commands.c */,
+				223A3E502034A10E004C9F62 /* main.c */,
+				223A3E522034A10E004C9F62 /* network.c */,
+				223A3E4A2034A10E004C9F62 /* ring.c */,
+				223A3E532034A10E004C9F62 /* sys_bsd.c */,
+				223A3E4D2034A10E004C9F62 /* telnet.c */,
+				223A3E4E2034A10E004C9F62 /* terminal.c */,
+				223A3E4F2034A10E004C9F62 /* tn3270.c */,
+				223A3E4C2034A10E004C9F62 /* utilities.c */,
+			);
+			name = telnet;
+			sourceTree = "<group>";
+		};
+		223A3E2F20349E0D004C9F62 /* libtelnet */ = {
+			isa = PBXGroup;
+			children = (
+				223A3E3B20349E61004C9F62 /* enc_des.c */,
+				223A3E3120349E60004C9F62 /* encrypt.c */,
+				223A3E3020349E60004C9F62 /* forward.c */,
+				223A3E3220349E60004C9F62 /* genget.c */,
+				223A3E3A20349E61004C9F62 /* getent.c */,
+				223A3E3720349E60004C9F62 /* kerberos.c */,
+				223A3E3520349E60004C9F62 /* kerberos5.c */,
+				223A3E3920349E61004C9F62 /* krb4encpwd.c */,
+				223A3E3620349E60004C9F62 /* misc.c */,
+				223A3E3320349E60004C9F62 /* pk.c */,
+				223A3E3820349E60004C9F62 /* read_password.c */,
+				223A3E3420349E60004C9F62 /* rsaencpwd.c */,
+				223A3E3C20349E61004C9F62 /* sra.c */,
+			);
+			name = libtelnet;
+			sourceTree = "<group>";
+		};
 		229EC3D120249304004E76C6 = {
 			isa = PBXGroup;
 			children = (
+				223A3E2F20349E0D004C9F62 /* libtelnet */,
+				223A3E2E20348025004C9F62 /* telnet */,
 				22D8625220279C4800456179 /* bind9 */,
 				229EC40820276228004E76C6 /* conn_lib.c */,
 				229EC3EA20259991004E76C6 /* ip_var.h */,
@@ -460,6 +550,10 @@
 				229EC4042026636D004E76C6 /* arpa_telnet.h */,
 				229EC40520266417004E76C6 /* sys_event.h */,
 				229EC4072026694F004E76C6 /* conn_lib.h */,
+				223A3E5E2034A173004C9F62 /* arpa_telnet.h */,
+				223A3E5F2034A24D004C9F62 /* curses.h */,
+				223A3E602034A284004C9F62 /* unctrl.h */,
+				223A3E612034A2C7004C9F62 /* term.h */,
 				229EC406202668F6004E76C6 /* mptcp_client */,
 				229EC3F820265918004E76C6 /* netcat */,
 				229EC3E720249394004E76C6 /* ping */,
@@ -488,6 +582,7 @@
 		229EC3ED2025B810004E76C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				223A3E622034A369004C9F62 /* libcurses.tbd */,
 				22D8641820287DDB00456179 /* libresolv.9.tbd */,
 				229EC3EE2025B810004E76C6 /* ios_system.framework */,
 			);
@@ -834,6 +929,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22D863CC2027AA3100456179 /* version.c in Sources */,
+				223A3E4620349E61004C9F62 /* krb4encpwd.c in Sources */,
 				22D862F220279F9100456179 /* regex.c in Sources */,
 				22D863F72027B1EA00456179 /* lwpacket.c in Sources */,
 				22D862FA20279F9100456179 /* sockaddr.c in Sources */,
@@ -881,13 +977,17 @@
 				22D863CE2027AA3600456179 /* view.c in Sources */,
 				22D862F020279F9100456179 /* ratelimiter.c in Sources */,
 				22D8635A2027A8C500456179 /* dst_lib.c in Sources */,
+				223A3E4520349E61004C9F62 /* read_password.c in Sources */,
 				22D862F520279F9100456179 /* rwlock.c in Sources */,
 				22D862F920279F9100456179 /* sha2.c in Sources */,
+				223A3E5C2034A10E004C9F62 /* network.c in Sources */,
 				22D8632B2027A6C400456179 /* mutex.c in Sources */,
 				22D862D320279F9100456179 /* commandline.c in Sources */,
 				22D862FD20279F9100456179 /* strtoul.c in Sources */,
+				223A3E582034A10E004C9F62 /* terminal.c in Sources */,
 				22D863482027A89200456179 /* dbiterator.c in Sources */,
 				22D862D620279F9100456179 /* event.c in Sources */,
+				223A3E4320349E61004C9F62 /* misc.c in Sources */,
 				22D863822027A93A00456179 /* nsec.c in Sources */,
 				22D863562027A8B900456179 /* ds.c in Sources */,
 				22D863D42027AA4600456179 /* zonekey.c in Sources */,
@@ -895,12 +995,16 @@
 				22D8632D2027A6CA00456179 /* thread.c in Sources */,
 				22D863ED2027B1CB00456179 /* lwbuffer.c in Sources */,
 				22D863E32027B1B300456179 /* gethost.c in Sources */,
+				223A3E542034A10E004C9F62 /* ring.c in Sources */,
 				22D8640A2027B30D00456179 /* getaddresses.c in Sources */,
+				223A3E5A2034A10E004C9F62 /* main.c in Sources */,
 				22D862CD20279F9100456179 /* backtrace.c in Sources */,
 				22D862F620279F9100456179 /* safe.c in Sources */,
 				22D864032027B20C00456179 /* print.c in Sources */,
 				22D863F32027B1DE00456179 /* lwinetntop.c in Sources */,
+				223A3E552034A10E004C9F62 /* authenc.c in Sources */,
 				229EC40020265981004E76C6 /* socks.c in Sources */,
+				223A3E592034A10E004C9F62 /* tn3270.c in Sources */,
 				22D862FE20279F9100456179 /* symtab.c in Sources */,
 				22D863E72027B1BD00456179 /* getnameinfo.c in Sources */,
 				22D8634A2027A89600456179 /* dbtable.c in Sources */,
@@ -912,8 +1016,10 @@
 				22D863F52027B1E600456179 /* lwinetpton.c in Sources */,
 				22D863642027A8E200456179 /* gssapictx.c in Sources */,
 				22D8639C2027A98A00456179 /* rdatasetiter.c in Sources */,
+				223A3E562034A10E004C9F62 /* utilities.c in Sources */,
 				22D863782027A91500456179 /* master.c in Sources */,
 				22D863AA2027A9B200456179 /* rriterator.c in Sources */,
+				223A3E4720349E61004C9F62 /* getent.c in Sources */,
 				22D863962027A97700456179 /* rdata.c in Sources */,
 				22D862E820279F9100456179 /* netscope.c in Sources */,
 				22D862ED20279F9100456179 /* quota.c in Sources */,
@@ -936,16 +1042,20 @@
 				22D863FF2027B20000456179 /* lwres_noop.c in Sources */,
 				22D8634E2027A8A000456179 /* dispatch.c in Sources */,
 				22D862E220279F9100456179 /* lib.c in Sources */,
+				223A3E3E20349E61004C9F62 /* encrypt.c in Sources */,
 				22D862D120279F9100456179 /* buffer.c in Sources */,
+				223A3E5B2034A10E004C9F62 /* commands.c in Sources */,
 				22D862DC20279F9100456179 /* httpd.c in Sources */,
 				22D862DD20279F9100456179 /* inet_aton.c in Sources */,
 				22D862D420279F9100456179 /* counter.c in Sources */,
 				22D8631C2027A35800456179 /* socket.c in Sources */,
 				22D8636C2027A8F600456179 /* key.c in Sources */,
+				223A3E3F20349E61004C9F62 /* genget.c in Sources */,
 				22D863BA2027A9FD00456179 /* tcpmsg.c in Sources */,
 				22D863E52027B1B800456179 /* getipnode.c in Sources */,
 				22D863BC2027AA0400456179 /* time.c in Sources */,
 				22D863242027A37000456179 /* syslog.c in Sources */,
+				223A3E4820349E61004C9F62 /* enc_des.c in Sources */,
 				22D862D020279F9100456179 /* bitstring.c in Sources */,
 				22D862EB20279F9100456179 /* pool.c in Sources */,
 				22D8630E2027A32C00456179 /* file.c in Sources */,
@@ -964,10 +1074,13 @@
 				22D863942027A97200456179 /* rcode.c in Sources */,
 				22D863502027A8A400456179 /* dlz.c in Sources */,
 				22D863602027A8D600456179 /* forward.c in Sources */,
+				223A3E4420349E61004C9F62 /* kerberos.c in Sources */,
 				22D863462027A88E00456179 /* db.c in Sources */,
 				22D863AC2027A9B700456179 /* sdb.c in Sources */,
 				22D863842027A94000456179 /* nsec3.c in Sources */,
 				22D8635E2027A8D100456179 /* dst_result.c in Sources */,
+				223A3E572034A10E004C9F62 /* telnet.c in Sources */,
+				223A3E4220349E61004C9F62 /* kerberos5.c in Sources */,
 				22D862CE20279F9100456179 /* base32.c in Sources */,
 				22D862FC20279F9100456179 /* string.c in Sources */,
 				22D863E12027B1AD00456179 /* getaddrinfo.c in Sources */,
@@ -987,12 +1100,14 @@
 				22D8638E2027A95E00456179 /* rbt.c in Sources */,
 				22D864132027B3CF00456179 /* namedconf.c in Sources */,
 				22D863922027A96C00456179 /* rbtdb64.c in Sources */,
+				223A3E5D2034A10E004C9F62 /* sys_bsd.c in Sources */,
 				22D863D82027B03200456179 /* dighost.c in Sources */,
 				22D862E320279F9100456179 /* log.c in Sources */,
 				22D862CC20279F9100456179 /* backtrace-emptytbl.c in Sources */,
 				22D863DB2027B19A00456179 /* compat.c in Sources */,
 				22D8630C2027A32700456179 /* errno2result.c in Sources */,
 				22D863D02027AA3C00456179 /* xfrin.c in Sources */,
+				223A3E3D20349E61004C9F62 /* forward.c in Sources */,
 				22D8631E2027A35F00456179 /* stdio.c in Sources */,
 				22D862F420279F9100456179 /* result.c in Sources */,
 				22D863BE2027AA0A00456179 /* timer.c in Sources */,
@@ -1020,6 +1135,7 @@
 				22D863A22027A99D00456179 /* resolver.c in Sources */,
 				22D863742027A90B00456179 /* log.c in Sources */,
 				22D8633E2027A87800456179 /* cache.c in Sources */,
+				223A3E4120349E61004C9F62 /* rsaencpwd.c in Sources */,
 				22D862DE20279F9100456179 /* inet_pton.c in Sources */,
 				22D863442027A88A00456179 /* compress.c in Sources */,
 				22D862F320279F9100456179 /* region.c in Sources */,

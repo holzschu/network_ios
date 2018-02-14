@@ -147,7 +147,7 @@ struct tv32 {
 };
 
 /* various options */
-int options;
+static int options;
 #define	F_FLOOD		0x0001
 #define	F_INTERVAL	0x0002
 #define	F_NUMERIC	0x0004
