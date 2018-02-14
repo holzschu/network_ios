@@ -63,7 +63,7 @@
 /*
  * Definitions to facilitate DLL's.
  */
-#include <ncurses_dll.h>
+#include "ncurses_dll.h"
 
 /*
  * User-definable tweak to disable the include of <stdbool.h>.
