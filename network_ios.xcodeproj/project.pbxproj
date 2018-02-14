@@ -274,6 +274,7 @@
 		223A3E602034A284004C9F62 /* unctrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = unctrl.h; path = sources/unctrl.h; sourceTree = "<group>"; };
 		223A3E612034A2C7004C9F62 /* term.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = term.h; path = sources/term.h; sourceTree = "<group>"; };
 		223A3E622034A369004C9F62 /* libcurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurses.tbd; path = usr/lib/libcurses.tbd; sourceTree = SDKROOT; };
+		223A3E642034F4EF004C9F62 /* ios_error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_error.h; sourceTree = "<group>"; };
 		229EC3DA20249305004E76C6 /* libnetwork_ios.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnetwork_ios.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		229EC3EA20259991004E76C6 /* ip_var.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ip_var.h; sourceTree = "<group>"; };
 		229EC3EB20259A53004E76C6 /* ping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ping.c; path = sources/ping.c; sourceTree = "<group>"; };
@@ -543,6 +544,7 @@
 				223A3E2E20348025004C9F62 /* telnet */,
 				22D8625220279C4800456179 /* bind9 */,
 				229EC40820276228004E76C6 /* conn_lib.c */,
+				223A3E642034F4EF004C9F62 /* ios_error.h */,
 				229EC3EA20259991004E76C6 /* ip_var.h */,
 				229EC3F02025BA61004E76C6 /* sys_socket.h */,
 				229EC3F12025FC6F004E76C6 /* netinet_in.h */,
