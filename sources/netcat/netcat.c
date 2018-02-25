@@ -384,6 +384,7 @@ netcat_main(int argc, char *argv[])
             else {
 				// errx(1, "unsupported proxy protocol");
                 fprintf(thread_stderr, "netcat: unsupported proxy protocol\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 			break;
@@ -403,6 +404,7 @@ netcat_main(int argc, char *argv[])
             if ((ifscope = if_nametoindex(boundif)) == 0) {
 				// errx(1, "bad interface name");
                 fprintf(thread_stderr, "netcat: bad interface name\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 			break;
@@ -418,6 +420,7 @@ netcat_main(int argc, char *argv[])
             if (iflag < 0 || *endp != '\0') {
 				// errx(1, "interval cannot be negative");
                 fprintf(thread_stderr, "netcar: interval cannot be negative\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 			break;
@@ -436,6 +439,7 @@ netcat_main(int argc, char *argv[])
             if (tclass == -1) {
 				// errx(1, "invalid traffic class");
                 fprintf(thread_stderr, "netcat: invalid traffic class\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 			break;
@@ -449,6 +453,7 @@ netcat_main(int argc, char *argv[])
             if (tcp_conn_timeout < 0 || *endp != '\0') {
 				// errx(1, "invalid tcp connection timeout");
                 fprintf(thread_stderr, "netcat: invalid tcp connection timeout\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 			break;
@@ -458,6 +463,7 @@ netcat_main(int argc, char *argv[])
             if (tcp_conn_keepidle < 0 || *endp != '\0') {
                 // errx(1, "invalid tcp keep idle interval");
                 fprintf(thread_stderr, "netcat: invalid tcp keep idle interval\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 			break;
@@ -467,6 +473,7 @@ netcat_main(int argc, char *argv[])
             if (tcp_conn_keepintvl < 0 || *endp != '\0') {
 				// errx(1, "invalid tcp keep interval");
                 fprintf(thread_stderr, "netcat: invalid tcp keep interval\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 			break;
@@ -476,6 +483,7 @@ netcat_main(int argc, char *argv[])
             if (tcp_conn_keepcnt < 0 || *endp != '\0') {
 				// errx(1, "invalid tcp keep count");
                 fprintf(thread_stderr, "netcat: invalid tcp keep count\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 			break;
@@ -485,6 +493,7 @@ netcat_main(int argc, char *argv[])
             if (tcp_conn_adaptive_rtimo < 0 || *endp != '\0') {
 				// errx(1, "invalid tcp adaptive read timeout value");
                 fprintf(thread_stderr, "netcat: invalid tcp adaptive read timeout value\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 			break;
@@ -494,6 +503,7 @@ netcat_main(int argc, char *argv[])
             if (tcp_conn_adaptive_wtimo < 0 || *endp != '\0') {
 				// errx(1, "invalid tcp adaptive write timeout value");
                 fprintf(thread_stderr, "netcat: invalid tcp adaptive write timeout value\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 			break;
@@ -529,6 +539,7 @@ netcat_main(int argc, char *argv[])
             if (valid == false) {
 				// errx(EX_USAGE, "invalid TOS value: `%s'", optarg);
                 fprintf(thread_stderr, "netcat: invalid TOS value: `%s'\n", optarg);
+                global_errno = EX_USAGE;
                 pthread_exit(NULL);
             }
 			break;
@@ -544,11 +555,13 @@ netcat_main(int argc, char *argv[])
             if (timeout < 0 || *endp != '\0') {
 				// errx(1, "timeout cannot be negative");
                 fprintf(thread_stderr, "netcat: timeout cannot be negative\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
             if (timeout >= (INT_MAX / 1000)) {
 				// errx(1, "timeout too large");
                 fprintf(thread_stderr, "netcat: timeout too large\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 #ifndef USE_SELECT
@@ -558,7 +571,7 @@ netcat_main(int argc, char *argv[])
 		case 'x':
 			xflag = 1;
 			if ((proxy = strdup(optarg)) == NULL)
-				{ fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); } 
+            { global_errno = 1; fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); }
 			break;
 		case 'z':
 			zflag = 1;
@@ -606,6 +619,7 @@ netcat_main(int argc, char *argv[])
     if (pid_optarg != NULL && uuid_optarg != NULL) {
         // errx(1, "cannot use -apple-delegate-pid and --apple-delegate-uuid");
         fprintf(thread_stderr, "netcat: cannot use -apple-delegate-pid and --apple-delegate-uuid\n");
+        global_errno = 1;
         pthread_exit(NULL);
     }
 
@@ -614,6 +628,7 @@ netcat_main(int argc, char *argv[])
         if (pid == ULONG_MAX || *endp != '\0') {
 			// errx(1, "invalid pid value");
             fprintf(thread_stderr, "netcat: invalid pid value\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -622,6 +637,7 @@ netcat_main(int argc, char *argv[])
         if (uuid_parse(pid_optarg, uuid)) {
 			// errx(1, "invalid uuid value");
             fprintf(thread_stderr, "netcat: invalid uuid value\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -637,6 +653,7 @@ netcat_main(int argc, char *argv[])
             if (ecn_mode == (int)LONG_MAX || *endp != '\0') {
 				// errx(1, "invalid ECN mode value");
                 fprintf(thread_stderr, "netcat: invalid ECN mode value\n");
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 		}
@@ -646,6 +663,7 @@ netcat_main(int argc, char *argv[])
         if (netsvctype == -1) {
 			// errx(1, "invalid network service type %s", netsvctype_optarg);
             fprintf(thread_stderr, "netcat: invalid network service type %s\n", netsvctype_optarg);
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -654,6 +672,7 @@ netcat_main(int argc, char *argv[])
         if (kao < 0 || *endp != '\0') {
 			// errx(1, "invalid kao value");
             fprintf(thread_stderr, "netcat: invalid kao value\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -663,11 +682,13 @@ netcat_main(int argc, char *argv[])
         if (uflag) {
 			// errx(1, "cannot use -u and -U");
             fprintf(thread_stderr, "netcat: cannot use -u and -U\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
         if (Mflag) {
 			// errx(1, "cannot use -M and -U");
             fprintf(thread_stderr, "netcat: cannot use -M and -U\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 		host = argv[0];
@@ -710,36 +731,43 @@ netcat_main(int argc, char *argv[])
     if (Mflag && Oflag) {
 		// errx(1, "cannot use -M and -O");
         fprintf(thread_stderr, "netcat: cannot use -M and -O\n");
+        global_errno = 1;
         pthread_exit(NULL);
     }
     if (srcroute && Mflag) {
 		// errx(1, "source routing isn't compatible with -M");
         fprintf(thread_stderr, "netcat: source routing isn't compatible with -M\n");
+        global_errno = 1;
         pthread_exit(NULL);
     }
     if (srcroute && !Oflag) {
 		// errx(1, "must use -O for source routing");
         fprintf(thread_stderr, "netcat: must use -O for source routing\n");
+        global_errno = 1;
         pthread_exit(NULL);
     }
     if (lflag && sflag) {
 		// errx(1, "cannot use -s and -l");
         fprintf(thread_stderr, "netcat: cannot use -s and -l\n");
+        global_errno = 1;
         pthread_exit(NULL);
     }
     if (lflag && pflag) {
 		// errx(1, "cannot use -p and -l");
         fprintf(thread_stderr, "netcat: cannot use -p and -l\n");
+        global_errno = 1;
         pthread_exit(NULL);
     }
     if (lflag && zflag) {
 		// errx(1, "cannot use -z and -l");
         fprintf(thread_stderr, "netcat: cannot use -z and -l\n");
+        global_errno = 1;
         pthread_exit(NULL);
     }
     if (!lflag && kflag) {
 		// errx(1, "must use -l with -k");
         fprintf(thread_stderr, "netcat: must use -l with -k\n");
+        global_errno = 1;
         pthread_exit(NULL);
     }
 
@@ -757,18 +785,21 @@ netcat_main(int argc, char *argv[])
         if (uflag) {
 			// errx(1, "no proxy support for UDP mode");
             fprintf(thread_stderr, "netcat: no proxy support for UDP mode\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 
         if (lflag) {
 			// errx(1, "no proxy support for listen");
             fprintf(thread_stderr, "netcat: no proxy support for listen\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 
         if (family == AF_UNIX) {
 			// errx(1, "no proxy support for unix sockets");
             fprintf(thread_stderr, "netcat: no proxy support for unix sockets\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 
@@ -776,12 +807,14 @@ netcat_main(int argc, char *argv[])
         if (family == AF_INET6) {
 			// errx(1, "no proxy support for IPv6");
             fprintf(thread_stderr, "netcat: no proxy support for IPv6\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 
         if (sflag) {
 			// errx(1, "no proxy support for local source address");
             fprintf(thread_stderr, "netcat: no proxy support for local source address\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 
@@ -808,7 +841,7 @@ netcat_main(int argc, char *argv[])
 			if (family != AF_UNIX)
 				s = local_listen(host, uport, hints);
 			if (s < 0)
-				{ fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); } 
+				{ global_errno = 1; fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); }
 			/*
 			 * For UDP, we will use recvfrom() initially
 			 * to wait for a caller, then use the regular
@@ -830,6 +863,7 @@ netcat_main(int argc, char *argv[])
                 if (rv < 0) {
 					// err(1, "recvfrom");
                     fprintf(thread_stderr, "netcat: recvfrom: %s\n", strerror(errno));
+                    global_errno = 1;
                     pthread_exit(NULL);
                 }
 
@@ -837,6 +871,7 @@ netcat_main(int argc, char *argv[])
                 if (rv < 0) {
 					// err(1, "connect");
                     fprintf(thread_stderr, "netcat: connect: %s\n", strerror(errno));
+                    global_errno = 1;
                     pthread_exit(NULL);
                 }
 
@@ -1003,6 +1038,7 @@ remote_connect(const char *host, const char *port, struct addrinfo hints)
     if ((error = getaddrinfo(host, port, &hints, &res))) {
 		// errx(1, "getaddrinfo: %s", gai_strerror(error));
         fprintf(thread_stderr, "netcat: getaddrinfo: %s\n", gai_strerror(error));
+        global_errno = 1;
         pthread_exit(NULL);
     }
 
@@ -1031,6 +1067,7 @@ remote_connect(const char *host, const char *port, struct addrinfo hints)
             if ((error = getaddrinfo(sflag, pflag, &ahints, &ares))) {
 				// errx(1, "getaddrinfo: %s", gai_strerror(error));
                 fprintf(thread_stderr, "netcat: getaddrinfo: %s\n", gai_strerror(error));
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 
@@ -1038,6 +1075,7 @@ remote_connect(const char *host, const char *port, struct addrinfo hints)
                      ares->ai_addrlen) < 0) {
                 // errx(1, "bind failed: %s", strerror(errno));
                 fprintf(thread_stderr, "netcat: bind failed: %s\n", strerror(errno));
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 			freeaddrinfo(ares);
@@ -1093,6 +1131,7 @@ remote_connectx(const char *host, const char *port, struct addrinfo hints)
     if ((error = getaddrinfo(host, port, &hints, &res))) {
 		// errx(1, "getaddrinfo: %s", gai_strerror(error));
         fprintf(thread_stderr, "netcat: getaddrinfo: %s\n", gai_strerror(error));
+        global_errno = 1;
         pthread_exit(NULL);
     }
 
@@ -1130,6 +1169,7 @@ remote_connectx(const char *host, const char *port, struct addrinfo hints)
             if ((error = getaddrinfo(sflag, pflag, &ahints, &ares))) {
 				// errx(1, "getaddrinfo: %s", gai_strerror(error));
                 fprintf(thread_stderr, "netcat: getaddrinfo: %s\n", gai_strerror(error));
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 		}
@@ -1203,6 +1243,7 @@ local_listen(char *host, char *port, struct addrinfo hints)
     if ((error = getaddrinfo(host, port, &hints, &res))) {
 		// errx(1, "getaddrinfo: %s", gai_strerror(error));
         fprintf(thread_stderr, "netcat: getaddrinfo: %s\n", gai_strerror(error));
+        global_errno = 1;
         pthread_exit(NULL);
     }
 
@@ -1214,7 +1255,7 @@ local_listen(char *host, char *port, struct addrinfo hints)
 
 		ret = setsockopt(s, SOL_SOCKET, SO_REUSEPORT, &x, sizeof(x));
 		if (ret == -1)
-			{ fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); } 
+			{ global_errno = 1; fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); }
 
 		if (!oflag)
 			set_common_sockopts(s, res0->ai_family);
@@ -1234,6 +1275,7 @@ local_listen(char *host, char *port, struct addrinfo hints)
         if (listen(s, 1) < 0) {
 			// err(1, "listen");
             fprintf(thread_stderr, "netcat: listen: %s\n", strerror(errno));
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1288,6 +1330,7 @@ readwrite(int nfd)
         if (rc != 0) {
 			// errx(1, "pthread_create failed: %d", rc);
             fprintf(thread_stderr, "netcat: pthread_create failed: %d\n", rc);
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1318,6 +1361,7 @@ readwrite(int nfd)
 			close(nfd);
 			// err(1, "Polling Error");
             fprintf(thread_stderr, "netcat: Polling Error: %s\n", strerror(errno));
+            global_errno = 1;
             pthread_exit(NULL);
 		}
 
@@ -1392,6 +1436,7 @@ readwrite(int nfd)
         if (rc > 0) {
 			// errx(1, "pthread_join failed: %d", rc);
             fprintf(thread_stderr, "netcat: pthread_join failed: %d\n", rc);
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1443,6 +1488,7 @@ build_ports(char *p)
         if (lflag) {
 			// errx(1, "Cannot use -l with multiple ports!");
             fprintf(thread_stderr, "netcat: Cannot use -l with multiple ports!•\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 
@@ -1454,12 +1500,14 @@ build_ports(char *p)
         if (hi <= 0 || hi > PORT_MAX || *endp != '\0') {
 			// errx(1, "port range not valid");
             fprintf(thread_stderr, "netcat: port range not valid\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 		lo = (int)strtoul(p, &endp, 10);
         if (lo <= 0 || lo > PORT_MAX || *endp != '\0') {
 			// errx(1, "port range not valid");
             fprintf(thread_stderr, "netcat: port range not valid\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 
@@ -1473,7 +1521,7 @@ build_ports(char *p)
 		for (cp = lo; cp <= hi; cp++) {
 			portlist[x] = calloc(1, PORT_MAX_LEN);
 			if (portlist[x] == NULL)
-				{ fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); } 
+				{ global_errno = 1; fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); }
 			snprintf(portlist[x], PORT_MAX_LEN, "%d", cp);
 			x++;
 		}
@@ -1495,11 +1543,12 @@ build_ports(char *p)
         if (hi <= 0 || hi > PORT_MAX || *endp != '\0') {
 			// errx(1, "port range not valid");
             fprintf(thread_stderr, "netcat: port range not valid\n");
+            global_errno = 1;
             pthread_exit(NULL);
         }
 		portlist[0] = calloc(1, PORT_MAX_LEN);
 		if (portlist[0] == NULL)
-			{ fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); } 
+        { global_errno = 1; fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); }
 		strlcpy(portlist[0], p, PORT_MAX_LEN);
 	}
 }
@@ -1533,7 +1582,7 @@ set_common_sockopts(int s, int af)
 	if (Sflag) {
 		if (setsockopt(s, IPPROTO_TCP, TCP_MD5SIG,
 			&x, sizeof(x)) == -1)
-			{ fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); } 
+        { global_errno = 1; fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); }
 	}
 #endif /* !__APPLE__ */
 	if (Dflag) {
@@ -1541,6 +1590,7 @@ set_common_sockopts(int s, int af)
                        &x, sizeof(x)) == -1) {
 			// err(1, "SO_DEBUG");
             fprintf(thread_stderr, "netcat: SO_DEBUG: %s\n", strerror(errno));
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1548,7 +1598,7 @@ set_common_sockopts(int s, int af)
 	if (jflag) {
 		if (setsockopt(s, SOL_SOCKET, SO_JUMBO,
 			&x, sizeof(x)) == -1)
-			{ fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); } 
+        { global_errno = 1; fprintf(thread_stderr, "netcat: %s\n", strerror(errno)); pthread_exit(NULL); }
 	}
 #endif /* !__APPLE__ */
 #ifdef __APPLE__
@@ -1557,6 +1607,7 @@ set_common_sockopts(int s, int af)
                        &x, sizeof(x)) == -1) {
 			// err(1, "SO_RECV_ANYIF");
             fprintf(thread_stderr, "netcat: SO_RECV_ANYIF: %s\n", strerror(errno));
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1565,6 +1616,7 @@ set_common_sockopts(int s, int af)
                        &x, sizeof(x)) == -1) {
             // err(1, "SO_RECV_ANYIF");
             fprintf(thread_stderr, "netcat: SO_RECV_ANYIF: %s\n", strerror(errno));
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1574,6 +1626,7 @@ set_common_sockopts(int s, int af)
                        &x, sizeof(x)) == -1) {
 			// err(1, "SO_INTCOPROC_ALLOW");
             fprintf(thread_stderr, "netcar: SO_INTCOPROC_ALLOW: %s\n", strerror(errno));
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1586,6 +1639,7 @@ set_common_sockopts(int s, int af)
                        sizeof (ifscope)) == -1) {
 			// err(1, "{IP,IPV6}_BOUND_IF");
                 fprintf(thread_stderr, "netcat: {IP,IPV6}_BOUND_IF: %s\n", strerror(errno));
+                global_errno = 1;
                 pthread_exit(NULL);
             }
 	}
@@ -1596,6 +1650,7 @@ set_common_sockopts(int s, int af)
                        sizeof (restrictions)) == -1) {
 			// err(1, "SO_RESTRICTIONS: SO_RESTRICT_DENY_CELLULAR");
             fprintf(thread_stderr, "netcat: SO_RESTRICTIONS: SO_RESTRICT_DENY_CELLULAR: %s\n", strerror(errno));
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1606,6 +1661,7 @@ set_common_sockopts(int s, int af)
                        sizeof (restrictions)) == -1) {
 			// err(1, "SO_RESTRICTIONS: SO_RESTRICT_DENY_EXPENSIVE");
             fprintf(thread_stderr, "netcat: SO_RESTRICTIONS: SO_RESTRICT_DENY_EXPENSIVE: %s\n", strerror(errno));
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1616,6 +1672,7 @@ set_common_sockopts(int s, int af)
             // err(1, "SO_NET_SERVICE_TYPE netsvctype_optarg %s netsvctype %d",
             fprintf(thread_stderr, "netcat: SO_NET_SERVICE_TYPE netsvctype_optarg %s netsvctype %d: %s\n",
 			    netsvctype_optarg, netsvctype, strerror(errno));
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1624,6 +1681,7 @@ set_common_sockopts(int s, int af)
                        &tclass, sizeof (tclass)) == -1) {
 			// err(1, "SO_TRAFFIC_CLASS");
             fprintf(thread_stderr, "netcat: SO_TRAFFIC_CLASS: %s\n", strerror(errno));
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1633,6 +1691,7 @@ set_common_sockopts(int s, int af)
                        sizeof(tcp_conn_timeout)) == -1) {
 			// err(1, "TCP_CONNECTIONTIMEOUT");
             fprintf(thread_stderr, "netcat: TCP_CONNECTIONTIMEOUT: %s\n", strerror(errno));
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1644,6 +1703,7 @@ set_common_sockopts(int s, int af)
                        &on, sizeof(on)) == -1) {
 			// err(1, "SO_KEEPALIVE");
             fprintf(thread_stderr, "netcat: SO_KEEPALIVE: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1653,6 +1713,7 @@ set_common_sockopts(int s, int af)
                        &tcp_conn_keepidle, sizeof(tcp_conn_keepidle)) == -1) {
 			// err(1, "TCP_KEEPALIVE");
             fprintf(thread_stderr, "netcat: TCP_KEEPALIVE: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1662,6 +1723,7 @@ set_common_sockopts(int s, int af)
                        &tcp_conn_keepintvl, sizeof(tcp_conn_keepintvl)) == -1) {
 			// err(1, "TCP_KEEPINTVL");
             fprintf(thread_stderr, "netcat: TCP_KEEPINTVL: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1671,6 +1733,7 @@ set_common_sockopts(int s, int af)
                        &tcp_conn_keepcnt, sizeof(tcp_conn_keepcnt)) == -1) {
 			// err(1, "TCP_KEEPCNT");
             fprintf(thread_stderr, "netcat: TCP_KEEPCNT: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1680,6 +1743,7 @@ set_common_sockopts(int s, int af)
                        &kao, sizeof(kao)) == -1) {
 			// err(1, "TCP_KEEPALIVE_OFFLOAD");
             fprintf(thread_stderr, "netcat: TCP_KEEPALIVE_OFFLOAD: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1690,6 +1754,7 @@ set_common_sockopts(int s, int af)
                        sizeof(tcp_conn_adaptive_rtimo)) == -1) {
 			// err(1, "TCP_ADAPTIVE_READ_TIMEOUT");
             fprintf(thread_stderr, "netcat: TCP_ADAPTIVE_READ_TIMEOUT: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
     }
@@ -1700,6 +1765,7 @@ set_common_sockopts(int s, int af)
                        sizeof(tcp_conn_adaptive_wtimo)) == -1) {
 			// err(1, "TCP_ADAPTIVE_WRITE_TIMEOUT");
             fprintf(thread_stderr, "netcat: TCP_ADAPTIVE_WRITE_TIMEOUT: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1709,6 +1775,7 @@ set_common_sockopts(int s, int af)
                        &pid, sizeof(pid)) == -1) {
 			// err(1, "SO_DELEGATED");
             fprintf(thread_stderr, "netcat: SO_DELEGATED: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1718,6 +1785,7 @@ set_common_sockopts(int s, int af)
                        uuid, sizeof(uuid)) == -1) {
 			// err(1, "SO_DELEGATED_UUID");
             fprintf(thread_stderr, "netcat: SO_DELEGATED_UUID: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1727,6 +1795,7 @@ set_common_sockopts(int s, int af)
                        &extbkidle_flag, sizeof(int)) == -1) {
 			// err(1, "SO_EXTENDED_BK_IDLE");
             fprintf(thread_stderr, "netcat: SO_EXTENDED_BK_IDLE: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1735,6 +1804,7 @@ set_common_sockopts(int s, int af)
                        &nowakefromsleep_flag, sizeof(int)) == -1) {
 			// err(1, "SO_NOWAKEFROMSLEEP");
             fprintf(thread_stderr, "netcat: SO_NOWAKEFROMSLEEP: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1743,6 +1813,7 @@ set_common_sockopts(int s, int af)
                        &ecn_mode, sizeof(int)) == -1) {
 			// err(1, "TCP_ECN_MODE");
             fprintf(thread_stderr, "netcat: TCP_ECN_MODE: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1760,6 +1831,7 @@ set_common_sockopts(int s, int af)
         if (setsockopt(s, proto, option, &Tflag, sizeof(Tflag)) == -1) {
 			// err(1, "set IP ToS");
             fprintf(thread_stderr, "netcat: set IP ToS: %s\n", strerror(errno) );
+            global_errno = 1;
             pthread_exit(NULL);
         }
 	}
@@ -1885,6 +1957,7 @@ wait_for_flowadv(int fd)
 		if (kq < 0) {
 			// errx(1, "failed to create kqueue for flow advisory");
             fprintf(thread_stderr, "netcat: failed to create kqueue for flow advisory\n");
+            global_errno = 1;
             pthread_exit(NULL);
 			return (1);
 		}
@@ -1924,6 +1997,7 @@ sockev_receive(void *arg)
 	if (kq < 0) {
 		// errx(1, "failed to create kqueue");
         fprintf(thread_stderr, "netcat: failed to create kqueue\n");
+        global_errno = 1;
         pthread_exit(NULL);
 		return (NULL);
 	}
