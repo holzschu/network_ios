@@ -74,7 +74,7 @@
 
 
 #include <TargetConditionals.h>
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_SIMULATOR
 #include <resolv.h>
 #include "ios_error.h"
 #endif
@@ -624,7 +624,7 @@ lwres_conf_parse(lwres_context_t *ctx, const char *filename) {
 	errno = 0;
     if ((fp = fopen(filename, "r")) == NULL) {
         // file not found or permission not granted. Was it /etc/resolv.conf?
-#ifndef TARGET_OS_IPHONE
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
         return (LWRES_R_NOTFOUND);
 #else
         if (strcmp(filename, LWRES_RESOLV_CONF) != 0) return (LWRES_R_NOTFOUND);
