@@ -267,7 +267,7 @@ kerberos5_send(ap)
 	    rdata.length = strlen(telnet_krb5_realm);
 	    rdata.data = (char *) malloc(rdata.length + 1);
 	    if (rdata.data == NULL) {
-	        fprintf(stderr, "malloc failed\n");
+	        fprintf(thread_stderr, "malloc failed\n");
 		return(0);
 	    }
 	    strcpy(rdata.data, telnet_krb5_realm);

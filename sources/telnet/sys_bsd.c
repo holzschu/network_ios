@@ -127,8 +127,8 @@ static SIG_FUNC_RET ayt(int);
 void
 init_sys(void)
 {
-    tout = fileno(stdout);
-    tin = fileno(stdin);
+    tout = fileno(thread_stdout);
+    tin = fileno(thread_stdin);
     errno = 0;
 }
 
@@ -223,9 +223,9 @@ void
 TerminalFlushOutput(void)
 {
 #ifdef	TIOCFLUSH
-    (void) ioctl(fileno(stdout), TIOCFLUSH, (char *) 0);
+    (void) ioctl(fileno(thread_stdout), TIOCFLUSH, (char *) 0);
 #else
-    (void) ioctl(fileno(stdout), TCFLSH, (char *) 0);
+    (void) ioctl(fileno(thread_stdout), TCFLSH, (char *) 0);
 #endif
 }
 
@@ -783,7 +783,7 @@ TerminalWindowSize(long *rows, long *cols)
 #ifdef	TIOCGWINSZ
     struct winsize ws;
 
-    if (ioctl(fileno(stdin), TIOCGWINSZ, (char *)&ws) >= 0) {
+    if (ioctl(fileno(thread_stdin), TIOCGWINSZ, (char *)&ws) >= 0) {
 	*rows = ws.ws_row;
 	*cols = ws.ws_col;
 	return 1;

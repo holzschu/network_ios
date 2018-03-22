@@ -112,7 +112,7 @@ unsigned char NetTraceFile[256] = "(standard output)";
 void
 SetNetTrace(char *file)
 {
-    if (NetTrace && NetTrace != stdout)
+    if (NetTrace && NetTrace != thread_stdout)
 	fclose(NetTrace);
     if (file  && (strcmp(file, "-") != 0)) {
 	NetTrace = fopen(file, "w");
@@ -120,9 +120,9 @@ SetNetTrace(char *file)
 	    strcpy((char *)NetTraceFile, file);
 	    return;
 	}
-	fprintf(stderr, "Cannot open %s.\n", file);
+	fprintf(thread_stderr, "Cannot open %s.\n", file);
     }
-    NetTrace = stdout;
+    NetTrace = thread_stdout;
     strcpy((char *)NetTraceFile, "(standard output)");
 }
 
@@ -159,7 +159,7 @@ Dump(char direction, unsigned char *buffer, int length)
 	    length -= BYTES_PER_LINE;
 	    offset += BYTES_PER_LINE;
 	}
-	if (NetTrace == stdout) {
+	if (NetTrace == thread_stdout) {
 	    fprintf(NetTrace, "\r\n");
 	} else {
 	    fprintf(NetTrace, "\n");
@@ -199,7 +199,7 @@ printoption(const char *direction, int cmd, int option)
 		} else
 		    fprintf(NetTrace, "%s %d %d", direction, cmd, option);
 	}
-	if (NetTrace == stdout) {
+	if (NetTrace == thread_stdout) {
 	    fprintf(NetTrace, "\r\n");
 	    fflush(NetTrace);
 	} else {
@@ -326,7 +326,7 @@ printsub(char direction, unsigned char *pointer, int length)
 	}
 	if (length < 1) {
 	    fprintf(NetTrace, "(Empty suboption??\?)");
-	    if (NetTrace == stdout)
+	    if (NetTrace == thread_stdout)
 		fflush(NetTrace);
 	    return;
 	}
@@ -668,7 +668,7 @@ printsub(char direction, unsigned char *pointer, int length)
 	    case TELQUAL_IS:
 		if (--want_status_response < 0)
 		    want_status_response = 0;
-		if (NetTrace == stdout)
+		if (NetTrace == thread_stdout)
 		    fprintf(NetTrace, " IS\r\n");
 		else
 		    fprintf(NetTrace, " IS\n");
@@ -686,7 +686,7 @@ printsub(char direction, unsigned char *pointer, int length)
 			else
 			    fprintf(NetTrace, " %s %d", cp, pointer[i]);
 
-			if (NetTrace == stdout)
+			if (NetTrace == thread_stdout)
 			    fprintf(NetTrace, "\r\n");
 			else
 			    fprintf(NetTrace, "\n");
@@ -714,7 +714,7 @@ printsub(char direction, unsigned char *pointer, int length)
 			} else
 			    i = j - 1;
 
-			if (NetTrace == stdout)
+			if (NetTrace == thread_stdout)
 			    fprintf(NetTrace, "\r\n");
 			else
 			    fprintf(NetTrace, "\n");
@@ -845,12 +845,12 @@ printsub(char direction, unsigned char *pointer, int length)
 	    break;
 	}
 	if (direction) {
-	    if (NetTrace == stdout)
+	    if (NetTrace == thread_stdout)
 		fprintf(NetTrace, "\r\n");
 	    else
 		fprintf(NetTrace, "\n");
 	}
-	if (NetTrace == stdout)
+	if (NetTrace == thread_stdout)
 	    fflush(NetTrace);
     }
 }
@@ -890,8 +890,8 @@ SetForExit(void)
 	EmptyTerminal();
     } while (ring_full_count(&netiring));	/* While there is any */
     setcommandmode();
-    fflush(stdout);
-    fflush(stderr);
+    fflush(thread_stdout);
+    fflush(thread_stderr);
     setconnmode(0);
     EmptyTerminal();			/* Flush the path to the tty */
     setcommandmode();
@@ -908,6 +908,6 @@ void
 ExitString(const char *string, int returnCode)
 {
     SetForExit();
-    fwrite(string, 1, strlen(string), stderr);
+    fwrite(string, 1, strlen(string), thread_stderr);
     exit(returnCode);
 }

@@ -370,7 +370,7 @@ sendcmd(int argc, char *argv[])
 	    return 0;
 	}
 	if (i + s->narg >= argc) {
-	    fprintf(stderr,
+	    fprintf(thread_stderr,
 	    "Need %d argument%s to 'send %s' command.  'send %s ?' for help.\n",
 		s->narg, s->narg == 1 ? "" : "s", s->name, s->name);
 	    return 0;
@@ -401,7 +401,7 @@ sendcmd(int argc, char *argv[])
     count = 0;
     for (i = 1; i < argc; i++) {
 	if ((s = GETSEND(argv[i])) == 0) {
-	    fprintf(stderr, "Telnet 'send' error - argument disappeared!\n");
+	    fprintf(thread_stderr, "Telnet 'send' error - argument disappeared!\n");
 	    quit();
 	    /*NOTREACHED*/
 	}
@@ -479,7 +479,7 @@ send_tncmd(void (*func)(int, int), const char *cmd, char *name)
     }
     cpp = (char **)genget(name, telopts, sizeof(char *));
     if (Ambiguous(cpp)) {
-	fprintf(stderr,"'%s': ambiguous argument ('send %s ?' for help).\n",
+	fprintf(thread_stderr,"'%s': ambiguous argument ('send %s ?' for help).\n",
 					name, cmd);
 	return 0;
     }
@@ -494,11 +494,11 @@ send_tncmd(void (*func)(int, int), const char *cmd, char *name)
 	    cp++;
 	}
 	if (*cp != 0) {
-	    fprintf(stderr, "'%s': unknown argument ('send %s ?' for help).\n",
+	    fprintf(thread_stderr, "'%s': unknown argument ('send %s ?' for help).\n",
 					name, cmd);
 	    return 0;
 	} else if (val < 0 || val > 255) {
-	    fprintf(stderr, "'%s': bad value ('send %s ?' for help).\n",
+	    fprintf(thread_stderr, "'%s': bad value ('send %s ?' for help).\n",
 					name, cmd);
 	    return 0;
 	}
@@ -829,7 +829,7 @@ toggle(int argc, char *argv[])
     struct togglelist *c;
 
     if (argc < 2) {
-	fprintf(stderr,
+	fprintf(thread_stderr,
 	    "Need an argument to 'toggle' command.  'toggle ?' for help.\n");
 	return 0;
     }
@@ -839,11 +839,11 @@ toggle(int argc, char *argv[])
 	name = *argv++;
 	c = GETTOGGLE(name);
 	if (Ambiguous((void *)c)) {
-	    fprintf(stderr, "'%s': ambiguous argument ('toggle ?' for help).\n",
+	    fprintf(thread_stderr, "'%s': ambiguous argument ('toggle ?' for help).\n",
 					name);
 	    return 0;
 	} else if (c == 0) {
-	    fprintf(stderr, "'%s': unknown argument ('toggle ?' for help).\n",
+	    fprintf(thread_stderr, "'%s': unknown argument ('toggle ?' for help).\n",
 					name);
 	    return 0;
 	} else {
@@ -950,11 +950,11 @@ setcmd(int argc, char *argv[])
     if (ct == 0) {
 	c = GETTOGGLE(argv[1]);
 	if (c == 0) {
-	    fprintf(stderr, "'%s': unknown argument ('set ?' for help).\n",
+	    fprintf(thread_stderr, "'%s': unknown argument ('set ?' for help).\n",
 			argv[1]);
 	    return 0;
 	} else if (Ambiguous((void *)c)) {
-	    fprintf(stderr, "'%s': ambiguous argument ('set ?' for help).\n",
+	    fprintf(thread_stderr, "'%s': ambiguous argument ('set ?' for help).\n",
 			argv[1]);
 	    return 0;
 	}
@@ -978,7 +978,7 @@ setcmd(int argc, char *argv[])
 	fprintf(thread_stdout, "Format is 'set Name Value'\n'set ?' for help.\n");
 	return 0;
     } else if (Ambiguous((void *)ct)) {
-	fprintf(stderr, "'%s': ambiguous argument ('set ?' for help).\n",
+	fprintf(thread_stderr, "'%s': ambiguous argument ('set ?' for help).\n",
 			argv[1]);
 	return 0;
     } else if (ct->handler) {
@@ -1005,7 +1005,7 @@ unsetcmd(int argc, char *argv[])
     char *name;
 
     if (argc < 2) {
-	fprintf(stderr,
+	fprintf(thread_stderr,
 	    "Need an argument to 'unset' command.  'unset ?' for help.\n");
 	return 0;
     }
@@ -1026,11 +1026,11 @@ unsetcmd(int argc, char *argv[])
 	if (ct == 0) {
 	    c = GETTOGGLE(name);
 	    if (c == 0) {
-		fprintf(stderr, "'%s': unknown argument ('unset ?' for help).\n",
+		fprintf(thread_stderr, "'%s': unknown argument ('unset ?' for help).\n",
 			name);
 		return 0;
 	    } else if (Ambiguous((void *)c)) {
-		fprintf(stderr, "'%s': ambiguous argument ('unset ?' for help).\n",
+		fprintf(thread_stderr, "'%s': ambiguous argument ('unset ?' for help).\n",
 			name);
 		return 0;
 	    }
@@ -1044,7 +1044,7 @@ unsetcmd(int argc, char *argv[])
 	    if (c->handler)
 		(*c->handler)(0);
 	} else if (Ambiguous((void *)ct)) {
-	    fprintf(stderr, "'%s': ambiguous argument ('unset ?' for help).\n",
+	    fprintf(thread_stderr, "'%s': ambiguous argument ('unset ?' for help).\n",
 			name);
 	    return 0;
 	} else if (ct->handler) {
@@ -1203,9 +1203,9 @@ modecmd(int argc, char *argv[])
 	fprintf(thread_stdout, "'mode' command requires an argument\n");
 	fprintf(thread_stdout, "'mode ?' for help.\n");
     } else if ((mt = GETMODECMD(argv[1])) == 0) {
-	fprintf(stderr, "Unknown mode '%s' ('mode ?' for help).\n", argv[1]);
+	fprintf(thread_stderr, "Unknown mode '%s' ('mode ?' for help).\n", argv[1]);
     } else if (Ambiguous((void *)mt)) {
-	fprintf(stderr, "Ambiguous mode '%s' ('mode ?' for help).\n", argv[1]);
+	fprintf(thread_stderr, "Ambiguous mode '%s' ('mode ?' for help).\n", argv[1]);
     } else if (mt->needconnect && !connected) {
 	fprintf(thread_stdout, "?Need to be connected first.\n");
 	fprintf(thread_stdout, "'mode ?' for help.\n");
@@ -1302,12 +1302,12 @@ setescape(int argc, char *argv[])
 		arg = argv[1];
 	else {
 		fprintf(thread_stdout, "new escape character: ");
-		(void) fgets(buf, sizeof(buf), stdin);
+		(void) fgets(buf, sizeof(buf), thread_stdin);
 		arg = buf;
 	}
 	if (arg[0] != '\0')
 		escape = arg[0];
-	(void) fflush(stdout);
+	(void) fflush(thread_stdout);
 	return 1;
 }
 
@@ -1317,7 +1317,7 @@ togcrmod(void)
     crmod = !crmod;
     fprintf(thread_stdout, "Deprecated usage - please use 'toggle crmod' in the future.\n");
     fprintf(thread_stdout, "%s map carriage return on output.\n", crmod ? "Will" : "Won't");
-    (void) fflush(stdout);
+    (void) fflush(thread_stdout);
     return 1;
 }
 
@@ -1491,18 +1491,18 @@ slccmd(int argc, char *argv[])
     struct slclist *c;
 
     if (argc != 2) {
-	fprintf(stderr,
+	fprintf(thread_stderr,
 	    "Need an argument to 'slc' command.  'slc ?' for help.\n");
 	return 0;
     }
     c = getslc(argv[1]);
     if (c == 0) {
-	fprintf(stderr, "'%s': unknown argument ('slc ?' for help).\n",
+	fprintf(thread_stderr, "'%s': unknown argument ('slc ?' for help).\n",
     				argv[1]);
 	return 0;
     }
     if (Ambiguous((void *)c)) {
-	fprintf(stderr, "'%s': ambiguous argument ('slc ?' for help).\n",
+	fprintf(thread_stderr, "'%s': ambiguous argument ('slc ?' for help).\n",
     				argv[1]);
 	return 0;
     }
@@ -1585,23 +1585,23 @@ env_cmd(int argc, char *argv[])
     struct envlist *c;
 
     if (argc < 2) {
-	fprintf(stderr,
+	fprintf(thread_stderr,
 	    "Need an argument to 'environ' command.  'environ ?' for help.\n");
 	return 0;
     }
     c = getenvcmd(argv[1]);
     if (c == 0) {
-	fprintf(stderr, "'%s': unknown argument ('environ ?' for help).\n",
+	fprintf(thread_stderr, "'%s': unknown argument ('environ ?' for help).\n",
     				argv[1]);
 	return 0;
     }
     if (Ambiguous((void *)c)) {
-	fprintf(stderr, "'%s': ambiguous argument ('environ ?' for help).\n",
+	fprintf(thread_stderr, "'%s': ambiguous argument ('environ ?' for help).\n",
     				argv[1]);
 	return 0;
     }
     if (c->narg + 2 != argc && strcasecmp(argv[1],"define")==0 && c->narg + 1 != argc) {
-	fprintf(stderr,
+	fprintf(thread_stderr,
 	    "Need %s%d argument%s to 'environ %s' command.  'environ ?' for help.\n",
 		c->narg < argc + 2 ? "only " : "",
 		c->narg, c->narg == 1 ? "" : "s", c->name);
@@ -1759,14 +1759,14 @@ env_send(unsigned char *var)
            && my_state_is_wont(TELOPT_OLD_ENVIRON)
 #endif
 		) {
-		fprintf(stderr,
+		fprintf(thread_stderr,
 		    "Cannot send '%s': Telnet ENVIRON option not enabled\n",
 									var);
 		return;
 	}
 	ep = env_find(var);
 	if (ep == 0) {
-		fprintf(stderr, "Cannot send '%s': variable not defined\n",
+		fprintf(thread_stderr, "Cannot send '%s': variable not defined\n",
 									var);
 		return;
 	}
@@ -1904,7 +1904,7 @@ auth_cmd(int argc, char *argv[])
     struct authlist *c;
 
     if (argc < 2) {
-	fprintf(stderr,
+	fprintf(thread_stderr,
 	    "Need an argument to 'auth' command.  'auth ?' for help.\n");
 	return 0;
     }
@@ -1912,17 +1912,17 @@ auth_cmd(int argc, char *argv[])
     c = (struct authlist *)
 		genget(argv[1], (char **) AuthList, sizeof(struct authlist));
     if (c == 0) {
-	fprintf(stderr, "'%s': unknown argument ('auth ?' for help).\n",
+	fprintf(thread_stderr, "'%s': unknown argument ('auth ?' for help).\n",
     				argv[1]);
 	return 0;
     }
     if (Ambiguous((void *)c)) {
-	fprintf(stderr, "'%s': ambiguous argument ('auth ?' for help).\n",
+	fprintf(thread_stderr, "'%s': ambiguous argument ('auth ?' for help).\n",
     				argv[1]);
 	return 0;
     }
     if (c->narg + 2 != argc) {
-	fprintf(stderr,
+	fprintf(thread_stderr,
 	    "Need %s%d argument%s to 'auth %s' command.  'auth ?' for help.\n",
 		c->narg < argc + 2 ? "only " : "",
 		c->narg, c->narg == 1 ? "" : "s", c->name);
@@ -2009,7 +2009,7 @@ encrypt_cmd(int argc, char *argv[])
     struct encryptlist *c;
 
     if (argc < 2) {
-	fprintf(stderr,
+	fprintf(thread_stderr,
 	    "Need an argument to 'encrypt' command.  'encrypt ?' for help.\n");
 	return 0;
     }
@@ -2017,26 +2017,26 @@ encrypt_cmd(int argc, char *argv[])
     c = (struct encryptlist *)
 		genget(argv[1], (char **) EncryptList, sizeof(struct encryptlist));
     if (c == 0) {
-	fprintf(stderr, "'%s': unknown argument ('encrypt ?' for help).\n",
+	fprintf(thread_stderr, "'%s': unknown argument ('encrypt ?' for help).\n",
     				argv[1]);
 	return 0;
     }
     if (Ambiguous((void *)c)) {
-	fprintf(stderr, "'%s': ambiguous argument ('encrypt ?' for help).\n",
+	fprintf(thread_stderr, "'%s': ambiguous argument ('encrypt ?' for help).\n",
     				argv[1]);
 	return 0;
     }
     argc -= 2;
     if (argc < c->minarg || argc > c->maxarg) {
 	if (c->minarg == c->maxarg) {
-	    fprintf(stderr, "Need %s%d argument%s ",
+	    fprintf(thread_stderr, "Need %s%d argument%s ",
 		c->minarg < argc ? "only " : "", c->minarg,
 		c->minarg == 1 ? "" : "s");
 	} else {
-	    fprintf(stderr, "Need %s%d-%d arguments ",
+	    fprintf(thread_stderr, "Need %s%d-%d arguments ",
 		c->maxarg < argc ? "only " : "", c->minarg, c->maxarg);
 	}
-	fprintf(stderr, "to 'encrypt %s' command.  'encrypt ?' for help.\n",
+	fprintf(thread_stderr, "to 'encrypt %s' command.  'encrypt ?' for help.\n",
 		c->name);
 	return 0;
     }
@@ -2089,7 +2089,7 @@ status(int argc, char *argv[])
 	fprintf(thread_stdout, "No connection.\n");
     }
     fprintf(thread_stdout, "Escape character is '%s'.\n", control(escape));
-    (void) fflush(stdout);
+    (void) fflush(thread_stdout);
     return 1;
 }
 
@@ -2206,7 +2206,7 @@ tn(int argc, char *argv[])
     if (argc < 2) {
 	(void) strcpy(line, "open ");
 	fprintf(thread_stdout, "(to) ");
-	(void) fgets(&line[strlen(line)], sizeof(line) - strlen(line), stdin);
+	(void) fgets(&line[strlen(line)], sizeof(line) - strlen(line), thread_stdin);
 	makeargv();
 	argc = margc;
 	argv = margv;
@@ -2271,9 +2271,9 @@ tn(int argc, char *argv[])
 		error = getaddrinfo(src_addr, 0, &hints, &src_res);
 	}
 	if (error != 0) {
-		fprintf(stderr, "%s: %s\n", src_addr, gai_strerror(error));
+		fprintf(thread_stderr, "%s: %s\n", src_addr, gai_strerror(error));
 		if (error == EAI_SYSTEM)
-			fprintf(stderr, "%s: %s\n", src_addr, strerror(errno));
+			fprintf(thread_stderr, "%s: %s\n", src_addr, strerror(errno));
 		setuid(getuid());
 		return 0;
 	}
@@ -2283,7 +2283,7 @@ tn(int argc, char *argv[])
 	struct sockaddr_un su;
 	
 	if (strlen(hostp) >= sizeof(su.sun_path)) {
-	    fprintf(stderr, "hostname too long for unix domain socket: %s",
+	    fprintf(thread_stderr, "hostname too long for unix domain socket: %s",
 		    hostp);
 		goto fail;
 	}
@@ -2352,9 +2352,9 @@ tn(int argc, char *argv[])
 	error = getaddrinfo(hostname, portp, &hints, &res);
     }
     if (error != 0) {
-	fprintf(stderr, "%s: %s\n", hostname, gai_strerror(error));
+	fprintf(thread_stderr, "%s: %s\n", hostname, gai_strerror(error));
 	if (error == EAI_SYSTEM)
-	    fprintf(stderr, "%s: %s\n", hostname, strerror(errno));
+	    fprintf(thread_stderr, "%s: %s\n", hostname, strerror(errno));
 	setuid(getuid());
 	goto fail;
     }
@@ -2673,8 +2673,8 @@ command(int top, const char *tbuf, int cnt)
 	getline:
 	    if (rlogin != _POSIX_VDISABLE)
 		fprintf(thread_stdout, "%s> ", prompt);
-	    if (fgets(line, sizeof(line), stdin) == NULL) {
-		if (feof(stdin) || ferror(stdin)) {
+	    if (fgets(line, sizeof(line), thread_stdin) == NULL) {
+		if (feof(thread_stdin) || ferror(thread_stdin)) {
 		    (void) quit();
 		    /*NOTREACHED*/
 		}
@@ -3007,9 +3007,9 @@ sourceroute(struct addrinfo *ai, char *arg, char **cpp, int *lenp, int *protop, 
 			error = getaddrinfo(cp, NULL, &hints, &res);
 		}
 		if (error != 0) {
-			fprintf(stderr, "%s: %s\n", cp, gai_strerror(error));
+			fprintf(thread_stderr, "%s: %s\n", cp, gai_strerror(error));
 			if (error == EAI_SYSTEM)
-				fprintf(stderr, "%s: %s\n", cp,
+				fprintf(thread_stderr, "%s: %s\n", cp,
 					strerror(errno));
 			*cpp = cp;
 			return(0);

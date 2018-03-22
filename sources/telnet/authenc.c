@@ -98,7 +98,7 @@ telnet_gets(const char *prom, char *result, int length, int echo)
 	TerminalNewMode(-1);
 	if (echo) {
 		fprintf(thread_stdout, "%s", prom);
-		res = fgets(result, length, stdin);
+		res = fgets(result, length, thread_stdin);
 	} else if ((res = getpass(prom))) {
 		strncpy(result, res, length);
 		res = result;

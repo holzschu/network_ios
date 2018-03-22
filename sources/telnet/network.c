@@ -54,6 +54,7 @@ __FBSDID("$FreeBSD: src/contrib/telnet/telnet/network.c,v 1.7 2003/05/04 02:54:4
 #include "defines.h"
 #include "externs.h"
 #include "fdset.h"
+#include "ios_error.h"
 
 Ring		netoring, netiring;
 unsigned char	netobuf[2*BUFSIZ], netibuf[BUFSIZ];
@@ -71,7 +72,7 @@ init_network(void)
     if (ring_init(&netiring, netibuf, sizeof netibuf) != 1) {
 	exit(1);
     }
-    NetTrace = stdout;
+    NetTrace = thread_stdout;
 }
 
 

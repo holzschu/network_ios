@@ -55,6 +55,7 @@ __FBSDID("$FreeBSD: src/contrib/telnet/telnet/main.c,v 1.20 2005/01/09 10:24:45 
 #ifdef	ENCRYPTION
 #include <libtelnet/encrypt.h>
 #endif
+#include "ios_error.h"
 
 /* These values need to be the same as defined in libtelnet/kerberos5.c */
 /* Either define them in both places, or put in some common header file. */
@@ -88,7 +89,7 @@ tninit(void)
 static void
 usage(void)
 {
-	fprintf(stderr, "usage: %s %s%s%s%s\n",
+	fprintf(thread_stderr, "usage: %s %s%s%s%s\n",
 	    prompt,
 #ifdef	AUTHENTICATION
 	    "[-4] [-6] [-8] [-E] [-K] [-L] [-N] [-S tos] [-X atype] [-c] [-d]",
@@ -187,7 +188,7 @@ telnet_main(int argc, char *argv[])
 #ifdef	HAS_GETTOS
 
 			if ((tos = parsetos(optarg, "tcp")) < 0)
-				fprintf(stderr, "%s%s%s%s\n",
+				fprintf(thread_stderr, "%s%s%s%s\n",
 					prompt, ": Bad TOS argument '",
 					optarg,
 					"; will try to use default TOS");
@@ -195,7 +196,7 @@ telnet_main(int argc, char *argv[])
 #define	MAXTOS	255
 			ultmp = strtoul(optarg, &ep, 0);
 			if (*ep || ep == optarg || ultmp > MAXTOS)
-				fprintf(stderr, "%s%s%s%s\n",
+				fprintf(thread_stderr, "%s%s%s%s\n",
 					prompt, ": Bad TOS argument '",
 					optarg,
 					"; will try to use default TOS");
@@ -228,19 +229,19 @@ telnet_main(int argc, char *argv[])
 #ifdef	AUTHENTICATION
 #if defined(KRB5) && defined(FORWARD)
 			if (forward_flags & OPTS_FORWARD_CREDS) {
-			    fprintf(stderr,
+			    fprintf(thread_stderr,
 				    "%s: Only one of -f and -F allowed.\n",
 				    prompt);
 			    usage();
 			}
 			forward_flags |= OPTS_FORWARD_CREDS;
 #else
-			fprintf(stderr,
+			fprintf(thread_stderr,
 			 "%s: Warning: -f ignored, no Kerberos V5 support.\n",
 				prompt);
 #endif
 #else
-			fprintf(stderr,
+			fprintf(thread_stderr,
 			 "%s: Warning: -f ignored, no Kerberos V5 support.\n",
 				prompt);
 #endif
@@ -249,7 +250,7 @@ telnet_main(int argc, char *argv[])
 #ifdef	AUTHENTICATION
 #if defined(KRB5) && defined(FORWARD)
 			if (forward_flags & OPTS_FORWARD_CREDS) {
-			    fprintf(stderr,
+			    fprintf(thread_stderr,
 				    "%s: Only one of -f and -F allowed.\n",
 				    prompt);
 			    usage();
@@ -257,12 +258,12 @@ telnet_main(int argc, char *argv[])
 			forward_flags |= OPTS_FORWARD_CREDS;
 			forward_flags |= OPTS_FORWARDABLE_CREDS;
 #else
-			fprintf(stderr,
+			fprintf(thread_stderr,
 			 "%s: Warning: -F ignored, no Kerberos V5 support.\n",
 				prompt);
 #endif
 #else
-			fprintf(stderr,
+			fprintf(thread_stderr,
 			 "%s: Warning: -F ignored, no Kerberos V5 support.\n",
 				prompt);
 #endif
@@ -276,12 +277,12 @@ telnet_main(int argc, char *argv[])
 			(void)strncpy(dest_realm, optarg, dst_realm_sz);
 		    }
 #else
-			fprintf(stderr,
+			fprintf(thread_stderr,
 			   "%s: Warning: -k ignored, no Kerberos V4 support.\n",
 								prompt);
 #endif
 #else
-			fprintf(stderr,
+			fprintf(thread_stderr,
 			   "%s: Warning: -k ignored, no Kerberos V4 support.\n",
 								prompt);
 #endif
@@ -308,7 +309,7 @@ telnet_main(int argc, char *argv[])
 			break;
 		case 'x':
 #ifndef	ENCRYPTION
-			fprintf(stderr,
+			fprintf(thread_stderr,
 			    "%s: Warning: -x ignored, no ENCRYPT support.\n",
 								prompt);
 #endif	/* ENCRYPTION */
@@ -318,7 +319,7 @@ telnet_main(int argc, char *argv[])
 			encrypt_auto(0);
 			decrypt_auto(0);
 #else
-			fprintf(stderr,
+			fprintf(thread_stderr,
 			    "%s: Warning: -y ignored, no ENCRYPT support.\n",
 								prompt);
 #endif	/* ENCRYPTION */

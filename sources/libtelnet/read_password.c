@@ -110,23 +110,23 @@ local_des_read_pw_string(s,max,prompt,verify)
 	return -1;
     while (!ok) {
 	(void) fprintf(thread_stdout, "%s", prompt);
-	(void) fflush(stdout);
-	while (!fgets(s, max, stdin));
+	(void) fflush(thread_stdout);
+	while (!fgets(s, max, thread_stdin));
 
 	if ((ptr = strchr(s, '\n')))
 	    *ptr = '\0';
 	if (verify) {
 	    fprintf(thread_stdout, "\nVerifying, please re-enter %s",prompt);
-	    (void) fflush(stdout);
-	    if (!fgets(key_string, sizeof(key_string), stdin)) {
-		clearerr(stdin);
+	    (void) fflush(thread_stdout);
+	    if (!fgets(key_string, sizeof(key_string), thread_stdin)) {
+		clearerr(thread_stdin);
 		continue;
 	    }
 	    if ((ptr = strchr(key_string, '\n')))
 	    *ptr = '\0';
 	    if (strcmp(s,key_string)) {
 		fprintf(thread_stdout, "\n\07\07Mismatch - try again\n");
-		(void) fflush(stdout);
+		(void) fflush(thread_stdout);
 		continue;
 	    }
 	}
