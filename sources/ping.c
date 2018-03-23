@@ -796,7 +796,10 @@ ping_main(int argc, char *const *argv)
 #if (DEBUG || DEVELOPMENT)
 			options |= F_HDRINCL;
 #else
-			err(1, "bind");
+			// err(1, "bind");
+            fprintf(thread_stderr, "ping: bind: %s\n", strerror(errno));
+            ios_exit(1);
+			
 #endif /* DEBUG || DEVELOPMENT */
 	}
 
