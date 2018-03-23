@@ -6,3 +6,4 @@ before_install:
 
 script:
 - xcodebuild -project network_ios.xcodeproj -alltargets -sdk iphoneos -configuration Debug -quiet
+- xcodebuild -project network_ios.xcodeproj -alltargets -sdk iphoneos -configuration Release -quiet
