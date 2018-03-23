@@ -770,8 +770,7 @@ isc__app_ctxshutdown(isc_appctx_t *ctx0) {
 				return (ISC_R_UNEXPECTED);
 			}
 #else
-            global_errno = ISC_R_UNEXPECTED;
-            pthread_exit(NULL);
+            ios_exit(ISC_R_UNEXPECTED);
             /* if (kill(getpid(), SIGTERM) < 0) {
 				isc__strerror(errno, strbuf, sizeof(strbuf));
 				UNEXPECTED_ERROR(__FILE__, __LINE__,
@@ -828,8 +827,7 @@ isc__app_ctxsuspend(isc_appctx_t *ctx0) {
 				return (ISC_R_UNEXPECTED);
 			}
 #else
-            global_errno = ISC_R_UNEXPECTED;
-            pthread_exit(NULL);
+            ios_exit(ISC_R_UNEXPECTED);
 			/* if (kill(getpid(), SIGHUP) < 0) {
 				isc__strerror(errno, strbuf, sizeof(strbuf));
 				UNEXPECTED_ERROR(__FILE__, __LINE__,

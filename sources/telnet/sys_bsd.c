@@ -947,20 +947,17 @@ process_rings(int netin, int netout, int netex, int ttyin, int ttyout, int poll)
     if ((ibitsp = (fd_set *)malloc(fdsn)) == NULL) {
         // err(1, "malloc");
         fprintf(thread_stderr, "telnet: malloc: %s\n", strerror(errno));
-        global_errno = 1;
-        pthread_exit(NULL);
+        ios_exit(1);
     }
     if ((obitsp = (fd_set *)malloc(fdsn)) == NULL) {
         // err(1, "malloc");
         fprintf(thread_stderr, "telnet: malloc: %s\n", strerror(errno));
-        global_errno = 1;
-        pthread_exit(NULL);
+        ios_exit(1);
     }
     if ((xbitsp = (fd_set *)malloc(fdsn)) == NULL) {
         // err(1, "malloc");
         fprintf(thread_stderr, "telnet: malloc: %s\n", strerror(errno));
-        global_errno = 1;
-        pthread_exit(NULL);
+        ios_exit(1);
     }
 	memset(ibitsp, 0, fdsn);
 	memset(obitsp, 0, fdsn);
