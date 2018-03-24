@@ -147,7 +147,7 @@ struct tv32 {
 };
 
 /* various options */
-static int options;
+static __thread int options;
 #define	F_FLOOD		0x0001
 #define	F_INTERVAL	0x0002
 #define	F_NUMERIC	0x0004
@@ -184,60 +184,60 @@ static int options;
  * to 8192 for complete accuracy...
  */
 #define	MAX_DUP_CHK	(8 * 128)
-static int mx_dup_ck = MAX_DUP_CHK;
-static char rcvd_tbl[MAX_DUP_CHK / 8];
+static __thread int mx_dup_ck = MAX_DUP_CHK;
+static __thread char rcvd_tbl[MAX_DUP_CHK / 8];
 
-static struct sockaddr_in whereto;    /* who to ping */
-static int datalen = DEFDATALEN;
-static int maxpayload;
-static int s;                /* socket file descriptor */
-static u_char outpackhdr[IP_MAXPACKET], *outpack;
-static char BBELL = '\a';		/* characters written for MISSED and AUDIBLE */
-static char BSPACE = '\b';		/* characters written for flood */
-static char DOT = '.';
-static char *hostname;
-static char *shostname;
-static int ident;            /* process id to identify our packets */
-static int uid;            /* cached uid for micro-optimization */
-static u_char icmp_type = ICMP_ECHO;
-static u_char icmp_type_rsp = ICMP_ECHOREPLY;
-static int phdr_len = 0;
-static int send_len;
-static char *boundif;
-static unsigned int ifscope;
-static int nocell;
-static int use_sendmsg = 0;
-static int use_recvmsg = 0;
-static int traffic_class = SO_TC_CTL;	/* use control class, by default */
-static int net_service_type = -1;
-static int no_dup = 0;
+static __thread struct sockaddr_in whereto;    /* who to ping */
+static __thread int datalen = DEFDATALEN;
+static __thread int maxpayload;
+static __thread int s;                /* socket file descriptor */
+static __thread u_char outpackhdr[IP_MAXPACKET], *outpack;
+static __thread char BBELL = '\a';		/* characters written for MISSED and AUDIBLE */
+static __thread char BSPACE = '\b';		/* characters written for flood */
+static __thread char DOT = '.';
+static __thread char *hostname;
+static __thread char *shostname;
+static __thread int ident;            /* process id to identify our packets */
+static __thread int uid;            /* cached uid for micro-optimization */
+static __thread u_char icmp_type = ICMP_ECHO;
+static __thread u_char icmp_type_rsp = ICMP_ECHOREPLY;
+static __thread int phdr_len = 0;
+static __thread int send_len;
+static __thread char *boundif;
+static __thread unsigned int ifscope;
+static __thread int nocell;
+static __thread int use_sendmsg = 0;
+static __thread int use_recvmsg = 0;
+static __thread int traffic_class = SO_TC_CTL;	/* use control class, by default */
+static __thread int net_service_type = -1;
+static __thread int no_dup = 0;
 
 /* counters */
-static long nmissedmax;		/* max value of ntransmitted - nreceived - 1 */
-static long npackets;			/* max packets to transmit */
-static long nreceived;			/* # of packets we got back */
-static long nrepeats;			/* number of duplicates */
-static long ntransmitted;		/* sequence # for outbound packets = #sent */
-static long snpackets;			/* max packets to transmit in one sweep */
-static long snreceived;		/* # of packets we got back in this sweep */
-static long sntransmitted;		/* # of packets we sent in this sweep */
-static int sweepmax;			/* max value of payload in sweep */
-static int sweepmin = 0;		/* start value of payload in sweep */
-static int sweepincr = 1;		/* payload increment in sweep */
-static int interval = 1000;		/* interval between packets, ms */
-static int waittime = MAXWAIT;		/* timeout for each packet */
-static long nrcvtimeout = 0;		/* # of packets we got back after waittime */
-static int icmp_len = 0;		/* length of the ICMP header */
+static __thread long nmissedmax;		/* max value of ntransmitted - nreceived - 1 */
+static __thread long npackets;			/* max packets to transmit */
+static __thread long nreceived;			/* # of packets we got back */
+static __thread long nrepeats;			/* number of duplicates */
+static __thread long ntransmitted;		/* sequence # for outbound packets = #sent */
+static __thread long snpackets;			/* max packets to transmit in one sweep */
+static __thread long snreceived;		/* # of packets we got back in this sweep */
+static __thread long sntransmitted;		/* # of packets we sent in this sweep */
+static __thread int sweepmax;			/* max value of payload in sweep */
+static __thread int sweepmin = 0;		/* start value of payload in sweep */
+static __thread int sweepincr = 1;		/* payload increment in sweep */
+static __thread int interval = 1000;		/* interval between packets, ms */
+static __thread int waittime = MAXWAIT;		/* timeout for each packet */
+static __thread long nrcvtimeout = 0;		/* # of packets we got back after waittime */
+static __thread int icmp_len = 0;		/* length of the ICMP header */
 
 /* timing */
-static int timing;			/* flag to do timing */
-static double tmin = 999999999.0;	/* minimum round trip time */
-static double tmax = 0.0;		/* maximum round trip time */
-static double tsum = 0.0;		/* sum of all times, for doing average */
-static double tsumsq = 0.0;		/* sum of all times squared, for std. dev. */
+static __thread int timing;			/* flag to do timing */
+static __thread double tmin = 999999999.0;	/* minimum round trip time */
+static __thread double tmax = 0.0;		/* maximum round trip time */
+static __thread double tsum = 0.0;		/* sum of all times, for doing average */
+static __thread double tsumsq = 0.0;		/* sum of all times squared, for std. dev. */
 
-static volatile sig_atomic_t finish_up;  /* nonzero if we've been told to finish up */
-static volatile sig_atomic_t siginfo_p;
+static __thread volatile sig_atomic_t finish_up;  /* nonzero if we've been told to finish up */
+static __thread volatile sig_atomic_t siginfo_p;
 
 static void fill(char *, char *);
 static u_short in_cksum(u_short *, int);
@@ -258,7 +258,7 @@ static int str2netservicetype(const char *, bool *);
 static u_int8_t str2tos(const char *, bool *);
 static void usage(void) __dead2;
 
-int32_t thiszone;		/* seconds offset from gmt to local time */
+__thread int32_t thiszone;		/* seconds offset from gmt to local time */
 extern int32_t gmt2local(time_t);
 static void pr_currenttime(void);
 
@@ -267,7 +267,7 @@ static int longopt_flag = 0;
 #define	LOF_CONNECT	0x01
 #define	LOF_PRTIME	0x02
 
-static const struct option longopts[] = {
+static __thread const struct option longopts[] = {
 	{ "apple-connect", no_argument, &longopt_flag, LOF_CONNECT },
 	{ "apple-time", no_argument, &longopt_flag, LOF_PRTIME },
 	{ NULL, 0, NULL, 0 }
