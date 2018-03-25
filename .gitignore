@@ -4,3 +4,5 @@ originalSources/
 *.a
 
 
+# Xcode
+xcuserdata/
