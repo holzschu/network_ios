@@ -52,8 +52,8 @@ static char sccsid[] = "@(#)getent.c	8.2 (Berkeley) 12/15/93";
 
 #include "misc-proto.h"
 
-static char *area;
-static char gettytab[] = "/etc/gettytab";
+static __thread char *area;
+static __thread char gettytab[] = "/etc/gettytab";
 
 /*ARGSUSED*/
 int

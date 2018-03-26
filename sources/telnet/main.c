@@ -67,7 +67,7 @@ char *ipsec_policy_in = NULL;
 char *ipsec_policy_out = NULL;
 #endif
 
-extern int tos;
+extern __thread int tos;
 
 int family = AF_UNSPEC;
 

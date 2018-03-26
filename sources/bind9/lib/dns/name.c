@@ -197,7 +197,7 @@ static isc_mem_t *thread_key_mctx = NULL;
 static isc_thread_key_t totext_filter_proc_key;
 static isc_once_t once = ISC_ONCE_INIT;
 #else
-static dns_name_totextfilter_t totext_filter_proc = NULL;
+static __thread dns_name_totextfilter_t totext_filter_proc = NULL;
 #endif
 
 static void

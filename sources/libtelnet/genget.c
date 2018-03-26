@@ -75,7 +75,7 @@ isprefix(char *s1, const char *s2)
 	return(*s1 ? 0 : (*s2 ? (s1 - os1) : (os1 - s1)));
 }
 
-static char *ambiguous;		/* special return value for command routines */
+static __thread char *ambiguous;		/* special return value for command routines */
 
 char **
 genget(char *name, char **table, int stlen)

@@ -109,9 +109,9 @@ static const char *description[ISC_R_NRESULTS] = {
 #define ISC_RESULT_RESULTSET			2
 #define ISC_RESULT_UNAVAILABLESET		3
 
-static isc_once_t 				once = ISC_ONCE_INIT;
-static ISC_LIST(resulttable)			tables;
-static isc_mutex_t				lock;
+static __thread isc_once_t 				once = ISC_ONCE_INIT;
+static __thread ISC_LIST(resulttable)			tables;
+static __thread isc_mutex_t				lock;
 
 static isc_result_t
 register_table(unsigned int base, unsigned int nresults, const char **text,

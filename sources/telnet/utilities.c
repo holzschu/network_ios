@@ -68,7 +68,7 @@ __FBSDID("$FreeBSD: src/contrib/telnet/telnet/utilities.c,v 1.8 2003/05/04 02:54
 #endif
 #include "ios_error.h"
 
-FILE	*NetTrace = 0;		/* Not in bss, since needs to stay */
+__thread FILE	*NetTrace = 0;		/* Not in bss, since needs to stay */
 int	prettydump;
 
 /*

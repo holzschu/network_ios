@@ -90,7 +90,7 @@ __FBSDID("$FreeBSD: src/contrib/telnet/telnet/ring.c,v 1.7 2003/05/04 02:54:48 o
  * to ZERO on allocation, we need to make sure, when interpreting the
  * clock, that when the times are EQUAL, then the buffer is FULL.
  */
-static u_long ring_clock = 0;
+static __thread u_long ring_clock = 0;
 
 
 #define	ring_empty(d) (((d)->consume == (d)->supply) && \

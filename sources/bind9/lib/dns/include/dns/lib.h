@@ -30,8 +30,8 @@ ISC_LANG_BEGINDECLS
 /*%
  * Tuning: external query load in packets per seconds.
  */
-LIBDNS_EXTERNAL_DATA extern unsigned int dns_pps;
-LIBDNS_EXTERNAL_DATA extern isc_msgcat_t *dns_msgcat;
+LIBDNS_EXTERNAL_DATA extern __thread unsigned int dns_pps;
+LIBDNS_EXTERNAL_DATA extern __thread isc_msgcat_t *dns_msgcat;
 
 void
 dns_lib_initmsgcat(void);

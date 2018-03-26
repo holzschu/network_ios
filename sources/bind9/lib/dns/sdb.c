@@ -140,7 +140,7 @@ typedef struct sdb_rdatasetiter {
 	} while (0)
 #endif
 
-static int dummy;
+static __thread int dummy;
 
 static isc_result_t dns_sdb_create(isc_mem_t *mctx, dns_name_t *origin,
 				   dns_dbtype_t type, dns_rdataclass_t rdclass,

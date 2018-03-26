@@ -924,13 +924,13 @@ nslookup_main(int argc, char **argv) {
 
 	(void)isc_app_run();
 
-	puts("");
-	debug("done, and starting to shut down");
-	if (global_event != NULL)
-		isc_event_free(&global_event);
-	cancel_all();
-	destroy_libs();
-	isc_app_finish();
-
-	return (query_error | print_error);
+    puts("");
+    debug("done, and starting to shut down");
+    if (global_event != NULL)
+        isc_event_free(&global_event);
+    cancel_all();
+    destroy_libs();
+    isc_app_finish();
+    return (query_error | print_error);
 }
+    

@@ -90,62 +90,62 @@ static u_int8_t str2tos(const char *, bool *);
 #define PORT_MAX_LEN	6
 
 /* Command Line Options */
-static int	cflag;					/* CRLF line-ending */
-static int	dflag;					/* detached, no stdin */
-static int	iflag;					/* Interval Flag */
+static __thread int	cflag;					/* CRLF line-ending */
+static __thread int	dflag;					/* detached, no stdin */
+static __thread int	iflag;					/* Interval Flag */
 #ifndef __APPLE__
-static int	jflag;					/* use jumbo frames if we can */
+static __thread int	jflag;					/* use jumbo frames if we can */
 #endif /* !__APPLE__ */
-static int	kflag;					/* More than one connect */
-static int	lflag;					/* Bind to local port */
-static int	nflag;					/* Don't do name look up */
-static char   *pflag;					/* Localport flag */
-static int	rflag;					/* Random ports flag */
-static char   *sflag;					/* Source Address */
-static int	tflag;					/* Telnet Emulation */
-static int	uflag;					/* UDP - Default to TCP */
-static int	vflag;					/* Verbosity */
-static int	xflag;					/* Socks proxy */
-static int	Oflag;					/* use connect vs. connectx */
-static int	zflag;					/* Port Scan Flag */
-static int	Dflag;					/* sodebug */
+static __thread int	kflag;					/* More than one connect */
+static __thread int	lflag;					/* Bind to local port */
+static __thread int	nflag;					/* Don't do name look up */
+static __thread char   *pflag;					/* Localport flag */
+static __thread int	rflag;					/* Random ports flag */
+static __thread char   *sflag;					/* Source Address */
+static __thread int	tflag;					/* Telnet Emulation */
+static __thread int	uflag;					/* UDP - Default to TCP */
+static __thread int	vflag;					/* Verbosity */
+static __thread int	xflag;					/* Socks proxy */
+static __thread int	Oflag;					/* use connect vs. connectx */
+static __thread int	zflag;					/* Port Scan Flag */
+static __thread int	Dflag;					/* sodebug */
 #ifndef __APPLE__
-static int	Sflag;					/* TCP MD5 signature option */
+static __thread int	Sflag;					/* TCP MD5 signature option */
 #endif /* !__APPLE__ */
 
 #ifdef __APPLE__
-static int	Aflag;					/* Set SO_RECV_ANYIF on socket */
-static int	aflag;					/* Set SO_AWDL_UNRESTRICTED on socket */
-static int	mflag;					/* Set SO_INTCOPROC_ALLOW on socket */
-static char	*boundif;				/* interface to bind to */
-static int	ifscope;				/* idx of bound to interface */
-static int	Cflag;					/* cellular connection OFF option */
-static int	Eflag;					/* expensive connection OFF option */
-static int	tclass = SO_TC_BE;			/* traffic class value */
-static int	Kflag;					/* traffic class option */
-static int	Fflag;					/* disable flow advisory for UDP if set */
-static int	Gflag;					/* TCP connection timeout */
-static int	tcp_conn_timeout;			/* Value of TCP connection timeout */
-static int	Hflag;					/* TCP keep idle option */
-static int	tcp_conn_keepidle;			/* Value of TCP keep idle interval in seconds */
-static int	Iflag;					/* TCP keep intvl option */
-static int	tcp_conn_keepintvl;			/* Value of TCP keep interval in seconds */
-static int	Jflag;					/* TCP keep count option */
-static int	tcp_conn_keepcnt;			/* Value of TCP keep count */
-static int	Lflag;					/* TCP adaptive read timeout */
-static int	Mflag;					/* MULTIPATH domain */
-static int	Nflag;					/* TCP adaptive write timeout */
-static int	oflag;					/* set options after connect/bind */
-static int	tcp_conn_adaptive_rtimo;		/* Value of TCP adaptive timeout */
-static int	tcp_conn_adaptive_wtimo;		/* Value of TCP adaptive timeout */
+static __thread int	Aflag;					/* Set SO_RECV_ANYIF on socket */
+static __thread int	aflag;					/* Set SO_AWDL_UNRESTRICTED on socket */
+static __thread int	mflag;					/* Set SO_INTCOPROC_ALLOW on socket */
+static __thread char	*boundif;				/* interface to bind to */
+static __thread int	ifscope;				/* idx of bound to interface */
+static __thread int	Cflag;					/* cellular connection OFF option */
+static __thread int	Eflag;					/* expensive connection OFF option */
+static __thread int	tclass = SO_TC_BE;			/* traffic class value */
+static __thread int	Kflag;					/* traffic class option */
+static __thread int	Fflag;					/* disable flow advisory for UDP if set */
+static __thread int	Gflag;					/* TCP connection timeout */
+static __thread int	tcp_conn_timeout;			/* Value of TCP connection timeout */
+static __thread int	Hflag;					/* TCP keep idle option */
+static __thread int	tcp_conn_keepidle;			/* Value of TCP keep idle interval in seconds */
+static __thread int	Iflag;					/* TCP keep intvl option */
+static __thread int	tcp_conn_keepintvl;			/* Value of TCP keep interval in seconds */
+static __thread int	Jflag;					/* TCP keep count option */
+static __thread int	tcp_conn_keepcnt;			/* Value of TCP keep count */
+static __thread int	Lflag;					/* TCP adaptive read timeout */
+static __thread int	Mflag;					/* MULTIPATH domain */
+static __thread int	Nflag;					/* TCP adaptive write timeout */
+static __thread int	oflag;					/* set options after connect/bind */
+static __thread int	tcp_conn_adaptive_rtimo;		/* Value of TCP adaptive timeout */
+static __thread int	tcp_conn_adaptive_wtimo;		/* Value of TCP adaptive timeout */
 
 static int		pid_flag = 0;			/* delegated pid */
 static const char	*pid_optarg = NULL;		/* delegated pid option */
-static pid_t		pid = -1;			/* value of delegated pid */
+static __thread pid_t		pid = -1;			/* value of delegated pid */
 
 static int		uuid_flag = 0;			/* delegated uuid */
 static const char	*uuid_optarg = NULL;		/* delegated uuid option */
-static uuid_t	uuid;					/* value of delegated uuid */
+static __thread uuid_t	uuid;					/* value of delegated uuid */
 
 static int		extbkidle_flag = 0;		/* extended background idle mode */
 
@@ -153,21 +153,21 @@ static int		nowakefromsleep_flag = 0;	/* extended background idle mode */
 
 static int		ecn_mode_flag = 0;		/* ECN mode option */
 static const char	*ecn_mode_optarg = NULL;	/* ECN mode option */
-static int		ecn_mode = -1;			/* TCP_ECN_MODE value  */
+static __thread int		ecn_mode = -1;			/* TCP_ECN_MODE value  */
 
 static int		kao_flag;				/* Keep Alive Offload option */
 static const char	*kao_optarg;				/* Keep Alive Offload option */
-static int		kao = -1;				/* Keep Alive Offload value */
+static __thread int		kao = -1;				/* Keep Alive Offload value */
 
-static int		Tflag = -1;			/* IP Type of Service */
+static __thread int		Tflag = -1;			/* IP Type of Service */
 
 static int		netsvctype_flag = 0;		/* Network service type  */
 static const char	*netsvctype_optarg = NULL;	/* Network service type option string */
-static int	netsvctype = -1;			/* SO_NET_SERVICE_TYPE value */
+static __thread int	netsvctype = -1;			/* SO_NET_SERVICE_TYPE value */
 #endif /* __APPLE__ */
 
-static int srcroute = 0;				/* Source routing IPv4/IPv6 options */
-static char *srcroute_hosts = NULL;
+static __thread int srcroute = 0;				/* Source routing IPv4/IPv6 options */
+static __thread char *srcroute_hosts = NULL;
 
 /* Variables for receiving socket events */
 static int sockev = 0;
@@ -176,10 +176,10 @@ void* sockev_receive(void *arg);
 
 static int notify_ack = 0;
 
-int use_flowadv = 1;
-static int timeout = -1;
-static int family = AF_UNSPEC;
-static char *portlist[PORT_MAX+1];
+__thread int use_flowadv = 1;
+static __thread int timeout = -1;
+static __thread int family = AF_UNSPEC;
+static __thread char *portlist[PORT_MAX+1];
 
 void	atelnet(int, unsigned char *, unsigned int);
 void	build_ports(char *);

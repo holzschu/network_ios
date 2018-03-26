@@ -61,11 +61,11 @@ char *user, *pass, *xuser, *xpass;
 DesData ck;
 IdeaData ik;
 
-extern int auth_debug_mode;
-extern char line[];
+extern __thread int auth_debug_mode;
+extern __thread char line[];
 
-static int sra_valid = 0;
-static int passwd_sent = 0;
+static __thread int sra_valid = 0;
+static __thread int passwd_sent = 0;
 
 static unsigned char str_data[1024] = { IAC, SB, TELOPT_AUTHENTICATION, 0,
 			  		AUTHTYPE_SRA, };

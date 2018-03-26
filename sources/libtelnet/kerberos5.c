@@ -626,6 +626,7 @@ kerberos5_is(ap, data, cnt)
 	return;
 }
 
+static int mutual_complete = 0;
 	void
 kerberos5_reply(ap, data, cnt)
 	Authenticator *ap;
@@ -635,7 +636,6 @@ kerberos5_reply(ap, data, cnt)
 #ifdef ENCRYPTION
         Session_Key skey;
 #endif
-	static int mutual_complete = 0;
 
 	if (cnt-- < 1)
 		return;

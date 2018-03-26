@@ -166,7 +166,7 @@
 #define LWRES_ALIGN(p) \
 	(((uintptr_t)(p) + LWRES_ALIGNBYTES) &~ LWRES_ALIGNBYTES)
 
-static struct hostent *he = NULL;
+static __thread struct hostent *he = NULL;
 static int copytobuf(struct hostent *, struct hostent *, char *, int);
 
 /*% Always looks for an IPv4 address. */

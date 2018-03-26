@@ -99,9 +99,9 @@ struct isc_hash {
 	hash_random_t	*rndvector; /*%< random vector for universal hashing */
 };
 
-static isc_mutex_t createlock;
-static isc_once_t once = ISC_ONCE_INIT;
-static isc_hash_t *hash = NULL;
+static __thread isc_mutex_t createlock;
+static __thread isc_once_t once = ISC_ONCE_INIT;
+static __thread isc_hash_t *hash = NULL;
 
 static unsigned char maptolower[] = {
 	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,

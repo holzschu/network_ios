@@ -94,9 +94,9 @@ int krb_rd_encpwd_req(KTEXT, char *, char *, u_long, AUTH_DAT *, char *, char *,
 
 extern auth_debug_mode;
 
-static unsigned char str_data[1024] = { IAC, SB, TELOPT_AUTHENTICATION, 0,
+static __thread unsigned char str_data[1024] = { IAC, SB, TELOPT_AUTHENTICATION, 0,
 			  		AUTHTYPE_KRB4_ENCPWD, };
-static unsigned char str_name[1024] = { IAC, SB, TELOPT_AUTHENTICATION,
+static __thread unsigned char str_name[1024] = { IAC, SB, TELOPT_AUTHENTICATION,
 					TELQUAL_NAME, };
 
 #define	KRB4_ENCPWD_AUTH	0	/* Authentication data follows */
@@ -107,14 +107,14 @@ static unsigned char str_name[1024] = { IAC, SB, TELOPT_AUTHENTICATION,
 
 #define KRB_SERVICE_NAME    "rcmd"
 
-static	KTEXT_ST auth;
-static	char name[ANAME_SZ];
-static	char user_passwd[ANAME_SZ];
-static	AUTH_DAT adat = { 0 };
+static	__thread KTEXT_ST auth;
+static	__thread char name[ANAME_SZ];
+static	__thread char user_passwd[ANAME_SZ];
+static	__thread AUTH_DAT adat = { 0 };
 #ifdef	ENCRYPTION
-static Block	session_key	= { 0 };
+static __thread Block	session_key	= { 0 };
 #endif	/* ENCRYPTION */
-static char  challenge[REALM_SZ];
+static __thread char  challenge[REALM_SZ];
 
 	static int
 Data(ap, type, d, c)

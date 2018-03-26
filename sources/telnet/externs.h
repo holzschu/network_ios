@@ -138,13 +138,13 @@ extern int
 extern cc_t escape;	/* Escape to command mode */
 extern cc_t rlogin;	/* Rlogin mode escape character */
 #ifdef	KLUDGELINEMODE
-extern cc_t echoc;	/* Toggle local echoing */
+extern __thread cc_t echoc;	/* Toggle local echoing */
 #endif
 
-extern char
+extern __thread char
     *prompt;		/* Prompt for command. */
 
-extern char
+extern __thread char
     doopt[],
     dont[],
     will[],
@@ -229,14 +229,14 @@ extern SIG_FUNC_RET
     ayt_status(void);
 #endif
 
-extern FILE
+extern __thread FILE
     *NetTrace;		/* Where debugging output goes */
 extern unsigned char
     NetTraceFile[];	/* Name of file where debugging output goes */
 extern void
     SetNetTrace(char *);	/* Function to change where debugging goes */
 
-extern jmp_buf
+extern __thread jmp_buf
     peerdied,
     toplevel;		/* For error conditions. */
 

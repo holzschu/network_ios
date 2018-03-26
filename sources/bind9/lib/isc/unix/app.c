@@ -62,9 +62,6 @@
 #include <pthread.h>
 #endif
 
-// iOS:
-#include <pthread.h>
-
 #ifndef USE_THREADS_SINGLECTX
 #include "../timer_p.h"
 #include "../task_p.h"
@@ -770,7 +767,7 @@ isc__app_ctxshutdown(isc_appctx_t *ctx0) {
 				return (ISC_R_UNEXPECTED);
 			}
 #else
-            ios_exit(ISC_R_UNEXPECTED);
+            return(ISC_R_UNEXPECTED);
             /* if (kill(getpid(), SIGTERM) < 0) {
 				isc__strerror(errno, strbuf, sizeof(strbuf));
 				UNEXPECTED_ERROR(__FILE__, __LINE__,
@@ -827,7 +824,7 @@ isc__app_ctxsuspend(isc_appctx_t *ctx0) {
 				return (ISC_R_UNEXPECTED);
 			}
 #else
-            ios_exit(ISC_R_UNEXPECTED);
+            return(ISC_R_UNEXPECTED);
 			/* if (kill(getpid(), SIGHUP) < 0) {
 				isc__strerror(errno, strbuf, sizeof(strbuf));
 				UNEXPECTED_ERROR(__FILE__, __LINE__,

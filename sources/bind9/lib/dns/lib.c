@@ -42,15 +42,15 @@
  *** Globals
  ***/
 
-LIBDNS_EXTERNAL_DATA unsigned int			dns_pps = 0U;
-LIBDNS_EXTERNAL_DATA isc_msgcat_t *			dns_msgcat = NULL;
+LIBDNS_EXTERNAL_DATA __thread unsigned int			dns_pps = 0U;
+LIBDNS_EXTERNAL_DATA __thread isc_msgcat_t *			dns_msgcat = NULL;
 
 
 /***
  *** Private
  ***/
 
-static isc_once_t		msgcat_once = ISC_ONCE_INIT;
+static __thread isc_once_t		msgcat_once = ISC_ONCE_INIT;
 
 
 /***
@@ -73,14 +73,14 @@ dns_lib_initmsgcat(void) {
 	RUNTIME_CHECK(isc_once_do(&msgcat_once, open_msgcat) == ISC_R_SUCCESS);
 }
 
-static isc_once_t init_once = ISC_ONCE_INIT;
-static isc_mem_t *dns_g_mctx = NULL;
+static __thread isc_once_t init_once = ISC_ONCE_INIT;
+static __thread isc_mem_t *dns_g_mctx = NULL;
 #ifndef BIND9
-static dns_dbimplementation_t *dbimp = NULL;
+static __thread dns_dbimplementation_t *dbimp = NULL;
 #endif
-static isc_boolean_t initialize_done = ISC_FALSE;
-static isc_mutex_t reflock;
-static unsigned int references = 0;
+static __thread isc_boolean_t initialize_done = ISC_FALSE;
+static __thread isc_mutex_t reflock;
+static __thread unsigned int references = 0;
 
 static void
 initialize(void) {

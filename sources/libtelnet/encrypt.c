@@ -93,32 +93,32 @@ int EncryptStartOutput(void);
 int EncryptStopInput(void);
 int EncryptStopOutput(void);
 
-int encrypt_debug_mode = 0;
-static int decrypt_mode = 0;
-static int encrypt_mode = 0;
-static int encrypt_verbose = 0;
-static int autoencrypt = 0;
-static int autodecrypt = 0;
-static int havesessionkey = 0;
-static int Server = 0;
+__thread int encrypt_debug_mode = 0;
+static __thread int decrypt_mode = 0;
+static __thread int encrypt_mode = 0;
+static __thread int encrypt_verbose = 0;
+static __thread int autoencrypt = 0;
+static __thread int autodecrypt = 0;
+static __thread int havesessionkey = 0;
+static __thread int Server = 0;
 static const char *Name = "Noname";
 
 #define	typemask(x)	((x) > 0 ? 1 << ((x)-1) : 0)
 
-static long i_support_encrypt = 0
+static __thread long i_support_encrypt = 0
  | typemask(ENCTYPE_DES_CFB64) | typemask(ENCTYPE_DES_OFB64)
  |0;
-static long i_support_decrypt = 0
+static __thread long i_support_decrypt = 0
  | typemask(ENCTYPE_DES_CFB64) | typemask(ENCTYPE_DES_OFB64)
  |0;
 
-static long i_wont_support_encrypt = 0;
-static long i_wont_support_decrypt = 0;
+static __thread long i_wont_support_encrypt = 0;
+static __thread long i_wont_support_decrypt = 0;
 #define	I_SUPPORT_ENCRYPT	(i_support_encrypt & ~i_wont_support_encrypt)
 #define	I_SUPPORT_DECRYPT	(i_support_decrypt & ~i_wont_support_decrypt)
 
-static long remote_supports_encrypt = 0;
-static long remote_supports_decrypt = 0;
+static __thread long remote_supports_encrypt = 0;
+static __thread long remote_supports_decrypt = 0;
 
 static Encryptions encryptions[] = {
     { "DES_CFB64",	ENCTYPE_DES_CFB64,
@@ -144,11 +144,11 @@ static Encryptions encryptions[] = {
     { NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 };
 
-static unsigned char str_send[64] = { IAC, SB, TELOPT_ENCRYPT,
+static __thread unsigned char str_send[64] = { IAC, SB, TELOPT_ENCRYPT,
 					 ENCRYPT_SUPPORT };
-static unsigned char str_suplen = 0;
-static unsigned char str_start[72] = { IAC, SB, TELOPT_ENCRYPT };
-static unsigned char str_end[] = { IAC, SB, TELOPT_ENCRYPT, 0, IAC, SE };
+static __thread unsigned char str_suplen = 0;
+static __thread unsigned char str_start[72] = { IAC, SB, TELOPT_ENCRYPT };
+static __thread unsigned char str_end[] = { IAC, SB, TELOPT_ENCRYPT, 0, IAC, SE };
 
 Encryptions *
 findencryption(int type)
@@ -705,7 +705,7 @@ encrypt_request_start(unsigned char *data __unused, int cnt __unused)
 	encrypt_start_output(encrypt_mode);
 }
 
-static unsigned char str_keyid[(MAXKEYLEN*2)+5] = { IAC, SB, TELOPT_ENCRYPT };
+static __thread unsigned char str_keyid[(MAXKEYLEN*2)+5] = { IAC, SB, TELOPT_ENCRYPT };
 
 void
 encrypt_enc_keyid(unsigned char *keyid, int len)

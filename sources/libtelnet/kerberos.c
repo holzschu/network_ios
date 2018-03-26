@@ -83,7 +83,7 @@ int kuserok(AUTH_DAT *, char *);
 
 extern int auth_debug_mode;
 
-static unsigned char str_data[1024] = { IAC, SB, TELOPT_AUTHENTICATION, 0,
+static __thread unsigned char str_data[1024] = { IAC, SB, TELOPT_AUTHENTICATION, 0,
 			  		AUTHTYPE_KERBEROS_V4, };
 
 #define	KRB_AUTH	0		/* Authentication data follows */
@@ -92,17 +92,17 @@ static unsigned char str_data[1024] = { IAC, SB, TELOPT_AUTHENTICATION, 0,
 #define	KRB_CHALLENGE	3		/* Challenge for mutual auth. */
 #define	KRB_RESPONSE	4		/* Response for mutual auth. */
 
-static	KTEXT_ST auth;
-static	char name[ANAME_SZ];
-static	AUTH_DAT adat = { 0, "", "", "", 0, {}, 0, 0, 0, { 0, "", 0 } };
+static	__thread KTEXT_ST auth;
+static	__thread char name[ANAME_SZ];
+static	__thread AUTH_DAT adat = { 0, "", "", "", 0, {}, 0, 0, 0, { 0, "", 0 } };
 #ifdef	ENCRYPTION
-static Block	session_key	= { 0 };
-static des_key_schedule sched;
-static Block	challenge	= { 0 };
+static __thread Block	session_key	= { 0 };
+static __thread des_key_schedule sched;
+static __thread Block	challenge	= { 0 };
 #endif	/* ENCRYPTION */
 
-static char krb_service_name[] = "rcmd";
-static char empty[] = "";
+static __thread char krb_service_name[] = "rcmd";
+static __thread char empty[] = "";
 
 static int
 Data(Authenticator *ap, int type, const unsigned char *d, int c)

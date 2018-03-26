@@ -34,7 +34,7 @@
 /*%
  * We need to do this this way for profiled locks.
  */
-static isc_mutex_t isc_strerror_lock;
+static __thread isc_mutex_t isc_strerror_lock;
 static void init_lock(void) {
 	RUNTIME_CHECK(isc_mutex_init(&isc_strerror_lock) == ISC_R_SUCCESS);
 }

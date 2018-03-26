@@ -88,9 +88,9 @@ static char sccsid[] = "@(#)rsaencpwd.c	8.3 (Berkeley) 5/30/95";
 
 extern auth_debug_mode;
 
-static unsigned char str_data[1024] = { IAC, SB, TELOPT_AUTHENTICATION, 0,
+static __thread unsigned char str_data[1024] = { IAC, SB, TELOPT_AUTHENTICATION, 0,
 			  		AUTHTYPE_RSA_ENCPWD, };
-static unsigned char str_name[1024] = { IAC, SB, TELOPT_AUTHENTICATION,
+static __thread unsigned char str_name[1024] = { IAC, SB, TELOPT_AUTHENTICATION,
 					TELQUAL_NAME, };
 
 #define	RSA_ENCPWD_AUTH	0	/* Authentication data follows */
@@ -102,13 +102,13 @@ static unsigned char str_name[1024] = { IAC, SB, TELOPT_AUTHENTICATION,
 #define CHAL_SZ   20
 #define PWD_SZ    40
 
-static	KTEXT_ST auth;
-static	char name[NAME_SZ];
-static	char user_passwd[PWD_SZ];
-static  char key_file[2*NAME_SZ];
-static  char lhostname[NAME_SZ];
-static char  challenge[CHAL_SZ];
-static int   challenge_len;
+static	__thread KTEXT_ST auth;
+static	__thread char name[NAME_SZ];
+static	__thread char user_passwd[PWD_SZ];
+static  __thread char key_file[2*NAME_SZ];
+static  __thread char lhostname[NAME_SZ];
+static __thread char  challenge[CHAL_SZ];
+static __thread int   challenge_len;
 
 	static int
 Data(ap, type, d, c)

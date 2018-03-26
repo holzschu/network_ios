@@ -85,7 +85,7 @@ LIBLWRES_EXTERNAL_DATA int	lwres_h_errno;
  * these have never been declared in any header file so make them static
  */
 
-static const char *h_errlist[] = {
+static __thread const char *h_errlist[] = {
 	"Resolver Error 0 (no error)",		/*%< 0 no error */
 	"Unknown host",				/*%< 1 HOST_NOT_FOUND */
 	"Host name lookup failure",		/*%< 2 TRY_AGAIN */
@@ -93,7 +93,7 @@ static const char *h_errlist[] = {
 	"No address associated with name",	/*%< 4 NO_ADDRESS */
 };
 
-static int	h_nerr = sizeof(h_errlist) / sizeof(h_errlist[0]);
+static __thread int	h_nerr = sizeof(h_errlist) / sizeof(h_errlist[0]);
 
 
 /*!

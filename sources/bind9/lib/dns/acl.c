@@ -490,9 +490,9 @@ dns_acl_detach(dns_acl_t **aclp) {
 }
 
 
-static isc_once_t	insecure_prefix_once = ISC_ONCE_INIT;
-static isc_mutex_t	insecure_prefix_lock;
-static isc_boolean_t	insecure_prefix_found;
+static __thread isc_once_t	insecure_prefix_once = ISC_ONCE_INIT;
+static __thread isc_mutex_t	insecure_prefix_lock;
+static __thread isc_boolean_t	insecure_prefix_found;
 
 static void
 initialize_action(void) {

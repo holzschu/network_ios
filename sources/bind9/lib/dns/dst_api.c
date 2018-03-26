@@ -74,16 +74,16 @@
 
 #define DST_AS_STR(t) ((t).value.as_textregion.base)
 
-static dst_func_t *dst_t_func[DST_MAX_ALGS];
+static __thread dst_func_t *dst_t_func[DST_MAX_ALGS];
 #ifdef BIND9
-static isc_entropy_t *dst_entropy_pool = NULL;
+static __thread isc_entropy_t *dst_entropy_pool = NULL;
 #endif
-static unsigned int dst_entropy_flags = 0;
-static isc_boolean_t dst_initialized = ISC_FALSE;
+static __thread unsigned int dst_entropy_flags = 0;
+static __thread isc_boolean_t dst_initialized = ISC_FALSE;
 
 void gss_log(int level, const char *fmt, ...) ISC_FORMAT_PRINTF(2, 3);
 
-isc_mem_t *dst__memory_pool = NULL;
+__thread isc_mem_t *dst__memory_pool = NULL;
 
 /*
  * Static functions.

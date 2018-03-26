@@ -92,7 +92,7 @@ struct fb {
 	} streams[2];
 };
 
-static struct fb fb[2];
+static __thread struct fb fb[2];
 
 struct keyidlist {
 	const char *keyid;

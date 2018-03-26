@@ -272,7 +272,7 @@ extern __thread char trustedkey[MXNAME];
 #endif
 extern __thread dns_tsigkey_t *key;
 extern __thread isc_boolean_t validated;
-extern __thread isc_taskmgr_t *taskmgr;
+__thread extern isc_taskmgr_t *taskmgr;
 extern __thread isc_task_t *global_task;
 extern __thread isc_boolean_t free_now;
 extern __thread isc_boolean_t debugging, debugtiming, memdebugging;

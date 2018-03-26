@@ -111,16 +111,16 @@ typedef ISC_LIST(debuglink_t)	debuglist_t;
 
 /* List of all active memory contexts. */
 
-static ISC_LIST(isc__mem_t)	contexts;
-static isc_once_t		once = ISC_ONCE_INIT;
-static isc_mutex_t		contextslock;
-static isc_mutex_t 		createlock;
+static __thread ISC_LIST(isc__mem_t)	contexts;
+static __thread isc_once_t		once = ISC_ONCE_INIT;
+static __thread isc_mutex_t		contextslock;
+static __thread isc_mutex_t 		createlock;
 
 /*%
  * Total size of lost memory due to a bug of external library.
  * Locked by the global lock.
  */
-static isc_uint64_t		totallost;
+static __thread isc_uint64_t		totallost;
 
 struct isc__mem {
 	isc_mem_t		common;

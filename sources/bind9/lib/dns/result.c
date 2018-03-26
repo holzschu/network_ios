@@ -191,7 +191,7 @@ static const char *rcode_text[DNS_R_NRCODERESULTS] = {
 #define DNS_RESULT_RESULTSET			2
 #define DNS_RESULT_RCODERESULTSET		3
 
-static isc_once_t		once = ISC_ONCE_INIT;
+static __thread isc_once_t		once = ISC_ONCE_INIT;
 
 static void
 initialize_action(void) {

@@ -66,7 +66,7 @@ static char sccsid[] = "@(#)read_password.c	8.3 (Berkeley) 5/30/95";
 #include <signal.h>
 #include <setjmp.h>
 
-static jmp_buf env;
+static __thread jmp_buf env;
 
 /*** Routines ****************************************************** */
 /*

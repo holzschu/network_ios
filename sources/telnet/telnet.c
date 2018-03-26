@@ -78,7 +78,7 @@ __FBSDID("$FreeBSD: src/contrib/telnet/telnet/telnet.c,v 1.16 2005/03/28 14:45:1
 
 #define	strip(x) ((my_want_state_is_wont(TELOPT_BINARY)) ? ((x)&0x7f) : (x))
 
-static unsigned char	subbuffer[SUBBUFSIZE],
+static __thread unsigned char	subbuffer[SUBBUFSIZE],
 			*subpointer, *subend;	 /* buffer for sub-options */
 #define	SB_CLEAR()	subpointer = subbuffer;
 #define	SB_TERM()	{ subend = subpointer; SB_CLEAR(); }
@@ -91,9 +91,9 @@ static unsigned char	subbuffer[SUBBUFSIZE],
 #define	SB_EOF()	(subpointer >= subend)
 #define	SB_LEN()	(subend - subpointer)
 
-char	options[256];		/* The combined options */
-char	do_dont_resp[256];
-char	will_wont_resp[256];
+__thread char	options[256];		/* The combined options */
+__thread char	do_dont_resp[256];
+__thread char	will_wont_resp[256];
 
 int
 	eight = 0,
@@ -109,7 +109,6 @@ int
 	telnetport,
 	SYNCHing,	/* we are in TELNET SYNCH mode */
 	flushout,	/* flush output */
-	autoflush = 0,	/* flush output when interrupting? */
 	autosynch,	/* send interrupt characters with SYNCH? */
 	localflow,	/* we handle flow control locally */
 	restartany,	/* if flow control enabled, restart on any character */
@@ -121,15 +120,18 @@ int
 	doaddrlookup = 1, /* do a reverse address lookup? */
 	clienteof = 0;
 
-char *prompt = 0;
+int     autoflush = 0;    /* flush output when interrupting? */
+
+
+__thread char *prompt = 0;
 #ifdef ENCRYPTION
-char *line;		/* hack around breakage in sra.c :-( !! */
+__thread char *line;		/* hack around breakage in sra.c :-( !! */
 #endif
 
 cc_t escape;
 cc_t rlogin;
 #ifdef	KLUDGELINEMODE
-cc_t echoc;
+__thread cc_t echoc;
 #endif
 
 /*
@@ -152,14 +154,14 @@ unsigned char telopt_environ = TELOPT_NEW_ENVIRON;
 # define telopt_environ TELOPT_NEW_ENVIRON
 #endif
 
-jmp_buf	toplevel;
-jmp_buf	peerdied;
+__thread jmp_buf	toplevel;
+__thread jmp_buf	peerdied;
 
-int	flushline;
-int	linemode;
+__thread int	flushline;
+__thread int	linemode;
 
 #ifdef	KLUDGELINEMODE
-int	kludgelinemode = 1;
+__thread int	kludgelinemode = 1;
 #endif
 
 static int is_unique(char *, char **, char **);

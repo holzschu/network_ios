@@ -100,11 +100,11 @@ extern int EncryptDebug(int);
 extern int EncryptVerbose(int);
 #endif	/* ENCRYPTION */
 #if	defined(IPPROTO_IP) && defined(IP_TOS)
-int tos = -1;
+__thread int tos = -1;
 #endif	/* defined(IPPROTO_IP) && defined(IP_TOS) */
 
-char	*hostname;
-static char _hostname[MAXHOSTNAMELEN];
+__thread char	*hostname;
+static __thread char _hostname[MAXHOSTNAMELEN];
 
 static int help(int, char **);
 static int call(intrtn_t, ...);
@@ -128,10 +128,10 @@ typedef struct {
 	int	needconnect;	/* Do we need to be connected to execute? */
 } Command;
 
-static char line[256];
-static char saveline[256];
-static int margc;
-static char *margv[20];
+static __thread char line[256];
+static __thread char saveline[256];
+static __thread int margc;
+static __thread char *margv[20];
 
 #ifdef OPIE
 #include <sys/wait.h>
