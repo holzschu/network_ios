@@ -247,42 +247,42 @@ typedef ISC_LIST(dig_lookup_t) dig_lookuplist_t;
  * Externals from dighost.c
  */
 
-extern dig_lookuplist_t lookup_list;
-extern dig_serverlist_t server_list;
-extern dig_searchlistlist_t search_list;
-extern unsigned int extrabytes;
+extern __thread dig_lookuplist_t lookup_list;
+extern __thread dig_serverlist_t server_list;
+extern __thread dig_searchlistlist_t search_list;
+extern __thread unsigned int extrabytes;
 
-extern isc_boolean_t check_ra, have_ipv4, have_ipv6, specified_source,
+extern __thread isc_boolean_t check_ra, have_ipv4, have_ipv6, specified_source,
 	usesearch, showsearch, qr;
-extern in_port_t port;
-extern unsigned int timeout;
-extern isc_mem_t *mctx;
-extern int sendcount;
-extern int ndots;
-extern int lookup_counter;
-extern int exitcode;
-extern isc_sockaddr_t bind_address;
-extern char keynametext[MXNAME];
-extern char keyfile[MXNAME];
-extern char keysecret[MXNAME];
-extern dns_name_t *hmacname;
-extern unsigned int digestbits;
+extern __thread in_port_t port;
+extern __thread unsigned int timeout;
+extern __thread isc_mem_t *mctx;
+extern __thread int sendcount;
+extern __thread int ndots;
+extern __thread int lookup_counter;
+extern __thread int exitcode;
+extern __thread isc_sockaddr_t bind_address;
+extern __thread char keynametext[MXNAME];
+extern __thread char keyfile[MXNAME];
+extern __thread char keysecret[MXNAME];
+extern __thread dns_name_t *hmacname;
+extern __thread unsigned int digestbits;
 #ifdef DIG_SIGCHASE
-extern char trustedkey[MXNAME];
+extern __thread char trustedkey[MXNAME];
 #endif
-extern dns_tsigkey_t *key;
-extern isc_boolean_t validated;
-extern isc_taskmgr_t *taskmgr;
-extern isc_task_t *global_task;
-extern isc_boolean_t free_now;
-extern isc_boolean_t debugging, debugtiming, memdebugging;
-extern isc_boolean_t keep_open;
+extern __thread dns_tsigkey_t *key;
+extern __thread isc_boolean_t validated;
+extern __thread isc_taskmgr_t *taskmgr;
+extern __thread isc_task_t *global_task;
+extern __thread isc_boolean_t free_now;
+extern __thread isc_boolean_t debugging, debugtiming, memdebugging;
+extern __thread isc_boolean_t keep_open;
 
-extern char *progname;
-extern int tries;
-extern int fatalexit;
+extern __thread char *progname;
+extern __thread int tries;
+extern __thread int fatalexit;
 #ifdef WITH_IDN
-extern int idnoptions;
+extern __thread int idnoptions;
 #endif
 
 /*

@@ -110,14 +110,14 @@
 #define NS_IN6ADDRSZ	16
 #endif
 
-static lwres_context_t *lwctx = NULL;
-static lwres_conf_t *lwconf;
+static __thread lwres_context_t *lwctx = NULL;
+static __thread lwres_conf_t *lwconf;
 
-dig_lookuplist_t lookup_list;
-dig_serverlist_t server_list;
-dig_searchlistlist_t search_list;
+__thread dig_lookuplist_t lookup_list;
+__thread dig_serverlist_t server_list;
+__thread dig_searchlistlist_t search_list;
 
-isc_boolean_t
+__thread isc_boolean_t
 	check_ra = ISC_FALSE,
 	have_ipv4 = ISC_FALSE,
 	have_ipv6 = ISC_FALSE,
@@ -129,23 +129,23 @@ isc_boolean_t
 	qr = ISC_FALSE,
 	is_dst_up = ISC_FALSE,
 	keep_open = ISC_FALSE;
-in_port_t port = 53;
-unsigned int timeout = 0;
-unsigned int extrabytes;
-isc_mem_t *mctx = NULL;
-isc_log_t *lctx = NULL;
-isc_taskmgr_t *taskmgr = NULL;
-isc_task_t *global_task = NULL;
-isc_timermgr_t *timermgr = NULL;
-isc_socketmgr_t *socketmgr = NULL;
-isc_sockaddr_t bind_address;
-isc_sockaddr_t bind_any;
-int sendcount = 0;
-int recvcount = 0;
-int sockcount = 0;
-int ndots = -1;
-int tries = 3;
-int lookup_counter = 0;
+__thread in_port_t port = 53;
+unsigned __thread int timeout = 0;
+unsigned __thread int extrabytes;
+__thread isc_mem_t *mctx = NULL;
+__thread isc_log_t *lctx = NULL;
+__thread isc_taskmgr_t *taskmgr = NULL;
+__thread isc_task_t *global_task = NULL;
+__thread isc_timermgr_t *timermgr = NULL;
+__thread isc_socketmgr_t *socketmgr = NULL;
+__thread isc_sockaddr_t bind_address;
+__thread isc_sockaddr_t bind_any;
+__thread int sendcount = 0;
+__thread int recvcount = 0;
+__thread int sockcount = 0;
+__thread int ndots = -1;
+__thread int tries = 3;
+__thread int lookup_counter = 0;
 
 #ifdef WITH_IDN
 static void		initialize_idn(void);
@@ -173,24 +173,24 @@ isc_sockaddr_t keepaddr;
  *\li	9   No reply from server
  *\li	10  Internal error
  */
-int exitcode = 0;
-int fatalexit = 0;
-char keynametext[MXNAME];
-char keyfile[MXNAME] = "";
-char keysecret[MXNAME] = "";
-dns_name_t *hmacname = NULL;
-unsigned int digestbits = 0;
-isc_buffer_t *namebuf = NULL;
-dns_tsigkey_t *key = NULL;
-isc_boolean_t validated = ISC_TRUE;
-isc_entropy_t *entp = NULL;
-isc_mempool_t *commctx = NULL;
-isc_boolean_t debugging = ISC_FALSE;
-isc_boolean_t debugtiming = ISC_FALSE;
-isc_boolean_t memdebugging = ISC_FALSE;
-char *progname = NULL;
-isc_mutex_t lookup_lock;
-dig_lookup_t *current_lookup = NULL;
+__thread int exitcode = 0;
+__thread int fatalexit = 0;
+__thread char keynametext[MXNAME];
+__thread char keyfile[MXNAME] = "";
+__thread char keysecret[MXNAME] = "";
+__thread dns_name_t *hmacname = NULL;
+__thread unsigned int digestbits = 0;
+__thread isc_buffer_t *namebuf = NULL;
+__thread dns_tsigkey_t *key = NULL;
+__thread isc_boolean_t validated = ISC_TRUE;
+__thread isc_entropy_t *entp = NULL;
+__thread isc_mempool_t *commctx = NULL;
+__thread isc_boolean_t debugging = ISC_FALSE;
+__thread isc_boolean_t debugtiming = ISC_FALSE;
+__thread isc_boolean_t memdebugging = ISC_FALSE;
+__thread char *progname = NULL;
+__thread isc_mutex_t lookup_lock;
+__thread dig_lookup_t *current_lookup = NULL;
 
 #ifdef DIG_SIGCHASE
 

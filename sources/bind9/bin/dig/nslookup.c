@@ -50,7 +50,7 @@
 #include <readline/history.h>
 #endif
 
-static isc_boolean_t short_form = ISC_TRUE,
+static __thread isc_boolean_t short_form = ISC_TRUE,
 	tcpmode = ISC_FALSE,
 	identify = ISC_FALSE, stats = ISC_TRUE,
 	comments = ISC_TRUE, section_question = ISC_TRUE,
@@ -58,17 +58,17 @@ static isc_boolean_t short_form = ISC_TRUE,
 	section_additional = ISC_TRUE, recurse = ISC_TRUE,
 	aaonly = ISC_FALSE, nofail = ISC_TRUE;
 
-static isc_boolean_t interactive;
+static __thread isc_boolean_t interactive;
 
-static isc_boolean_t in_use = ISC_FALSE;
-static char defclass[MXRD] = "IN";
-static char deftype[MXRD] = "A";
-static isc_event_t *global_event = NULL;
-static int query_error = 1, print_error = 0;
+static __thread isc_boolean_t in_use = ISC_FALSE;
+static __thread char defclass[MXRD] = "IN";
+static __thread char deftype[MXRD] = "A";
+static __thread isc_event_t *global_event = NULL;
+static __thread int query_error = 1, print_error = 0;
 
-static char domainopt[DNS_NAME_MAXTEXT];
+static __thread char domainopt[DNS_NAME_MAXTEXT];
 
-static const char *rcodetext[] = {
+static __thread const char *rcodetext[] = {
 	"NOERROR",
 	"FORMERR",
 	"SERVFAIL",
@@ -88,7 +88,7 @@ static const char *rcodetext[] = {
 	"BADVERS"
 };
 
-static const char *rtypetext[] = {
+static __thread const char *rtypetext[] = {
 	"rtype_0 = ",			/* 0 */
 	"internet address = ",		/* 1 */
 	"nameserver = ",		/* 2 */

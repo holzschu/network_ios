@@ -56,20 +56,20 @@
 
 #define DIG_MAX_ADDRESSES 20
 
-dig_lookup_t *default_lookup = NULL;
+__thread dig_lookup_t *default_lookup = NULL;
 
-static char *batchname = NULL;
-static FILE *batchfp = NULL;
-static char *argv0;
-static int addresscount = 0;
+static __thread char *batchname = NULL;
+static __thread FILE *batchfp = NULL;
+static __thread char *argv0;
+static __thread int addresscount = 0;
 
-static char domainopt[DNS_NAME_MAXTEXT];
+static __thread char domainopt[DNS_NAME_MAXTEXT];
 
-static isc_boolean_t short_form = ISC_FALSE, printcmd = ISC_TRUE,
+static __thread isc_boolean_t short_form = ISC_FALSE, printcmd = ISC_TRUE,
 	ip6_int = ISC_FALSE, plusquest = ISC_FALSE, pluscomm = ISC_FALSE,
 	multiline = ISC_FALSE, nottl = ISC_FALSE, noclass = ISC_FALSE,
 	onesoa = ISC_FALSE, rrcomments = ISC_FALSE;
-static isc_uint32_t splitwidth = 0xffffffff;
+static __thread isc_uint32_t splitwidth = 0xffffffff;
 
 /*% opcode text */
 static const char * const opcodetext[] = {

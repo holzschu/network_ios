@@ -54,12 +54,12 @@
 #include "ios_error.h"
 #include <dig/dig.h>
 
-static isc_boolean_t short_form = ISC_TRUE, listed_server = ISC_FALSE;
-static isc_boolean_t default_lookups = ISC_TRUE;
-static int seen_error = -1;
-static isc_boolean_t list_addresses = ISC_TRUE;
-static dns_rdatatype_t list_type = dns_rdatatype_a;
-static isc_boolean_t printed_server = ISC_FALSE;
+static __thread isc_boolean_t short_form = ISC_TRUE, listed_server = ISC_FALSE;
+static __thread isc_boolean_t default_lookups = ISC_TRUE;
+static __thread int seen_error = -1;
+static __thread isc_boolean_t list_addresses = ISC_TRUE;
+static __thread dns_rdatatype_t list_type = dns_rdatatype_a;
+static __thread isc_boolean_t printed_server = ISC_FALSE;
 
 static const char *opcodetext[] = {
 	"QUERY",
