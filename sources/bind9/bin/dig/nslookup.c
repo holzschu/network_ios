@@ -895,7 +895,7 @@ int
 nslookup_main(int argc, char **argv) {
 	isc_result_t result;
 
-    interactive = ISC_TF(stdin == thread_stdin); // ISC_TF(isatty(0));
+    interactive = ISC_TF(ios_isatty(0));
 
 	ISC_LIST_INIT(lookup_list);
 	ISC_LIST_INIT(server_list);

@@ -1126,7 +1126,7 @@ process_rings(int netin, int netout, int netex, int ttyin, int ttyout, int poll)
 	    c = 0;
 	} else {
 	    /* EOF detection for line mode!!!! */
-	    if ((c == 0) && MODE_LOCAL_CHARS(globalmode) && isatty(tin)) {
+	    if ((c == 0) && MODE_LOCAL_CHARS(globalmode) && ios_isatty(tin)) {
 			/* must be an EOF... */
 		*ttyiring.supply = termEofChar;
 		c = 1;
