@@ -2490,15 +2490,13 @@ tn(int argc, char *argv[])
 	    if (af_error != 0)
 		while (next != NULL && next->ai_family != res->ai_family)
 		    next = next->ai_next;
-	    // warn("connect to address %s", sockaddr_ntop(res->ai_addr));
-        fprintf(thread_stderr, "%s: connect to address %s: %s\n", prompt, sockaddr_ntop(res->ai_addr), strerror(errno));
-	    if (next != NULL) {
+	    warn("connect to address %s", sockaddr_ntop(res->ai_addr));
+        if (next != NULL) {
 		res = next;
 		(void) NetClose(net);
 		continue;
 	    }
-	    // warnx("Unable to connect to remote host");
-        fprintf(thread_stderr, "%s: Unable to connect to remote host", prompt);
+	    warnx("Unable to connect to remote host");
 	    (void) NetClose(net);
 	    goto fail;
 	}

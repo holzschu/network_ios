@@ -945,19 +945,13 @@ process_rings(int netin, int netout, int netex, int ttyin, int ttyout, int poll)
 	
 	fdsn = tmp;
     if ((ibitsp = (fd_set *)malloc(fdsn)) == NULL) {
-        // err(1, "malloc");
-        fprintf(thread_stderr, "telnet: malloc: %s\n", strerror(errno));
-        ios_exit(1);
+        err(1, "malloc");
     }
     if ((obitsp = (fd_set *)malloc(fdsn)) == NULL) {
-        // err(1, "malloc");
-        fprintf(thread_stderr, "telnet: malloc: %s\n", strerror(errno));
-        ios_exit(1);
+        err(1, "malloc");
     }
     if ((xbitsp = (fd_set *)malloc(fdsn)) == NULL) {
-        // err(1, "malloc");
-        fprintf(thread_stderr, "telnet: malloc: %s\n", strerror(errno));
-        ios_exit(1);
+        err(1, "malloc");
     }
 	memset(ibitsp, 0, fdsn);
 	memset(obitsp, 0, fdsn);

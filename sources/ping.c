@@ -367,9 +367,7 @@ ping_main(int argc, char *const *argv)
 	sockerrno = errno;
 
     if (setuid(getuid()) != 0) {
-        fprintf(thread_stderr, "ping: setuid() failed: %s\n", strerror(errno));
-        ios_exit(EX_NOPERM);
-		// err(EX_NOPERM, "setuid() failed");
+        err(EX_NOPERM, "setuid() failed");
     }
 	uid = getuid();
 
@@ -397,11 +395,9 @@ ping_main(int argc, char *const *argv)
 		case 'c':
 			ultmp = strtoul(optarg, &ep, 0);
             if (*ep || ep == optarg || ultmp > LONG_MAX || !ultmp) {
-                fprintf(thread_stderr,
-				// errx(EX_USAGE,
+                errx(EX_USAGE,
                         "ping: invalid count of packets to transmit: `%s'\n",
 				    optarg);
-                ios_exit(EX_USAGE);
             }
 			npackets = ultmp;
 			break;
@@ -415,9 +411,7 @@ ping_main(int argc, char *const *argv)
 		case 'f':
 			if (uid) {
 				errno = EPERM;
-                fprintf(thread_stderr, "ping: -f flag: %s\n", strerror(errno));
-                ios_exit(EX_NOPERM);
-				// err(EX_NOPERM, "-f flag");
+                err(EX_NOPERM, "-f flag");
 			}
 			options |= F_FLOOD;
 			setbuf(thread_stdout, (char *)NULL);
@@ -425,10 +419,8 @@ ping_main(int argc, char *const *argv)
 		case 'G': /* Maximum packet size for ping sweep */
 			ultmp = strtoul(optarg, &ep, 0);
             if (*ep || ep == optarg) {
-                fprintf(thread_stderr, "ping: invalid packet size: `%s'\n",
-                //errx(EX_USAGE, "invalid packet size: `%s'",
+                errx(EX_USAGE, "invalid packet size: `%s'",
 				    optarg);
-                ios_exit(EX_USAGE);
             }
 #ifndef __APPLE__
 			if (uid != 0 && ultmp > DEFDATALEN) {
@@ -444,10 +436,8 @@ ping_main(int argc, char *const *argv)
 		case 'g': /* Minimum packet size for ping sweep */
 			ultmp = strtoul(optarg, &ep, 0);
             if (*ep || ep == optarg) {
-                fprintf(thread_stderr, "ping: invalid packet size: `%s'\n",
-                        //errx(EX_USAGE, "invalid packet size: `%s'",
-                        optarg);
-                ios_exit(EX_USAGE);
+                errx(EX_USAGE, "invalid packet size: `%s'",
+                     optarg);
             }
 #ifndef __APPLE__
 			if (uid != 0 && ultmp > DEFDATALEN) {
@@ -463,10 +453,8 @@ ping_main(int argc, char *const *argv)
 		case 'h': /* Packet size increment for ping sweep */
 			ultmp = strtoul(optarg, &ep, 0);
                 if (*ep || ep == optarg || ultmp < 1) {
-                    fprintf(thread_stderr, "ping: invalid increment size: `%s'\n",
-				// errx(EX_USAGE, "invalid increment size: `%s'",
-				    optarg);
-                    ios_exit(EX_USAGE);
+                    errx(EX_USAGE, "invalid increment size: `%s'",
+                         optarg);
                 }
 #ifndef __APPLE__
 			if (uid != 0 && ultmp > DEFDATALEN) {
@@ -481,31 +469,25 @@ ping_main(int argc, char *const *argv)
 			break;
 		case 'I':		/* multicast interface */
                 if (inet_aton(optarg, &ifaddr) == 0) {
-				// errx(EX_USAGE,
-                     fprintf(thread_stderr,
-                             "ping: invalid multicast interface: `%s'\n",
-				    optarg);
-                    ios_exit(EX_USAGE);
+                    errx(EX_USAGE,
+                         "ping: invalid multicast interface: `%s'\n",
+                         optarg);
                 }
 			options |= F_MIF;
 			break;
 		case 'i':		/* wait between sending packets */
 			t = strtod(optarg, &ep) * 1000.0;
                 if (*ep || ep == optarg || t > (double)INT_MAX) {
-                    fprintf(thread_stderr,
-				// errx(EX_USAGE,
+                    errx(EX_USAGE,
                             "ping: invalid timing interval: `%s'\n",
 				    optarg);
-                    ios_exit(EX_USAGE);
                 }
 			options |= F_INTERVAL;
 			interval = (int)t;
 			if (uid && interval < 100) {
 				errno = EPERM;
-				// err(EX_NOPERM,
-                    fprintf(thread_stderr,
+				err(EX_NOPERM,
                             "ping: -i interval too short: %s\n", strerror(errno));
-                ios_exit(EX_NOPERM);
 			}
 			break;
 		case 'k':
@@ -519,11 +501,9 @@ ping_main(int argc, char *const *argv)
 			}
 			traffic_class = str2sotc(optarg, &valid);
                 if (valid == false) {
-                    fprintf(thread_stderr,
-				// errx(EX_USAGE,
+                    errx(EX_USAGE,
                             "ping: bad traffic class: `%s'\n",
 				     optarg);
-                    ios_exit(EX_USAGE);
                 }
 			break;
 		case 'K':
@@ -533,10 +513,8 @@ ping_main(int argc, char *const *argv)
 			}
 			net_service_type = str2netservicetype(optarg, &valid);
                 if (valid == false) {
-				// errx(EX_USAGE, "bad network service type: `%s'",
-                fprintf(thread_stderr, "ping: bad network service type: `%s'\n",
+                    errx(EX_USAGE, "bad network service type: `%s'",
 				     optarg);
-                    ios_exit(EX_USAGE);
                 }
 			/* suppress default traffic class (-k can still be specified after -K) */
 			traffic_class = -1;
@@ -548,16 +526,12 @@ ping_main(int argc, char *const *argv)
 		case 'l':
 			ultmp = strtoul(optarg, &ep, 0);
                 if (*ep || ep == optarg || ultmp > INT_MAX) {
-                // errx(EX_USAGE,
-                    fprintf(thread_stderr,
+                    errx(EX_USAGE,
                             "ping: invalid preload value: `%s'\n", optarg);
-                    ios_exit(EX_USAGE);
                 }
 			if (uid) {
 				errno = EPERM;
-				// err(EX_NOPERM, "-l flag");
-                fprintf(thread_stderr, "ping: -l flag: %s\n", strerror(errno));
-                ios_exit(EX_NOPERM);
+                err(EX_NOPERM, "-l flag");
 			}
 			preload = ultmp;
 			break;
@@ -572,18 +546,14 @@ ping_main(int argc, char *const *argv)
 				options |= F_TIME;
 				break;
 			default:
-                fprintf(thread_stderr, "ping: invalid message: `%c'\n", optarg[0]);
-                    ios_exit(EX_USAGE);
-				// errx(EX_USAGE, "invalid message: `%c'", optarg[0]);
+				errx(EX_USAGE, "invalid message: `%c'", optarg[0]);
 				break;
 			}
 			break;
 		case 'm':		/* TTL */
 			ultmp = strtoul(optarg, &ep, 0);
             if (*ep || ep == optarg || ultmp > MAXTTL) {
-                fprintf(thread_stderr, "ping: invalid TTL: `%s'\n", optarg);
-				// errx(EX_USAGE, "invalid TTL: `%s'", optarg);
-                ios_exit(EX_USAGE);
+                errx(EX_USAGE, "invalid TTL: `%s'", optarg);
             }
 			ttl = ultmp;
 			options |= F_TTL;
@@ -629,10 +599,8 @@ ping_main(int argc, char *const *argv)
 		case 's':		/* size of packet to send */
 			ultmp = strtoul(optarg, &ep, 0);
             if (*ep || ep == optarg) {
-                // errx(EX_USAGE, "invalid packet size: `%s'",
-                fprintf(thread_stderr, "ping: invalid packet size: `%s'\n",
-				    optarg);
-                ios_exit(EX_USAGE);
+                errx(EX_USAGE, "invalid packet size: `%s'",
+                    optarg);
             }
 #ifndef __APPLE__
 			if (uid != 0 && ultmp > DEFDATALEN) {
@@ -647,10 +615,8 @@ ping_main(int argc, char *const *argv)
 		case 'T':		/* multicast TTL */
 			ultmp = strtoul(optarg, &ep, 0);
             if (*ep || ep == optarg || ultmp > MAXTTL) {
-                // errx(EX_USAGE, "invalid multicast TTL: `%s'",
-                fprintf(thread_stderr, "ping: invalid multicast TTL: `%s'\n",
+                errx(EX_USAGE, "invalid multicast TTL: `%s'",
 				    optarg);
-                ios_exit(EX_USAGE);
             }
 			mttl = ultmp;
 			options |= F_MTTL;
@@ -658,18 +624,14 @@ ping_main(int argc, char *const *argv)
 		case 't':
 			alarmtimeout = strtoul(optarg, &ep, 0);
             if ((alarmtimeout < 1) || (alarmtimeout == ULONG_MAX)) {
-				// errx(EX_USAGE,
-                fprintf(thread_stderr,
+				errx(EX_USAGE,
                      "ping: invalid timeout: `%s'\n",
 				    optarg);
-                ios_exit(EX_USAGE);
             }
             if (alarmtimeout > MAXALARM) {
-				// errx(EX_USAGE,
-                fprintf(thread_stderr,
+				errx(EX_USAGE,
                      "ping: invalid timeout: `%s' > %d\n",
 				    optarg, MAXALARM);
-                ios_exit(EX_USAGE);
             }
 			alarm((unsigned int)alarmtimeout);
 			break;
@@ -679,11 +641,9 @@ ping_main(int argc, char *const *argv)
 		case 'W':		/* wait ms for answer */
 			t = strtod(optarg, &ep);
             if (*ep || ep == optarg || t > (double)INT_MAX) {
-				// errx(EX_USAGE,
-                fprintf(thread_stderr,
+				errx(EX_USAGE,
                         "ping: invalid timing interval: `%s'\n",
 				    optarg);
-                ios_exit(EX_USAGE);
             }
 			options |= F_WAITTIME;
 			waittime = (int)t;
@@ -692,9 +652,7 @@ ping_main(int argc, char *const *argv)
 			options |= F_HDRINCL;
 			tos = str2tos(optarg, &valid);
             if (valid == false) {
-				// errx(EX_USAGE, "invalid TOS: `%s'", optarg);
-                fprintf(thread_stderr, "pung: invalid TOS: `%s'\n", optarg);
-                ios_exit(EX_USAGE);
+				errx(EX_USAGE, "invalid TOS: `%s'", optarg);
             }
 			break;
 		case 0:
@@ -717,9 +675,7 @@ ping_main(int argc, char *const *argv)
 	}
 
     if (boundif != NULL && (ifscope = if_nametoindex(boundif)) == 0) {
-        fprintf(thread_stderr, "ping: bad interface name\n");
-        // errx(1, "bad interface name");
-        ios_exit(1);
+        errx(1, "bad interface name");
     }
 
 	if (argc - optind != 1)
@@ -743,9 +699,7 @@ ping_main(int argc, char *const *argv)
 			(void)fprintf(thread_stdout, "ICMP_TSTAMP\n");
 		break;
 	default:
-		// errx(EX_USAGE, "ICMP_TSTAMP and ICMP_MASKREQ are exclusive.");
-        fprintf(thread_stderr, "ping: ICMP_TSTAMP and ICMP_MASKREQ are exclusive.\n");
-        ios_exit(EX_USAGE);
+		errx(EX_USAGE, "ICMP_TSTAMP and ICMP_MASKREQ are exclusive.");
 		break;
 	}
 	icmp_len = sizeof(struct ip) + ICMP_MINLEN + phdr_len;
@@ -753,11 +707,9 @@ ping_main(int argc, char *const *argv)
 		icmp_len += MAX_IPOPTLEN;
 	maxpayload = IP_MAXPACKET - icmp_len;
     if (datalen > maxpayload) {
-		// errx(EX_USAGE,
-        fprintf(thread_stderr,
+		errx(EX_USAGE,
              "packet size too large: %d > %d", datalen,
 		    maxpayload);
-        ios_exit(EX_USAGE);
     }
 	send_len = icmp_len + datalen;
 	datap = &outpack[ICMP_MINLEN + phdr_len + TIMEVAL_LEN];
@@ -772,18 +724,14 @@ ping_main(int argc, char *const *argv)
 		} else {
 			hp = gethostbyname2(source, AF_INET);
             if (!hp) {
-                // errx(EX_NOHOST, "cannot resolve %s: %s",
-                fprintf(thread_stderr, "ping: cannot resolve %s: %s\n",
+                errx(EX_NOHOST, "cannot resolve %s: %s",
 				    source, hstrerror(h_errno));
-                ios_exit(EX_NOHOST);
             }
 
 			sock_in.sin_len = sizeof sock_in;
 			if ((unsigned)hp->h_length > sizeof(sock_in.sin_addr) ||
                 hp->h_length < 0) {
-                // errx(1, "gethostbyname2: illegal address");
-                fprintf(thread_stderr, "ping: gethostbyname2: illegal address\n");
-                ios_exit(1);
+                errx(1, "gethostbyname2: illegal address");
             }
 			memcpy(&sock_in.sin_addr, hp->h_addr_list[0],
 			    sizeof(sock_in.sin_addr));
@@ -796,9 +744,7 @@ ping_main(int argc, char *const *argv)
 #if (DEBUG || DEVELOPMENT)
 			options |= F_HDRINCL;
 #else
-			// err(1, "bind");
-            fprintf(thread_stderr, "ping: bind: %s\n", strerror(errno));
-            ios_exit(1);
+			err(1, "bind");
 			
 #endif /* DEBUG || DEVELOPMENT */
 	}
@@ -812,16 +758,12 @@ ping_main(int argc, char *const *argv)
 	} else {
 		hp = gethostbyname2(target, AF_INET);
         if (!hp) {
-            // errx(EX_NOHOST, "cannot resolve %s: %s",
-            fprintf(thread_stderr, "ping: cannot resolve %s: %s\n",
+            errx(EX_NOHOST, "cannot resolve %s: %s",
 			    target, hstrerror(h_errno));
-            ios_exit(EX_NOHOST);
         }
 
         if ((unsigned)hp->h_length > sizeof(to->sin_addr)) {
-            // errx(1, "gethostbyname2 returned an illegal address");
-            fprintf(thread_stderr, "ping: gethostbyname2 returned an illegal address\n");
-            ios_exit(1);
+            errx(1, "gethostbyname2 returned an illegal address");
         }
 		memcpy(&to->sin_addr, hp->h_addr_list[0], sizeof to->sin_addr);
 		(void)strncpy(hnamebuf, hp->h_name, sizeof(hnamebuf) - 1);
@@ -854,23 +796,17 @@ ping_main(int argc, char *const *argv)
 	} while (0);
 	
     if (options & F_FLOOD && options & F_INTERVAL) {
-		// errx(EX_USAGE, "-f and -i: incompatible options");
-        fprintf(thread_stderr, "ping: -f and -i: incompatible options\n");
-        ios_exit(EX_USAGE);
+		errx(EX_USAGE, "-f and -i: incompatible options");
     }
 
     if (options & F_FLOOD && IN_MULTICAST(ntohl(to->sin_addr.s_addr))) {
-        // errx(EX_USAGE,
-		fprintf(thread_stderr,
+        errx(EX_USAGE,
                 "ping: -f flag cannot be used with multicast destination\n");
-        ios_exit(EX_USAGE);
     }
 	if (options & (F_MIF | F_NOLOOP | F_MTTL)
         && !IN_MULTICAST(ntohl(to->sin_addr.s_addr))) {
-        // errx(EX_USAGE,
-		fprintf(thread_stderr,
+        errx(EX_USAGE,
                 "ping: -I, -L, -T flags cannot be used with unicast destination\n");
-        ios_exit(EX_USAGE);
     }
 
 	if (!(options & F_PINGFILLED))
@@ -881,9 +817,7 @@ ping_main(int argc, char *const *argv)
 
 	if (s < 0) {
 		errno = sockerrno;
-		// err(EX_OSERR, "socket");
-        fprintf(thread_stderr, "ping: socket: %s\n", strerror(errno));
-        ios_exit(EX_OSERR);
+		err(EX_OSERR, "socket");
 	}
 	hold = 1;
 	(void) setsockopt(s, SOL_SOCKET, SO_RECV_ANYIF, (char *)&hold,
@@ -891,17 +825,13 @@ ping_main(int argc, char *const *argv)
 	if (ifscope != 0) {
 		if (setsockopt(s, IPPROTO_IP, IP_BOUND_IF,
                        (char *)&ifscope, sizeof (ifscope)) != 0) {
-			// err(EX_OSERR, "setsockopt(IP_BOUND_IF)");
-            fprintf(thread_stderr, "ping: setsockopt(IP_BOUND_IF): %s\n", strerror(errno));
-            ios_exit(EX_OSERR);
+			err(EX_OSERR, "setsockopt(IP_BOUND_IF)");
         }
 	}
 	if (nocell) {
 		if (setsockopt(s, IPPROTO_IP, IP_NO_IFT_CELLULAR,
                        (char *)&nocell, sizeof (nocell)) != 0) {
-			// err(EX_OSERR, "setsockopt(IP_NO_IFT_CELLULAR)");
-            fprintf(thread_stderr, "ping: setsockopt(IP_NO_IFT_CELLULAR): %s\n", strerror(errno));
-            ios_exit(EX_OSERR);
+			err(EX_OSERR, "setsockopt(IP_NO_IFT_CELLULAR)");
         }
 	}
 	if (options & F_SO_DEBUG)
@@ -914,13 +844,11 @@ ping_main(int argc, char *const *argv)
 		if (net_service_type != -1)
 			if (setsockopt(s, SOL_SOCKET, SO_NET_SERVICE_TYPE,
 				       (void *)&net_service_type, sizeof (net_service_type)) != 0)
-                fprintf(thread_stderr, "ping: setsockopt(SO_NET_SERVICE_TYPE: %s\n", strerror(errno));
-                // warn("setsockopt(SO_NET_SERVICE_TYPE");
+                warn("setsockopt(SO_NET_SERVICE_TYPE");
 		if (traffic_class != -1) {
 			if (setsockopt(s, SOL_SOCKET, SO_TRAFFIC_CLASS,
 				       (void *)&traffic_class, sizeof (traffic_class)) != 0)
-                fprintf(thread_stderr, "ping: setsockopt(SO_TRAFFIC_CLASS: %s\n", strerror(errno));
-				// warn("setsockopt(SO_TRAFFIC_CLASS");
+                warn("setsockopt(SO_TRAFFIC_CLASS");
 			
 		}
 	}
@@ -967,9 +895,7 @@ ping_main(int argc, char *const *argv)
 			mib[3] = IPCTL_DEFTTL;
 			sz = sizeof(ttl);
             if (sysctl(mib, 4, &ttl, &sz, NULL, 0) == -1) {
-				// err(1, "sysctl(net.inet.ip.ttl)");
-                fprintf(thread_stderr, "ping: sysctl(net.inet.ip.ttl): %s\n", strerror(errno));
-                ios_exit(1);
+				err(1, "sysctl(net.inet.ip.ttl)");
             }
 		}
 		setsockopt(s, IPPROTO_IP, IP_HDRINCL, &hold, sizeof(hold));
@@ -993,9 +919,7 @@ ping_main(int argc, char *const *argv)
 		rspace[sizeof(rspace) - 1] = IPOPT_EOL;
 		if (setsockopt(s, IPPROTO_IP, IP_OPTIONS, rspace,
                        sizeof(rspace)) < 0) {
-			// err(EX_OSERR, "setsockopt IP_OPTIONS");
-            fprintf(thread_stderr, "ping: setsockopt IP_OPTIONS: %s\n", strerror(errno));
-            ios_exit(EX_OSERR);
+			err(EX_OSERR, "setsockopt IP_OPTIONS");
         }
 #else
 		errx(EX_UNAVAILABLE,
@@ -1006,64 +930,48 @@ ping_main(int argc, char *const *argv)
 	if (options & F_TTL) {
 		if (setsockopt(s, IPPROTO_IP, IP_TTL, &ttl,
 		    sizeof(ttl)) < 0) {
-			// err(EX_OSERR, "setsockopt IP_TTL");
-            fprintf(thread_stderr, "ping: setsockopt IP_TTL: %s\n", strerror(errno));
-            ios_exit(EX_OSERR);
+			err(EX_OSERR, "setsockopt IP_TTL");
 		}
 	}
 	if (options & F_NOLOOP) {
 		if (setsockopt(s, IPPROTO_IP, IP_MULTICAST_LOOP, &loop,
 		    sizeof(loop)) < 0) {
-			// err(EX_OSERR, "setsockopt IP_MULTICAST_LOOP");
-            fprintf(thread_stderr, "ping: setsockopt IP_MULTICAST_LOOP: %s\n", strerror(errno));
-            ios_exit(EX_OSERR);
+			err(EX_OSERR, "setsockopt IP_MULTICAST_LOOP");
 		}
 	}
 	if (options & F_MTTL) {
 		if (setsockopt(s, IPPROTO_IP, IP_MULTICAST_TTL, &mttl,
 		    sizeof(mttl)) < 0) {
-			// err(EX_OSERR, "setsockopt IP_MULTICAST_TTL");
-            fprintf(thread_stderr, "ping: setsockopt IP_MULTICAST_TTL: %s\n", strerror(errno));
-            ios_exit(EX_OSERR);
+			err(EX_OSERR, "setsockopt IP_MULTICAST_TTL");
 		}
 	}
 	if (options & F_MIF) {
 		if (setsockopt(s, IPPROTO_IP, IP_MULTICAST_IF, &ifaddr,
 		    sizeof(ifaddr)) < 0) {
-			// err(EX_OSERR, "setsockopt IP_MULTICAST_IF");
-            fprintf(thread_stderr, "ping: setsockopt IP_MULTICAST_IF: %s\n", strerror(errno));
-            ios_exit(EX_OSERR);
+			err(EX_OSERR, "setsockopt IP_MULTICAST_IF");
 		}
 	}
 #ifdef SO_TIMESTAMP
 	{ int on = 1;
         if (setsockopt(s, SOL_SOCKET, SO_TIMESTAMP, &on, sizeof(on)) < 0) {
-		// err(EX_OSERR, "setsockopt SO_TIMESTAMP");
-            fprintf(thread_stderr, "ping: setsockopt SO_TIMESTAMP: %s\n", strerror(errno));
-            ios_exit(EX_OSERR);
+            err(EX_OSERR, "setsockopt SO_TIMESTAMP");
         }
 	}
 #endif
 
 	if ((options & F_CONNECT)) {
         if (connect(s, (struct sockaddr *)&whereto, sizeof whereto) == -1) {
-			// err(EX_OSERR, "connect");
-            fprintf(thread_stderr, "ping: connect: %s\n", strerror(errno));
-            ios_exit(EX_OSERR);
+			err(EX_OSERR, "connect");
         }
 	}
 
 	if (sweepmax) {
         if (sweepmin >= sweepmax) {
-			// errx(EX_USAGE, "Maximum packet size must be greater than the minimum packet size");
-            fprintf(thread_stderr, "ping: Maximum packet size must be greater than the minimum packet size\n");
-            ios_exit(EX_USAGE);
+			errx(EX_USAGE, "Maximum packet size must be greater than the minimum packet size");
         }
 
         if (datalen != DEFDATALEN) {
-			// errx(EX_USAGE, "Packet size and ping sweep are mutually exclusive");
-            fprintf(thread_stderr, "ping: Packet size and ping sweep are mutually exclusive\n");
-            ios_exit(EX_USAGE);
+			errx(EX_USAGE, "Packet size and ping sweep are mutually exclusive");
         }
 
 		if (npackets > 0) {
@@ -1075,9 +983,7 @@ ping_main(int argc, char *const *argv)
 		send_len = icmp_len + sweepmin;
 	}
     if (options & F_SWEEP && !sweepmax) {
-		// errx(EX_USAGE, "Maximum sweep size must be specified");
-        fprintf(thread_stderr, "ping: Maximum sweep size must be specified\n");
-        ios_exit(EX_USAGE);
+		errx(EX_USAGE, "Maximum sweep size must be specified");
     }
 
 	/*
@@ -1126,9 +1032,7 @@ ping_main(int argc, char *const *argv)
 	sigset_t newset;
 	sigemptyset(&newset);
     if (sigprocmask(SIG_SETMASK, &newset, NULL) != 0) {
-		// err(EX_OSERR, "sigprocmask(newset)");
-        fprintf(thread_stderr, "ping: sigprocmask(newset): %s\n", strerror(errno));
-        ios_exit(EX_OSERR);
+		err(EX_OSERR, "sigprocmask(newset)");
     }
 
 	/*
@@ -1141,30 +1045,22 @@ ping_main(int argc, char *const *argv)
 
 	si_sa.sa_handler = stopit;
 	if (sigaction(SIGINT, &si_sa, 0) == -1) {
-		// err(EX_OSERR, "sigaction SIGINT");
-        fprintf(thread_stderr, "ping: sigaction SIGINT: %s\n", strerror(errno));
-        ios_exit(EX_OSERR);
+		err(EX_OSERR, "sigaction SIGINT");
 	}
 	si_sa.sa_handler = stopit;
 	if (sigaction(SIGQUIT, &si_sa, 0) == -1) {
-		// err(EX_OSERR, "sigaction SIGQUIT");
-        fprintf(thread_stderr, "ping: sigaction SIGQUIT: %s\n", strerror(errno));
-        ios_exit(EX_OSERR);
+		err(EX_OSERR, "sigaction SIGQUIT");
 	}
     
 	si_sa.sa_handler = status;
 	if (sigaction(SIGINFO, &si_sa, 0) == -1) {
-		// err(EX_OSERR, "sigaction SIGINFO");
-        fprintf(thread_stderr, "ping: sigaction SIGINFO: %s\n", strerror(errno));
-        ios_exit(EX_OSERR);
+		err(EX_OSERR, "sigaction SIGINFO");
 	}
 
 	if (alarmtimeout > 0) {
 		si_sa.sa_handler = stopit;
         if (sigaction(SIGALRM, &si_sa, 0) == -1) {
-			// err(EX_OSERR, "sigaction SIGALRM");
-            fprintf(thread_stderr, "ping: sigaction SIGALRM: %s\n", strerror(errno));
-            ios_exit(EX_OSERR);
+			err(EX_OSERR, "sigaction SIGALRM");
         }
 	}
 
@@ -1205,9 +1101,7 @@ ping_main(int argc, char *const *argv)
 
 		check_status();
         if ((unsigned)s >= FD_SETSIZE) {
-			// errx(EX_OSERR, "descriptor too large");
-            fprintf(thread_stderr, "ping: descriptor too large\n");
-            ios_exit(EX_OSERR);
+			errx(EX_OSERR, "descriptor too large");
         }
 		FD_ZERO(&rfds);
 		FD_SET(s, &rfds);
@@ -1238,8 +1132,7 @@ ping_main(int argc, char *const *argv)
 			if ((cc = recvmsg(s, &msg, 0)) < 0) {
 				if (errno == EINTR)
 					continue;
-                fprintf(thread_stderr, "ping: recvmsg: %s\n", strerror(errno));
-				// warn("recvmsg");
+                warn("recvmsg");
 				continue;
 			}
 			for (cmsg = CMSG_FIRSTHDR(&msg); cmsg != NULL; cmsg = CMSG_NXTHDR(&msg, cmsg)) {
@@ -1483,9 +1376,8 @@ pr_pack(char *buf, int cc, struct sockaddr_in *from, struct timeval *tv,
 	recv_len = cc;
 	if (cc < hlen + ICMP_MINLEN) {
 		if (options & F_VERBOSE)
-            // warn(
-            fprintf(thread_stderr, "ping: packet too short (%d bytes) from %s: %s\n", cc,
-			     inet_ntoa(from->sin_addr), strerror(errno));
+            warn("packet too short (%d bytes) from %s\n", cc,
+			     inet_ntoa(from->sin_addr));
 		return;
 	}
 
