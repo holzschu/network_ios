@@ -1444,13 +1444,10 @@ pinger(void)
 				usleep(FLOOD_BACKOFF);
 				return;
 			}
-            fprintf(thread_stderr, "ping: sendto: %s\n", strerror(errno));
-			// warn("sendto");
+            warn("sendto");
 		} else {
-            fprintf(thread_stderr, "ping: %s: partial write: %d of %d bytes: %s\n",
-                    hostname, i, cc, strerror(errno));
-            // warn("%s: partial write: %d of %d bytes",
-			     // hostname, i, cc);
+            warn("%s: partial write: %d of %d bytes",
+			     hostname, i, cc);
 		}
 	}
 	ntransmitted++;
@@ -2138,10 +2135,8 @@ fill(char *bp, char *patp)
 
 	for (cp = patp; *cp; cp++) {
         if (!isxdigit(*cp)) {
-            // errx(EX_USAGE,
-            fprintf(thread_stderr,
-			    "patterns must be specified as hex digits");
-            ios_exit(EX_USAGE);
+            errx(EX_USAGE,
+                "patterns must be specified as hex digits");
         }
 
 	}

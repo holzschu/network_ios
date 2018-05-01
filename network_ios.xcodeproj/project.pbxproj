@@ -230,6 +230,7 @@
 		22B752E92068D59500F2B025 /* sourceroute.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3FD20265981004E76C6 /* sourceroute.c */; };
 		22B752EA2068D59A00F2B025 /* ping.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3EB20259A53004E76C6 /* ping.c */; };
 		22B752EB2068D59A00F2B025 /* gmt2local.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F220264FCB004E76C6 /* gmt2local.c */; };
+		22F0805D20984EB9003C3BF0 /* whois.c in Sources */ = {isa = PBXBuildFile; fileRef = 22F0805C20984EB9003C3BF0 /* whois.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -476,6 +477,7 @@
 		22D864142027B3D300456179 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = parser.c; path = sources/bind9/lib/isccfg/parser.c; sourceTree = SOURCE_ROOT; };
 		22D864162027B3DA00456179 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = sources/bind9/lib/isccfg/version.c; sourceTree = SOURCE_ROOT; };
 		22D8641820287DDB00456179 /* libresolv.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.9.tbd; path = usr/lib/libresolv.9.tbd; sourceTree = SDKROOT; };
+		22F0805C20984EB9003C3BF0 /* whois.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = whois.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -532,6 +534,7 @@
 		229EC3D120249304004E76C6 = {
 			isa = PBXGroup;
 			children = (
+				22F0805B20984E8F003C3BF0 /* whois */,
 				223A3E2F20349E0D004C9F62 /* libtelnet */,
 				223A3E2E20348025004C9F62 /* telnet */,
 				22D8625220279C4800456179 /* bind9 */,
@@ -877,6 +880,14 @@
 			path = isccfg;
 			sourceTree = "<group>";
 		};
+		22F0805B20984E8F003C3BF0 /* whois */ = {
+			isa = PBXGroup;
+			children = (
+				22F0805C20984EB9003C3BF0 /* whois.c */,
+			);
+			name = whois;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1170,6 +1181,7 @@
 				22B752402068CDD200F2B025 /* dst_api.c in Sources */,
 				22B7522B2068CDCA00F2B025 /* lwres_noop.c in Sources */,
 				22B752A62068CDE200F2B025 /* radix.c in Sources */,
+				22F0805D20984EB9003C3BF0 /* whois.c in Sources */,
 				22B752732068CDD200F2B025 /* tkey.c in Sources */,
 				22B752692068CDD200F2B025 /* rriterator.c in Sources */,
 				22B7524D2068CDD200F2B025 /* lib.c in Sources */,
