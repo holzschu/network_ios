@@ -19,6 +19,7 @@ Commands available in this package:
 - host
 - dig
 - telnet
+- whois
 
 If you run them inside [OpenTerm](https://github.com/louisdh/terminal), the interactive versions work. I can't speak for other applications. 
 
