@@ -231,6 +231,7 @@
 		22B752EA2068D59A00F2B025 /* ping.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3EB20259A53004E76C6 /* ping.c */; };
 		22B752EB2068D59A00F2B025 /* gmt2local.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F220264FCB004E76C6 /* gmt2local.c */; };
 		22F0805D20984EB9003C3BF0 /* whois.c in Sources */ = {isa = PBXBuildFile; fileRef = 22F0805C20984EB9003C3BF0 /* whois.c */; };
+		D28F12B920B44D6A0046B948 /* conn_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC40820276228004E76C6 /* conn_lib.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1177,6 +1178,7 @@
 				22B752E02068D56B00F2B025 /* network.c in Sources */,
 				22B752552068CDD200F2B025 /* nsec3.c in Sources */,
 				22B752CA2068CDEC00F2B025 /* strerror.c in Sources */,
+				D28F12B920B44D6A0046B948 /* conn_lib.c in Sources */,
 				22B752212068CDCA00F2B025 /* herror.c in Sources */,
 				22B752402068CDD200F2B025 /* dst_api.c in Sources */,
 				22B7522B2068CDCA00F2B025 /* lwres_noop.c in Sources */,

@@ -43,8 +43,49 @@
 
 #include "conn_lib.h"
 
+#define  SIOCGASSOCIDS  _IOWR('s', 150, struct so_aidreq) /* get associds */
+#define  SIOCGCONNIDS  _IOWR('s', 151, struct so_cidreq) /* get connids */
+#define  SIOCGCONNINFO  _IOWR('s', 152, struct so_cinforeq) /* get conninfo */
+
+// https://opensource.apple.com/source/xnu/xnu-3247.1.106/bsd/sys/socket.h
+
+/*
+ * Structure for SIOCGASSOCIDS
+ */
+struct so_aidreq {
+  __uint32_t  sar_cnt;  /* number of associations */
+  sae_associd_t  *sar_aidp;  /* array of association IDs */
+};
+
+/*
+ * Structure for SIOCGCONNIDS
+ */
+struct so_cidreq {
+  sae_associd_t  scr_aid;  /* association ID */
+  __uint32_t  scr_cnt;  /* number of connections */
+  sae_connid_t  *scr_cidp;  /* array of connection IDs */
+};
+
+/*
+*
+* Structure for SIOCGCONNINFO
+*/
+struct so_cinforeq {
+  sae_connid_t  scir_cid;    /* connection ID */
+  __uint32_t  scir_flags;    /* see flags below */
+  __uint32_t  scir_ifindex;    /* (last) outbound interface */
+  __int32_t  scir_error;    /* most recent error */
+  struct sockaddr  *scir_src;    /* source address */
+  socklen_t  scir_src_len;    /* source address len */
+  struct sockaddr *scir_dst;    /* destination address */
+  socklen_t  scir_dst_len;    /* destination address len */
+  __uint32_t  scir_aux_type;    /* aux data type (CIAUX) */
+  void    *scir_aux_data;    /* aux data */
+  __uint32_t  scir_aux_len;    /* aux data len */
+};
+
 int
-copyassocids(int s, sae_associd_t **aidpp, uint32_t *cnt)
+ios_copyassocids(int s, sae_associd_t **aidpp, uint32_t *cnt)
 {
 	struct so_aidreq aidr;
 	sae_associd_t *buf;
@@ -85,13 +126,13 @@ copyassocids(int s, sae_associd_t **aidpp, uint32_t *cnt)
 }
 
 void
-freeassocids(sae_associd_t *aidp)
+ios_freeassocids(sae_associd_t *aidp)
 {
 	free(aidp);
 }
 
 int
-copyconnids(int s, sae_associd_t aid, sae_connid_t **cidp, uint32_t *cnt)
+ios_copyconnids(int s, sae_associd_t aid, sae_connid_t **cidp, uint32_t *cnt)
 {
 	struct so_cidreq cidr;
 	sae_connid_t *buf;
@@ -133,13 +174,13 @@ copyconnids(int s, sae_associd_t aid, sae_connid_t **cidp, uint32_t *cnt)
 }
 
 void
-freeconnids(sae_connid_t *cidp)
+ios_freeconnids(sae_connid_t *cidp)
 {
 	free(cidp);
 }
 
 int
-copyconninfo(int s, sae_connid_t cid, conninfo_t **cfop)
+ios_copyconninfo(int s, sae_connid_t cid, conninfo_t **cfop)
 {
 	struct sockaddr *src = NULL, *dst = NULL, *aux = NULL;
 	struct so_cinforeq scir;
@@ -218,7 +259,7 @@ error:
 }
 
 void
-freeconninfo(conninfo_t *cfo)
+ios_freeconninfo(conninfo_t *cfo)
 {
 	if (cfo->ci_src != NULL)
 		free(cfo->ci_src);

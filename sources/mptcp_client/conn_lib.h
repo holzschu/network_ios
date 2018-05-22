@@ -33,6 +33,8 @@
 #ifndef mptcp_client_conn_lib_h
 #define mptcp_client_conn_lib_h
 
+
+
 typedef struct conninfo {
 	__uint32_t			ci_flags;			/* see flags in sys/socket.h (CIF_CONNECTING, etc...) */
 	__uint32_t			ci_ifindex;			/* outbound interface */
@@ -43,11 +45,11 @@ typedef struct conninfo {
 	void				*ci_aux_data;		/* auxiliary data */
 } conninfo_t;
 
-extern int copyassocids(int, sae_associd_t **, uint32_t *);
-extern void freeassocids(sae_associd_t *);
-extern int copyconnids(int, sae_associd_t, sae_connid_t **, uint32_t *);
-extern void freeconnids(sae_connid_t *);
-extern int copyconninfo(int, sae_connid_t, conninfo_t **);
-extern void freeconninfo(conninfo_t *);
+extern int ios_copyassocids(int, sae_associd_t **, uint32_t *);
+extern void ios_freeassocids(sae_associd_t *);
+extern int ios_copyconnids(int, sae_associd_t, sae_connid_t **, uint32_t *);
+extern void ios_freeconnids(sae_connid_t *);
+extern int ios_copyconninfo(int, sae_connid_t, conninfo_t **);
+extern void ios_freeconninfo(conninfo_t *);
 
 #endif
