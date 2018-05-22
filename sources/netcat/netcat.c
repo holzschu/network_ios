@@ -1897,7 +1897,7 @@ showconninfo(int s, sae_connid_t cid)
 	conninfo_t *cfo = NULL;
 	int err;
 
-	err = copyconninfo(s, cid, &cfo);
+	err = ios_copyconninfo(s, cid, &cfo);
 	if (err != 0) {
         fprintf(thread_stderr, "netcat: copyconninfo failed for cid %d\n%s\n", cid, strerror(errno));
 		goto out;
@@ -1951,7 +1951,7 @@ showconninfo(int s, sae_connid_t cid)
 	}
 out:
 	if (cfo != NULL)
-		freeconninfo(cfo);
+		ios_freeconninfo(cfo);
 
 	return (err);
 }
@@ -1964,7 +1964,7 @@ showmpinfo(int s)
 	sae_connid_t *cid = NULL;
 	int i, err;
 
-	err = copyassocids(s, &aid, &aid_cnt);
+	err = ios_copyassocids(s, &aid, &aid_cnt);
 	if (err != 0) {
         fprintf(thread_stderr, "netcat: copyassocids failed: %s\n", strerror(errno));
 		goto done;
@@ -1979,7 +1979,7 @@ showmpinfo(int s)
 	}
 
 	/* just do an association for now */
-	err = copyconnids(s, SAE_ASSOCID_ANY, &cid, &cid_cnt);
+	err = ios_copyconnids(s, SAE_ASSOCID_ANY, &cid, &cid_cnt);
 	if (err != 0) {
         fprintf(thread_stderr, "netcat: copyconnids failed\n%s\n", strerror(errno));
 		goto done;
@@ -1997,9 +1997,9 @@ showmpinfo(int s)
 
 done:
 	if (aid != NULL)
-		freeassocids(aid);
+		ios_freeassocids(aid);
 	if (cid != NULL)
-		freeconnids(cid);
+		ios_freeconnids(cid);
 }
 
 int
