@@ -61,6 +61,7 @@ __FBSDID("$FreeBSD: src/contrib/telnet/telnet/telnet.c,v 1.16 2005/03/28 14:45:1
 #include "types.h"
 #include "general.h"
 
+#define TERMCAP
 #ifdef TERMCAP
 #include <curses.h>
 #include <term.h>
@@ -703,12 +704,12 @@ is_unique(char *name, char **as, char **ae)
 char termbuf[1024];
 
 /*ARGSUSED*/
-#ifdef __APPLE__
-__private_extern__ int
-#else
+// #ifdef __APPLE__
+// __private_extern__ int
+// #else
 static int
-#endif
-setupterm(char *tname, int fd, int *errp)
+// #endif
+ios_setupterm(char *tname, int fd, int *errp)
 {
 	if (tgetent(termbuf, tname) == 1) {
 		termbuf[1023] = '\0';
@@ -740,7 +741,7 @@ gettermname(void)
 		if (tnamep && tnamep != unknown)
 			free(tnamep);
 		if ((tname = (char *)env_getvalue((const unsigned char *)"TERM")) &&
-				(setupterm(tname, 1, &err) == 0)) {
+				(ios_setupterm(tname, 1, &err) == 0)) {
 			tnamep = mklist(termbuf, tname);
 		} else {
 			if (tname && (strlen(tname) <= 40)) {
