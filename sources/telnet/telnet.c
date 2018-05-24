@@ -728,7 +728,7 @@ extern char ttytype[];
 
 int resettermname = 1;
 
-static const char *
+/* static const char *
 gettermname(void)
 {
 	char *tname;
@@ -756,7 +756,7 @@ gettermname(void)
 	if (*next == 0)
 		next = tnamep;
 	return(*next++);
-}
+} */
 /*
  * suboption()
  *
@@ -784,11 +784,12 @@ suboption(void)
 	if (SB_EOF() || SB_GET() != TELQUAL_SEND) {
 	    return;
 	} else {
-	    const char *name;
+	    char *name;
 	    unsigned char temp[50];
 	    int len;
 
-	    name = gettermname();
+        name = getenv("TERM"); // gettermname();
+        upcase(name);
 	    len = strlen(name) + 4 + 2;
 	    if (len < NETROOM()) {
 		sprintf((char *)temp, "%c%c%c%c%s%c%c", IAC, SB, TELOPT_TTYPE,
