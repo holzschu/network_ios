@@ -232,6 +232,9 @@
 		22B752EB2068D59A00F2B025 /* gmt2local.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F220264FCB004E76C6 /* gmt2local.c */; };
 		22F0805D20984EB9003C3BF0 /* whois.c in Sources */ = {isa = PBXBuildFile; fileRef = 22F0805C20984EB9003C3BF0 /* whois.c */; };
 		D28F12B920B44D6A0046B948 /* conn_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC40820276228004E76C6 /* conn_lib.c */; };
+		D2F3B945214D300700D8E248 /* udptunnel.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F3B942214D300700D8E248 /* udptunnel.m */; };
+		D2F3B946214D300700D8E248 /* host2ip.c in Sources */ = {isa = PBXBuildFile; fileRef = D2F3B943214D300700D8E248 /* host2ip.c */; };
+		D2F3B947214D300700D8E248 /* host2ip.h in Headers */ = {isa = PBXBuildFile; fileRef = D2F3B944214D300700D8E248 /* host2ip.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -479,6 +482,9 @@
 		22D864162027B3DA00456179 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = sources/bind9/lib/isccfg/version.c; sourceTree = SOURCE_ROOT; };
 		22D8641820287DDB00456179 /* libresolv.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.9.tbd; path = usr/lib/libresolv.9.tbd; sourceTree = SDKROOT; };
 		22F0805C20984EB9003C3BF0 /* whois.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = whois.c; sourceTree = "<group>"; };
+		D2F3B942214D300700D8E248 /* udptunnel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = udptunnel.m; sourceTree = "<group>"; };
+		D2F3B943214D300700D8E248 /* host2ip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = host2ip.c; sourceTree = "<group>"; };
+		D2F3B944214D300700D8E248 /* host2ip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = host2ip.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -535,6 +541,7 @@
 		229EC3D120249304004E76C6 = {
 			isa = PBXGroup;
 			children = (
+				D2F3B941214D300700D8E248 /* udptunnel */,
 				22F0805B20984E8F003C3BF0 /* whois */,
 				223A3E2F20349E0D004C9F62 /* libtelnet */,
 				223A3E2E20348025004C9F62 /* telnet */,
@@ -889,6 +896,16 @@
 			name = whois;
 			sourceTree = "<group>";
 		};
+		D2F3B941214D300700D8E248 /* udptunnel */ = {
+			isa = PBXGroup;
+			children = (
+				D2F3B942214D300700D8E248 /* udptunnel.m */,
+				D2F3B943214D300700D8E248 /* host2ip.c */,
+				D2F3B944214D300700D8E248 /* host2ip.h */,
+			);
+			path = udptunnel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -896,6 +913,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2F3B947214D300700D8E248 /* host2ip.h in Headers */,
 				22B7520A2068CCE200F2B025 /* network_ios.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -973,6 +991,7 @@
 				22B752D22068D55700F2B025 /* read_password.c in Sources */,
 				22B752672068CDD200F2B025 /* name.c in Sources */,
 				22B7526F2068CDD200F2B025 /* stats.c in Sources */,
+				D2F3B945214D300700D8E248 /* udptunnel.m in Sources */,
 				22B752E92068D59500F2B025 /* sourceroute.c in Sources */,
 				22B752AA2068CDE200F2B025 /* regex.c in Sources */,
 				22B7529A2068CDE200F2B025 /* lib.c in Sources */,
@@ -1054,6 +1073,7 @@
 				22B752C42068CDEC00F2B025 /* net.c in Sources */,
 				22B7529C2068CDE200F2B025 /* md5.c in Sources */,
 				22B752192068CDCA00F2B025 /* compat.c in Sources */,
+				D2F3B946214D300700D8E248 /* host2ip.c in Sources */,
 				22B752A32068CDE200F2B025 /* pool.c in Sources */,
 				22B752542068CDD200F2B025 /* nsec.c in Sources */,
 				22B752D12068D53000F2B025 /* telnet.c in Sources */,
