@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		221CD96C21E35A6D00F3B47C /* ifconfig.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD96B21E35A6D00F3B47C /* ifconfig.c */; };
+		221CD97F21E384DC00F3B47C /* af_inet.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97921E384DB00F3B47C /* af_inet.c */; };
+		221CD98321E384DC00F3B47C /* ifclone.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97D21E384DC00F3B47C /* ifclone.c */; };
+		221CD98421E384DC00F3B47C /* af_link.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97E21E384DC00F3B47C /* af_link.c */; };
 		22B7520A2068CCE200F2B025 /* network_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 22B752082068CCE200F2B025 /* network_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22B7520E2068CCFA00F2B025 /* ios_system.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 229EC3EE2025B810004E76C6 /* ios_system.framework */; };
 		22B7520F2068CD0A00F2B025 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 223A3E622034A369004C9F62 /* libcurses.tbd */; };
@@ -238,6 +242,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		221CD96B21E35A6D00F3B47C /* ifconfig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ifconfig.c; path = ifconfig/ifconfig.c; sourceTree = SOURCE_ROOT; };
+		221CD97921E384DB00F3B47C /* af_inet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = af_inet.c; sourceTree = "<group>"; };
+		221CD97D21E384DC00F3B47C /* ifclone.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ifclone.c; sourceTree = "<group>"; };
+		221CD97E21E384DC00F3B47C /* af_link.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = af_link.c; sourceTree = "<group>"; };
 		223A3E2A20343AA1004C9F62 /* dig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dig.c; path = sources/bind9/bin/dig/dig.c; sourceTree = SOURCE_ROOT; };
 		223A3E2C20346C2B004C9F62 /* host.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = host.c; path = sources/bind9/bin/dig/host.c; sourceTree = SOURCE_ROOT; };
 		223A3E3020349E60004C9F62 /* forward.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = forward.c; path = sources/libtelnet/forward.c; sourceTree = "<group>"; };
@@ -501,6 +509,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		221CD96A21E359F800F3B47C /* ifconfig */ = {
+			isa = PBXGroup;
+			children = (
+				221CD96B21E35A6D00F3B47C /* ifconfig.c */,
+				221CD97921E384DB00F3B47C /* af_inet.c */,
+				221CD97E21E384DC00F3B47C /* af_link.c */,
+				221CD97D21E384DC00F3B47C /* ifclone.c */,
+			);
+			path = ifconfig;
+			sourceTree = "<group>";
+		};
 		223A3E2E20348025004C9F62 /* telnet */ = {
 			isa = PBXGroup;
 			children = (
@@ -541,6 +560,7 @@
 		229EC3D120249304004E76C6 = {
 			isa = PBXGroup;
 			children = (
+				221CD96A21E359F800F3B47C /* ifconfig */,
 				D2F3B941214D300700D8E248 /* udptunnel */,
 				22F0805B20984E8F003C3BF0 /* whois */,
 				223A3E2F20349E0D004C9F62 /* libtelnet */,
@@ -1018,6 +1038,7 @@
 				22B7527B2068CDD200F2B025 /* xfrin.c in Sources */,
 				22B752992068CDE200F2B025 /* lfsr.c in Sources */,
 				22B752842068CDE200F2B025 /* backtrace-emptytbl.c in Sources */,
+				221CD96C21E35A6D00F3B47C /* ifconfig.c in Sources */,
 				22B752DB2068D55D00F2B025 /* krb4encpwd.c in Sources */,
 				22B752B52068CDE200F2B025 /* strtoul.c in Sources */,
 				22B752572068CDD200F2B025 /* peer.c in Sources */,
@@ -1096,6 +1117,7 @@
 				22B752282068CDCA00F2B025 /* lwres_gabn.c in Sources */,
 				22B7524A2068CDD200F2B025 /* key.c in Sources */,
 				22B7523F2068CDD200F2B025 /* ds.c in Sources */,
+				221CD98421E384DC00F3B47C /* af_link.c in Sources */,
 				22B752CE2068CDF000F2B025 /* mutex.c in Sources */,
 				22B752B42068CDE200F2B025 /* string.c in Sources */,
 				22B752262068CDCA00F2B025 /* lwinetpton.c in Sources */,
@@ -1104,6 +1126,7 @@
 				22B752E22068D56B00F2B025 /* sys_bsd.c in Sources */,
 				22B752452068CDD200F2B025 /* gssapi_link.c in Sources */,
 				22B7525B2068CDD200F2B025 /* rbtdb.c in Sources */,
+				221CD98321E384DC00F3B47C /* ifclone.c in Sources */,
 				22B752432068CDD200F2B025 /* dst_result.c in Sources */,
 				22B752222068CDCA00F2B025 /* lwbuffer.c in Sources */,
 				22B752DC2068D55D00F2B025 /* misc.c in Sources */,
@@ -1194,6 +1217,7 @@
 				22B752BE2068CDEC00F2B025 /* entropy.c in Sources */,
 				22B752902068CDE200F2B025 /* heap.c in Sources */,
 				22B752DE2068D56B00F2B025 /* commands.c in Sources */,
+				221CD97F21E384DC00F3B47C /* af_inet.c in Sources */,
 				22B7523E2068CDD200F2B025 /* dnssec.c in Sources */,
 				22B752E02068D56B00F2B025 /* network.c in Sources */,
 				22B752552068CDD200F2B025 /* nsec3.c in Sources */,
