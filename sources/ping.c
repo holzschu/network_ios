@@ -236,7 +236,9 @@ static __thread double tmax = 0.0;		/* maximum round trip time */
 static __thread double tsum = 0.0;		/* sum of all times, for doing average */
 static __thread double tsumsq = 0.0;		/* sum of all times squared, for std. dev. */
 
-static __thread volatile sig_atomic_t finish_up;  /* nonzero if we've been told to finish up */
+// finish_up cannot be thread local, because it is set inside a fuction called from the signal handler,
+// which is in a different thread.
+static volatile sig_atomic_t finish_up;  /* nonzero if we've been told to finish up */
 static __thread volatile sig_atomic_t siginfo_p;
 
 static void fill(char *, char *);

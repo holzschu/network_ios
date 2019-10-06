@@ -133,7 +133,7 @@ static __thread char saveline[256];
 static __thread int margc;
 static __thread char *margv[20];
 
-#ifdef OPIE
+#ifdef OPIE 
 #include <sys/wait.h>
 #define PATH_OPIEKEY	"/usr/bin/opiekey"
 static int
