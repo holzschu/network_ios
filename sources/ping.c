@@ -1220,8 +1220,10 @@ stopit(int sig __unused)
 	 * When doing reverse DNS lookups, the finish_up flag might not
 	 * be noticed for a while.  Just exit if we get a second SIGINT.
 	 */
-	if (!(options & F_NUMERIC) && finish_up)
-		_exit(nreceived ? 0 : 2);
+    // We can't call "exit" from a signal handler inside ios_system (it exits the main thread)
+    // Until we move to thread_signal, disable this.
+	// if (!(options & F_NUMERIC) && finish_up)
+	// 	_exit(nreceived ? 0 : 2);
 	finish_up = 1;
 }
 

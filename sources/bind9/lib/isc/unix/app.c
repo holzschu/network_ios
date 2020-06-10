@@ -767,6 +767,30 @@ isc__app_ctxshutdown(isc_appctx_t *ctx0) {
 				return (ISC_R_UNEXPECTED);
 			}
 #else
+            // cleanup here:
+            // ctx is the isc__appctx_t we need to clean:
+            ctx->common.impmagic = 0;
+            ctx->common.magic = 0;
+            // free(ctx->common.methods);
+            ctx->common.methods = NULL;
+            free(ctx->mctx);
+            ctx->mctx = NULL;
+            ctx->lock = 0;
+            free(ctx->on_run.head);
+            ctx->on_run.head = NULL;
+            free(ctx->on_run.tail);
+            ctx->on_run.tail = NULL;
+            ctx->shutdown_requested = 0;
+            ctx->running = 0;
+            ctx->want_shutdown = 0;
+            ctx->want_reload = 0;
+            ctx->blocked = 0;
+            free(ctx->taskmgr);
+            ctx->taskmgr = NULL;
+            free(ctx->socketmgr);
+            ctx->socketmgr = NULL;
+            free(ctx->timermgr);
+            ctx->timermgr = NULL;
             ios_exit(0);
             return(ISC_R_UNEXPECTED);
             /* if (kill(getpid(), SIGTERM) < 0) {
@@ -825,6 +849,30 @@ isc__app_ctxsuspend(isc_appctx_t *ctx0) {
 				return (ISC_R_UNEXPECTED);
 			}
 #else
+            // cleanup here:
+            // ctx is the isc__appctx_t we need to clean:
+            ctx->common.impmagic = 0;
+            ctx->common.magic = 0;
+            free(ctx->common.methods);
+            ctx->common.methods = NULL;
+            free(ctx->mctx);
+            ctx->mctx = NULL;
+            ctx->lock = 0;
+            free(ctx->on_run.head);
+            ctx->on_run.head = NULL;
+            free(ctx->on_run.tail);
+            ctx->on_run.tail = NULL;
+            ctx->shutdown_requested = 0;
+            ctx->running = 0;
+            ctx->want_shutdown = 0;
+            ctx->want_reload = 0;
+            ctx->blocked = 0;
+            free(ctx->taskmgr);
+            ctx->taskmgr = NULL;
+            free(ctx->socketmgr);
+            ctx->socketmgr = NULL;
+            free(ctx->timermgr);
+            ctx->timermgr = NULL;
             ios_exit(0);
             return(ISC_R_UNEXPECTED);
 			/* if (kill(getpid(), SIGHUP) < 0) {

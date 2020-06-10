@@ -559,7 +559,23 @@ dns_ncache_getrdataset(dns_rdataset_t *ncacherdataset, dns_name_t *name,
 		return (result);
 
 	INSIST(remaining.length != 0);
-
+    // iOS: reset methods:
+    rdataset_methods.disassociate = rdataset_disassociate;
+    rdataset_methods.first = rdataset_first;
+    rdataset_methods.next = rdataset_next;
+    rdataset_methods.current = rdataset_current;
+    rdataset_methods.clone = rdataset_clone;
+    rdataset_methods.count = rdataset_count;
+    rdataset_methods.addnoqname = NULL;
+    rdataset_methods.getnoqname = NULL;
+    rdataset_methods.addclosest = NULL;
+    rdataset_methods.getclosest = NULL;
+    rdataset_methods.getadditional = NULL;
+    rdataset_methods.setadditional = NULL;
+    rdataset_methods.putadditional = NULL;
+    rdataset_methods.settrust      = rdataset_settrust;
+    rdataset_methods.expire        = NULL;
+    //
 	rdataset->methods = &rdataset_methods;
 	rdataset->rdclass = ncacherdataset->rdclass;
 	rdataset->type = type;
@@ -658,7 +674,23 @@ dns_ncache_getsigrdataset(dns_rdataset_t *ncacherdataset, dns_name_t *name,
 		return (result);
 
 	INSIST(remaining.length != 0);
-
+    // iOS: reset methods:
+    rdataset_methods.disassociate = rdataset_disassociate;
+    rdataset_methods.first = rdataset_first;
+    rdataset_methods.next = rdataset_next;
+    rdataset_methods.current = rdataset_current;
+    rdataset_methods.clone = rdataset_clone;
+    rdataset_methods.count = rdataset_count;
+    rdataset_methods.addnoqname = NULL;
+    rdataset_methods.getnoqname = NULL;
+    rdataset_methods.addclosest = NULL;
+    rdataset_methods.getclosest = NULL;
+    rdataset_methods.getadditional = NULL;
+    rdataset_methods.setadditional = NULL;
+    rdataset_methods.putadditional = NULL;
+    rdataset_methods.settrust      = rdataset_settrust;
+    rdataset_methods.expire        = NULL;
+    //
 	rdataset->methods = &rdataset_methods;
 	rdataset->rdclass = ncacherdataset->rdclass;
 	rdataset->type = dns_rdatatype_rrsig;
@@ -715,7 +747,24 @@ dns_ncache_current(dns_rdataset_t *ncacherdataset, dns_name_t *found,
 	trust = isc_buffer_getuint8(&source);
 	INSIST(trust <= dns_trust_ultimate);
 	isc_buffer_remainingregion(&source, &remaining);
-
+    
+    // iOS: reset methods:
+    rdataset_methods.disassociate = rdataset_disassociate;
+    rdataset_methods.first = rdataset_first;
+    rdataset_methods.next = rdataset_next;
+    rdataset_methods.current = rdataset_current;
+    rdataset_methods.clone = rdataset_clone;
+    rdataset_methods.count = rdataset_count;
+    rdataset_methods.addnoqname = NULL;
+    rdataset_methods.getnoqname = NULL;
+    rdataset_methods.addclosest = NULL;
+    rdataset_methods.getclosest = NULL;
+    rdataset_methods.getadditional = NULL;
+    rdataset_methods.setadditional = NULL;
+    rdataset_methods.putadditional = NULL;
+    rdataset_methods.settrust      = rdataset_settrust;
+    rdataset_methods.expire        = NULL;
+    //
 	rdataset->methods = &rdataset_methods;
 	rdataset->rdclass = ncacherdataset->rdclass;
 	rdataset->type = type;

@@ -221,7 +221,23 @@ dns_rdataset_makequestion(dns_rdataset_t *rdataset, dns_rdataclass_t rdclass,
 
 	REQUIRE(DNS_RDATASET_VALID(rdataset));
 	REQUIRE(rdataset->methods == NULL);
-
+    // iOS: reset methods:
+    question_methods.disassociate = question_disassociate;
+    question_methods.first = question_cursor;
+    question_methods.next = question_cursor;
+    question_methods.current = question_current;
+    question_methods.clone = question_clone;
+    question_methods.count = question_count;
+    question_methods.addnoqname = NULL;
+    question_methods.getnoqname = NULL;
+    question_methods.addclosest = NULL;
+    question_methods.getclosest = NULL;
+    question_methods.getadditional = NULL;
+    question_methods.setadditional = NULL;
+    question_methods.putadditional = NULL;
+    question_methods.settrust      = NULL;
+    question_methods.expire        = NULL;
+    //
 	rdataset->methods = &question_methods;
 	rdataset->rdclass = rdclass;
 	rdataset->type = type;

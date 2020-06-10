@@ -477,7 +477,23 @@ dns_rdataslab_tordataset(unsigned char *slab, unsigned int reservelen,
 {
 	REQUIRE(slab != NULL);
 	REQUIRE(!dns_rdataset_isassociated(rdataset));
-
+    // iOS: reset methods:
+    rdataset_methods.disassociate = rdataset_disassociate;
+    rdataset_methods.first = rdataset_first;
+    rdataset_methods.next = rdataset_next;
+    rdataset_methods.current = rdataset_current;
+    rdataset_methods.clone = rdataset_clone;
+    rdataset_methods.count = rdataset_count;
+    rdataset_methods.addnoqname = NULL;
+    rdataset_methods.getnoqname = NULL;
+    rdataset_methods.addclosest = NULL;
+    rdataset_methods.getclosest = NULL;
+    rdataset_methods.getadditional = NULL;
+    rdataset_methods.setadditional = NULL;
+    rdataset_methods.putadditional = NULL;
+    rdataset_methods.settrust      = NULL;
+    rdataset_methods.expire        = NULL;
+    //
 	rdataset->methods = &rdataset_methods;
 	rdataset->rdclass = rdclass;
 	rdataset->type = rdtype;

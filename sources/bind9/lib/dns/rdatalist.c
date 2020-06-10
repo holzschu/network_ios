@@ -80,6 +80,23 @@ dns_rdatalist_tordataset(dns_rdatalist_t *rdatalist,
 	REQUIRE(DNS_RDATASET_VALID(rdataset));
 	REQUIRE(! dns_rdataset_isassociated(rdataset));
 
+    // iOS: reset methods:
+    methods.disassociate = isc__rdatalist_disassociate;
+    methods.first = isc__rdatalist_first;
+    methods.next = isc__rdatalist_next;
+    methods.current = isc__rdatalist_current;
+    methods.clone = isc__rdatalist_clone;
+    methods.count = isc__rdatalist_count;
+    methods.addnoqname = isc__rdatalist_addnoqname;
+    methods.getnoqname = isc__rdatalist_getnoqname;
+    methods.addclosest = isc__rdatalist_addclosest;
+    methods.getclosest = isc__rdatalist_getclosest;
+    methods.getadditional = NULL;
+    methods.setadditional = NULL;
+    methods.putadditional = NULL;
+    methods.settrust      = NULL;
+    methods.expire        = NULL;
+    //
 	rdataset->methods = &methods;
 	rdataset->rdclass = rdatalist->rdclass;
 	rdataset->type = rdatalist->type;

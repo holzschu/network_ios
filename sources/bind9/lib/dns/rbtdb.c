@@ -2901,7 +2901,24 @@ bind_rdataset(dns_rbtdb_t *rbtdb, dns_rbtnode_t *node,
 	new_reference(rbtdb, node);
 
 	INSIST(rdataset->methods == NULL);      /* We must be disassociated. */
-
+    
+    // iOS: reset methods:
+    rdataset_methods.disassociate = rdataset_disassociate;
+    rdataset_methods.first = rdataset_first;
+    rdataset_methods.next = rdataset_next;
+    rdataset_methods.current = rdataset_current;
+    rdataset_methods.clone = rdataset_clone;
+    rdataset_methods.count = rdataset_count;
+    rdataset_methods.addnoqname = NULL;
+    rdataset_methods.getnoqname = rdataset_getnoqname;
+    rdataset_methods.addclosest = NULL;
+    rdataset_methods.getclosest = rdataset_getclosest;
+    rdataset_methods.getadditional = rdataset_getadditional;
+    rdataset_methods.setadditional = rdataset_setadditional;
+    rdataset_methods.putadditional = rdataset_putadditional;
+    rdataset_methods.settrust      = rdataset_settrust;
+    rdataset_methods.expire        = rdataset_expire;
+    //
 	rdataset->methods = &rdataset_methods;
 	rdataset->rdclass = rbtdb->common.rdclass;
 	rdataset->type = RBTDB_RDATATYPE_BASE(header->type);

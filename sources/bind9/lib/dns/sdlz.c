@@ -1430,8 +1430,25 @@ list_tordataset(dns_rdatalist_t *rdatalist,
 	/* This should never fail. */
 	RUNTIME_CHECK(dns_rdatalist_tordataset(rdatalist, rdataset) ==
 		      ISC_R_SUCCESS);
-
-	rdataset->methods = &rdataset_methods;
+    
+    // iOS: reset methods:
+    rdataset_methods.disassociate = disassociate;
+    rdataset_methods.first = isc__rdatalist_first;
+    rdataset_methods.next = isc__rdatalist_next;
+    rdataset_methods.current = isc__rdatalist_current;
+    rdataset_methods.clone = rdataset_clone;
+    rdataset_methods.count = isc__rdatalist_count;
+    rdataset_methods.addnoqname = isc__rdatalist_addnoqname;
+    rdataset_methods.getnoqname = isc__rdatalist_getnoqname;
+    rdataset_methods.addclosest = NULL;
+    rdataset_methods.getclosest = NULL;
+    rdataset_methods.getadditional = NULL;
+    rdataset_methods.setadditional = NULL;
+    rdataset_methods.putadditional = NULL;
+    rdataset_methods.settrust      = NULL;
+    rdataset_methods.expire        = NULL;
+    //
+    rdataset->methods = &rdataset_methods;
 	dns_db_attachnode(db, node, &rdataset->private5);
 }
 
