@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,8 +11,8 @@
 		221CD97F21E384DC00F3B47C /* af_inet.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97921E384DB00F3B47C /* af_inet.c */; };
 		221CD98321E384DC00F3B47C /* ifclone.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97D21E384DC00F3B47C /* ifclone.c */; };
 		221CD98421E384DC00F3B47C /* af_link.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97E21E384DC00F3B47C /* af_link.c */; };
+		222691FB24B5125A001A0D2F /* ios_system.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 222691FA24B51252001A0D2F /* ios_system.xcframework */; };
 		22B7520A2068CCE200F2B025 /* network_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 22B752082068CCE200F2B025 /* network_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		22B7520E2068CCFA00F2B025 /* ios_system.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 229EC3EE2025B810004E76C6 /* ios_system.framework */; };
 		22B7520F2068CD0A00F2B025 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 223A3E622034A369004C9F62 /* libcurses.tbd */; };
 		22B752102068CD1000F2B025 /* libresolv.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D8641820287DDB00456179 /* libresolv.9.tbd */; };
 		22B752112068CDBE00F2B025 /* aclconf.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8640E2027B3C000456179 /* aclconf.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
@@ -246,6 +246,7 @@
 		221CD97921E384DB00F3B47C /* af_inet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = af_inet.c; sourceTree = "<group>"; };
 		221CD97D21E384DC00F3B47C /* ifclone.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ifclone.c; sourceTree = "<group>"; };
 		221CD97E21E384DC00F3B47C /* af_link.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = af_link.c; sourceTree = "<group>"; };
+		222691FA24B51252001A0D2F /* ios_system.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ios_system.xcframework; path = "../../../Library/Developer/Xcode/DerivedData/network_ios-gynrpnyxwmjzzmbfruoooaiqggxz/SourcePackages/artifacts/ios_system/ios_system.xcframework"; sourceTree = "<group>"; };
 		223A3E2A20343AA1004C9F62 /* dig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dig.c; path = sources/bind9/bin/dig/dig.c; sourceTree = SOURCE_ROOT; };
 		223A3E2C20346C2B004C9F62 /* host.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = host.c; path = sources/bind9/bin/dig/host.c; sourceTree = SOURCE_ROOT; };
 		223A3E3020349E60004C9F62 /* forward.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = forward.c; path = sources/libtelnet/forward.c; sourceTree = "<group>"; };
@@ -280,7 +281,6 @@
 		223A3E652034F7EB004C9F62 /* ncurses_dll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ncurses_dll.h; sourceTree = "<group>"; };
 		229EC3EA20259991004E76C6 /* ip_var.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ip_var.h; sourceTree = "<group>"; };
 		229EC3EB20259A53004E76C6 /* ping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ping.c; path = sources/ping.c; sourceTree = "<group>"; };
-		229EC3EE2025B810004E76C6 /* ios_system.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ios_system.framework; path = Frameworks/ios_system.framework; sourceTree = "<group>"; };
 		229EC3F02025BA61004E76C6 /* sys_socket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sys_socket.h; sourceTree = "<group>"; };
 		229EC3F12025FC6F004E76C6 /* netinet_in.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = netinet_in.h; sourceTree = "<group>"; };
 		229EC3F220264FCB004E76C6 /* gmt2local.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gmt2local.c; path = sources/gmt2local.c; sourceTree = "<group>"; };
@@ -502,7 +502,7 @@
 			files = (
 				22B752102068CD1000F2B025 /* libresolv.9.tbd in Frameworks */,
 				22B7520F2068CD0A00F2B025 /* libcurses.tbd in Frameworks */,
-				22B7520E2068CCFA00F2B025 /* ios_system.framework in Frameworks */,
+				222691FB24B5125A001A0D2F /* ios_system.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,7 +611,7 @@
 			children = (
 				223A3E622034A369004C9F62 /* libcurses.tbd */,
 				22D8641820287DDB00456179 /* libresolv.9.tbd */,
-				229EC3EE2025B810004E76C6 /* ios_system.framework */,
+				222691FA24B51252001A0D2F /* ios_system.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -955,6 +955,8 @@
 			dependencies = (
 			);
 			name = network_ios;
+			packageProductDependencies = (
+			);
 			productName = network_ios;
 			productReference = 22B752062068CCE100F2B025 /* network_ios.framework */;
 			productType = "com.apple.product-type.framework";
@@ -982,6 +984,9 @@
 				en,
 			);
 			mainGroup = 229EC3D120249304004E76C6;
+			packageReferences = (
+				222691F724B5123C001A0D2F /* XCRemoteSwiftPackageReference "ios_system" */,
+			);
 			productRefGroup = 229EC3DB20249305004E76C6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1369,7 +1374,11 @@
 				);
 				INFOPLIST_FILE = network_ios/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-Wno-ignored-attributes",
@@ -1400,7 +1409,11 @@
 				);
 				INFOPLIST_FILE = network_ios/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-Wno-ignored-attributes",
@@ -1436,6 +1449,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		222691F724B5123C001A0D2F /* XCRemoteSwiftPackageReference "ios_system" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/holzschu/ios_system.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 229EC3D220249304004E76C6 /* Project object */;
 }
