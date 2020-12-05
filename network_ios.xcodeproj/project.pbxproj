@@ -12,6 +12,7 @@
 		221CD98321E384DC00F3B47C /* ifclone.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97D21E384DC00F3B47C /* ifclone.c */; };
 		221CD98421E384DC00F3B47C /* af_link.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97E21E384DC00F3B47C /* af_link.c */; };
 		222691FB24B5125A001A0D2F /* ios_system.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 222691FA24B51252001A0D2F /* ios_system.xcframework */; };
+		2256DE6E257C23B900396B43 /* wol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2256DE6C257C23B900396B43 /* wol.cpp */; };
 		22B7520A2068CCE200F2B025 /* network_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 22B752082068CCE200F2B025 /* network_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22B7520F2068CD0A00F2B025 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 223A3E622034A369004C9F62 /* libcurses.tbd */; };
 		22B752102068CD1000F2B025 /* libresolv.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D8641820287DDB00456179 /* libresolv.9.tbd */; };
@@ -279,6 +280,7 @@
 		223A3E622034A369004C9F62 /* libcurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurses.tbd; path = usr/lib/libcurses.tbd; sourceTree = SDKROOT; };
 		223A3E642034F4EF004C9F62 /* ios_error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_error.h; sourceTree = "<group>"; };
 		223A3E652034F7EB004C9F62 /* ncurses_dll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ncurses_dll.h; sourceTree = "<group>"; };
+		2256DE6C257C23B900396B43 /* wol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = wol.cpp; sourceTree = "<group>"; };
 		229EC3EA20259991004E76C6 /* ip_var.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ip_var.h; sourceTree = "<group>"; };
 		229EC3EB20259A53004E76C6 /* ping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ping.c; path = sources/ping.c; sourceTree = "<group>"; };
 		229EC3F02025BA61004E76C6 /* sys_socket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sys_socket.h; sourceTree = "<group>"; };
@@ -557,9 +559,18 @@
 			name = libtelnet;
 			sourceTree = "<group>";
 		};
+		2256DE64257C188D00396B43 /* wakeonlan */ = {
+			isa = PBXGroup;
+			children = (
+				2256DE6C257C23B900396B43 /* wol.cpp */,
+			);
+			name = wakeonlan;
+			sourceTree = "<group>";
+		};
 		229EC3D120249304004E76C6 = {
 			isa = PBXGroup;
 			children = (
+				2256DE64257C188D00396B43 /* wakeonlan */,
 				221CD96A21E359F800F3B47C /* ifconfig */,
 				D2F3B941214D300700D8E248 /* udptunnel */,
 				22F0805B20984E8F003C3BF0 /* whois */,
@@ -1089,6 +1100,7 @@
 				22B752742068CDD200F2B025 /* tsec.c in Sources */,
 				22B752472068CDD200F2B025 /* hmac_link.c in Sources */,
 				22B7526C2068CDD200F2B025 /* soa.c in Sources */,
+				2256DE6E257C23B900396B43 /* wol.cpp in Sources */,
 				22B752C22068CDEC00F2B025 /* interfaceiter.c in Sources */,
 				22B752D52068D55D00F2B025 /* encrypt.c in Sources */,
 				22B752302068CDD200F2B025 /* acl.c in Sources */,
