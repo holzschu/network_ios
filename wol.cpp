@@ -178,11 +178,11 @@ int wol_main(int argc, char * const argv[])
                 case '?': // unrecognized option
                     if (optopt == 'b' || optopt == 'p' || optopt == 'd') {
                         // throw std::runtime_error(std::string("Option -") + static_cast<char>(optopt) + " requires an argument");
-                        fprintf(thread_stderr,  "Option -%c requires an argument.\n", c);
+                        fprintf(thread_stderr,  "Option -%c requires an argument.\n", (char)c);
                         pthread_exit(NULL);
                     } else {
                         // throw std::runtime_error(std::string("Unknown option '-") + static_cast<char>(optopt) + "'");
-                        fprintf(thread_stderr,  "Unknown option '-%c'\n", c);
+                        fprintf(thread_stderr,  "Unknown option '-%c'\n", (char)c);
                         pthread_exit(NULL);
                     }
                 default:
@@ -197,7 +197,10 @@ int wol_main(int argc, char * const argv[])
             send_wol(argv[optind], port, bcast);
             
             if (!quiet) {
-                fprintf(thread_stdout, "Packet sent to %lX '-'%s on port %d\n", bcast, argv[optind], port);
+                char str[INET_ADDRSTRLEN];
+                // now get it back and print it
+                inet_ntop(AF_INET, &bcast, str, INET_ADDRSTRLEN);
+                fprintf(thread_stdout, "Packet sent to %s-%s on port %d\n", str, argv[optind], port);
                 // std::cout << "Packet sent to " << std::hex << std::uppercase << htonl(bcast) << '-' << argv[optind]
                 //    << " on port " << std::dec << port << '\n';
             }
