@@ -176,13 +176,14 @@ int wol_main(int argc, char * const argv[])
                     }
                     break;
                 case '?': // unrecognized option
+                    // No need to print the error message, getopt already did.
                     if (optopt == 'b' || optopt == 'p' || optopt == 'd') {
                         // throw std::runtime_error(std::string("Option -") + static_cast<char>(optopt) + " requires an argument");
-                        fprintf(thread_stderr,  "Option -%c requires an argument.\n", (char)c);
+                        // fprintf(thread_stderr,  "Option -%c requires an argument.\n", (char)c);
                         pthread_exit(NULL);
                     } else {
                         // throw std::runtime_error(std::string("Unknown option '-") + static_cast<char>(optopt) + "'");
-                        fprintf(thread_stderr,  "Unknown option '-%c'\n", (char)c);
+                        // fprintf(thread_stderr,  "Unknown option '-%c'\n", (char)c);
                         pthread_exit(NULL);
                     }
                 default:

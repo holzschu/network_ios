@@ -13,7 +13,7 @@ let package = Package(
         .binaryTarget(
             name: "network_ios",
             url: "https://github.com/holzschu/network_ios/releases/download/0.2/network_ios.xcframework.zip",
-            checksum: "b67a5e0094610a40dea8f14511ca10aad4bd10f9c3969b8d484ea758fe37db0d"
+            checksum: "f71aab4be3534fb60cd0d18b43fccd8290da06083030d071c297f380ee300336"
         )
     ]
 )
