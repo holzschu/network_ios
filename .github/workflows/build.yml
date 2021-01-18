@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  build:
+    name: Building release assets
+    runs-on: macOS-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: xcode-select
+      run: sudo xcode-select -s /Applications/Xcode_12.3.app
+
+    - name: build-ios_system
+      run: swift run --package-path xcfs build
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body_path: .build/release.md
+        draft: false
+        prerelease: false
+
+    - name: Upload network_ios
+      id: upload-network_ios
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: .build/network_ios.xcframework.zip
+        asset_name: network_ios.xcframework.zip
+        asset_content_type: application/zip
