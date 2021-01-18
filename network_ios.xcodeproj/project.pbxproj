@@ -996,7 +996,6 @@
 			);
 			mainGroup = 229EC3D120249304004E76C6;
 			packageReferences = (
-				222691F724B5123C001A0D2F /* XCRemoteSwiftPackageReference "ios_system" */,
 			);
 			productRefGroup = 229EC3DB20249305004E76C6 /* Products */;
 			projectDirPath = "";
@@ -1463,17 +1462,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		222691F724B5123C001A0D2F /* XCRemoteSwiftPackageReference "ios_system" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/holzschu/ios_system.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 229EC3D220249304004E76C6 /* Project object */;
 }
