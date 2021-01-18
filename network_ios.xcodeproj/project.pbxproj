@@ -11,7 +11,6 @@
 		221CD97F21E384DC00F3B47C /* af_inet.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97921E384DB00F3B47C /* af_inet.c */; };
 		221CD98321E384DC00F3B47C /* ifclone.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97D21E384DC00F3B47C /* ifclone.c */; };
 		221CD98421E384DC00F3B47C /* af_link.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97E21E384DC00F3B47C /* af_link.c */; };
-		222691FB24B5125A001A0D2F /* ios_system.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 222691FA24B51252001A0D2F /* ios_system.xcframework */; };
 		2256DE6E257C23B900396B43 /* wol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2256DE6C257C23B900396B43 /* wol.cpp */; };
 		22B7520A2068CCE200F2B025 /* network_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 22B752082068CCE200F2B025 /* network_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22B7520F2068CD0A00F2B025 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 223A3E622034A369004C9F62 /* libcurses.tbd */; };
@@ -236,6 +235,7 @@
 		22B752EA2068D59A00F2B025 /* ping.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3EB20259A53004E76C6 /* ping.c */; };
 		22B752EB2068D59A00F2B025 /* gmt2local.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F220264FCB004E76C6 /* gmt2local.c */; };
 		22F0805D20984EB9003C3BF0 /* whois.c in Sources */ = {isa = PBXBuildFile; fileRef = 22F0805C20984EB9003C3BF0 /* whois.c */; };
+		D271F8A625B577BF005F88E5 /* ios_system.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D271F8A525B577BF005F88E5 /* ios_system.xcframework */; };
 		D28F12B920B44D6A0046B948 /* conn_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC40820276228004E76C6 /* conn_lib.c */; };
 		D2F3B945214D300700D8E248 /* udptunnel.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F3B942214D300700D8E248 /* udptunnel.m */; };
 		D2F3B946214D300700D8E248 /* host2ip.c in Sources */ = {isa = PBXBuildFile; fileRef = D2F3B943214D300700D8E248 /* host2ip.c */; };
@@ -247,7 +247,6 @@
 		221CD97921E384DB00F3B47C /* af_inet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = af_inet.c; sourceTree = "<group>"; };
 		221CD97D21E384DC00F3B47C /* ifclone.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ifclone.c; sourceTree = "<group>"; };
 		221CD97E21E384DC00F3B47C /* af_link.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = af_link.c; sourceTree = "<group>"; };
-		222691FA24B51252001A0D2F /* ios_system.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ios_system.xcframework; path = "../../../Library/Developer/Xcode/DerivedData/network_ios-gynrpnyxwmjzzmbfruoooaiqggxz/SourcePackages/artifacts/ios_system/ios_system.xcframework"; sourceTree = "<group>"; };
 		223A3E2A20343AA1004C9F62 /* dig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dig.c; path = sources/bind9/bin/dig/dig.c; sourceTree = SOURCE_ROOT; };
 		223A3E2C20346C2B004C9F62 /* host.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = host.c; path = sources/bind9/bin/dig/host.c; sourceTree = SOURCE_ROOT; };
 		223A3E3020349E60004C9F62 /* forward.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = forward.c; path = sources/libtelnet/forward.c; sourceTree = "<group>"; };
@@ -492,6 +491,7 @@
 		22D864162027B3DA00456179 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = sources/bind9/lib/isccfg/version.c; sourceTree = SOURCE_ROOT; };
 		22D8641820287DDB00456179 /* libresolv.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.9.tbd; path = usr/lib/libresolv.9.tbd; sourceTree = SDKROOT; };
 		22F0805C20984EB9003C3BF0 /* whois.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = whois.c; sourceTree = "<group>"; };
+		D271F8A525B577BF005F88E5 /* ios_system.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ios_system.xcframework; path = xcfs/.build/artifacts/xcfs/ios_system.xcframework; sourceTree = "<group>"; };
 		D2F3B942214D300700D8E248 /* udptunnel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = udptunnel.m; sourceTree = "<group>"; };
 		D2F3B943214D300700D8E248 /* host2ip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = host2ip.c; sourceTree = "<group>"; };
 		D2F3B944214D300700D8E248 /* host2ip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = host2ip.h; sourceTree = "<group>"; };
@@ -504,7 +504,7 @@
 			files = (
 				22B752102068CD1000F2B025 /* libresolv.9.tbd in Frameworks */,
 				22B7520F2068CD0A00F2B025 /* libcurses.tbd in Frameworks */,
-				222691FB24B5125A001A0D2F /* ios_system.xcframework in Frameworks */,
+				D271F8A625B577BF005F88E5 /* ios_system.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,9 +620,9 @@
 		229EC3ED2025B810004E76C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D271F8A525B577BF005F88E5 /* ios_system.xcframework */,
 				223A3E622034A369004C9F62 /* libcurses.tbd */,
 				22D8641820287DDB00456179 /* libresolv.9.tbd */,
-				222691FA24B51252001A0D2F /* ios_system.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1386,6 +1386,7 @@
 				);
 				INFOPLIST_FILE = network_ios/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1421,6 +1422,7 @@
 				);
 				INFOPLIST_FILE = network_ios/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
