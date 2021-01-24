@@ -6,3 +6,4 @@ originalSources/
 
 # Xcode
 xcuserdata/
+.build
