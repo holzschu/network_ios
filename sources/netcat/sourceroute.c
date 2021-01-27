@@ -43,12 +43,7 @@
 #include <string.h>
 #include <errno.h>
 
-#include "TargetConditionals.h"
-#if TARGET_OS_SIMULATOR
-#include <i386/param.h>
-#else
-#include <arm/param.h>
-#endif
+#include <machine/param.h>
 #include "ios_error.h"
 
 /*
