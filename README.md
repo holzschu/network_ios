@@ -3,7 +3,7 @@
 
 <p align="center">
 <img src="https://img.shields.io/badge/Platform-iOS%2014.0+-lightgrey.svg" alt="Platform: iOS">
-<a href="https://travis-ci.org/holzschu/network_ios"><img src="https://travis-ci.org/holzschu/network_ios.svg?branch=master" alt="Build Status"/></a>
+<a href="https://github.com/holzschu/network_ios/actions"><img src="https://github.com/holzschu/network_ios/workflows/CI/badge.svg" alt="Build Status"/></a>
 <br>
 <a href="http://twitter.com/nholzschuch"><img src="https://img.shields.io/badge/Twitter-@nholzschuch-blue.svg?style=flat" alt="Twitter"/></a>
 </p>
