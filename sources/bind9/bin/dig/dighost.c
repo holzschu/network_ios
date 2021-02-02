@@ -130,7 +130,7 @@ __thread isc_boolean_t
 	is_dst_up = ISC_FALSE,
 	keep_open = ISC_FALSE;
 __thread in_port_t port = 53;
-unsigned __thread int timeout = 0;
+unsigned __thread int timeout_ = 0;
 unsigned __thread int extrabytes;
 __thread isc_mem_t *mctx = NULL;
 __thread isc_log_t *lctx = NULL;
@@ -2495,10 +2495,10 @@ bringup_timer(dig_query_t *query, unsigned int default_timeout) {
 	if (ISC_LIST_NEXT(query, link) != NULL)
 		local_timeout = SERVER_TIMEOUT;
 	else {
-		if (timeout == 0)
+		if (timeout_ == 0)
 			local_timeout = default_timeout;
 		else
-			local_timeout = timeout;
+			local_timeout = timeout_;
 	}
 	debug("have local timeout of %d", local_timeout);
 	isc_interval_set(&l->interval, local_timeout, 0);
@@ -3499,17 +3499,17 @@ recv_done(isc_task_t *task, isc_event_t *event) {
 		 * the timeout to much longer, so brief network
 		 * outages won't cause the XFR to abort
 		 */
-		if (timeout != INT_MAX && l->timer != NULL) {
+		if (timeout_ != INT_MAX && l->timer != NULL) {
 			unsigned int local_timeout;
 
-			if (timeout == 0) {
+			if (timeout_ == 0) {
 				if (l->tcp_mode)
 					local_timeout = TCP_TIMEOUT * 4;
 				else
 					local_timeout = UDP_TIMEOUT * 4;
 			} else {
-				if (timeout < (INT_MAX / 4))
-					local_timeout = timeout * 4;
+				if (timeout_ < (INT_MAX / 4))
+					local_timeout = timeout_ * 4;
 				else
 					local_timeout = INT_MAX;
 			}

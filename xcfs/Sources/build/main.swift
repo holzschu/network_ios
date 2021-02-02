@@ -18,7 +18,7 @@ enum Config {
 try download(url: Config.iOSSystemErrorHURL)
 
 // TODO: We can add more platforms here
-let platforms: [Platform] = [.iPhoneOS, .iPhoneSimulator]
+let platforms: [Platform] = [.iPhoneOS, .iPhoneSimulator, .Catalyst]
 
 let schemes = [ "network_ios" ]
 
