@@ -1113,12 +1113,12 @@ plus_option(char *option, isc_boolean_t is_batchfile,
 				goto need_value;
 			if (!state)
 				goto invalid_option;
-			result = parse_uint(&timeout, value, MAXTIMEOUT,
+			result = parse_uint(&timeout_, value, MAXTIMEOUT,
 					    "timeout");
 			if (result != ISC_R_SUCCESS)
 				fatal("Couldn't parse timeout");
-			if (timeout == 0)
-				timeout = 1;
+			if (timeout_ == 0)
+				timeout_ = 1;
 			break;
 #if DIG_SIGCHASE_TD
 		case 'o': /* topdown */

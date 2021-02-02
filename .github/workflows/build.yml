@@ -16,7 +16,7 @@ jobs:
     - name: xcode-select
       run: sudo xcode-select -s /Applications/Xcode_12.3.app
 
-    - name: build-ios_system
+    - name: build-network_ios
       run: swift run --package-path xcfs build
 
     - name: Create Release

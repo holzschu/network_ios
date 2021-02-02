@@ -789,12 +789,12 @@ parse_args(isc_boolean_t is_batchfile, int argc, char **argv) {
 			 * The timer routines are coded such that
 			 * timeout==MAXINT doesn't enable the timer
 			 */
-			timeout = INT_MAX;
+			timeout_ = INT_MAX;
 			break;
 		case 'W':
-			timeout = atoi(isc_commandline_argument);
-			if (timeout < 1)
-				timeout = 1;
+			timeout_ = atoi(isc_commandline_argument);
+			if (timeout_ < 1)
+				timeout_ = 1;
 			break;
 		case 'R':
 			tries = atoi(isc_commandline_argument) + 1;
