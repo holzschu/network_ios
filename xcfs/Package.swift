@@ -11,10 +11,9 @@ _ = Package(
     targets: [
         .binaryTarget(
             name: "ios_system",
-            url: "https://github.com/yury/ios_system/releases/download/v2.7.0/ios_system.xcframework.zip",
-            checksum: "a3ec1c198b944b7d0e8932b7da447b164ae9b869c11c8f0f35cc7b5f09129fe2"
+            url: "https://github.com/holzschu/ios_system/releases/download/v2.7.0/ios_system.xcframework.zip",
+            checksum: "83545ba08c01d0ea813fa48133efd64f734a0c3900e8e123188e9e9d2907ca90"
         ),
-
         .target(
             name: "build",
             dependencies: ["FMake"]
