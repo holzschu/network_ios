@@ -255,7 +255,7 @@ extern __thread unsigned int extrabytes;
 extern __thread isc_boolean_t check_ra, have_ipv4, have_ipv6, specified_source,
 	usesearch, showsearch, qr;
 extern __thread in_port_t port;
-extern __thread unsigned int timeout;
+extern __thread unsigned int timeout_;
 extern __thread isc_mem_t *mctx;
 extern __thread int sendcount;
 extern __thread int ndots;

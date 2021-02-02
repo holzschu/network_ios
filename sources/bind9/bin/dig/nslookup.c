@@ -500,7 +500,7 @@ show_settings(isc_boolean_t full, isc_boolean_t serv_only) {
 	       usesearch ? "search" : "nosearch",
 	       recurse ? "recurse" : "norecurse");
 	fprintf(thread_stdout, "  timeout = %d\t\tretry = %d\tport = %d\tndots = %d\n",
-	       timeout, tries, port, ndots);
+	       timeout_, tries, port, ndots);
 	fprintf(thread_stdout, "  querytype = %-8s\tclass = %s\n", deftype, defclass);
 	fprintf(thread_stdout, "  srchlist = ");
 	for (listent = ISC_LIST_HEAD(search_list);
@@ -560,7 +560,7 @@ set_timeout(const char *value) {
 	isc_uint32_t n;
 	isc_result_t result = parse_uint(&n, value, UINT_MAX, "timeout");
 	if (result == ISC_R_SUCCESS)
-		timeout = n;
+		timeout_ = n;
 }
 
 static void
