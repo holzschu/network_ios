@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,10 +11,13 @@
 		221CD97F21E384DC00F3B47C /* af_inet.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97921E384DB00F3B47C /* af_inet.c */; };
 		221CD98321E384DC00F3B47C /* ifclone.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97D21E384DC00F3B47C /* ifclone.c */; };
 		221CD98421E384DC00F3B47C /* af_link.c in Sources */ = {isa = PBXBuildFile; fileRef = 221CD97E21E384DC00F3B47C /* af_link.c */; };
+		22465F3E2849E0EC00A03E5A /* ping6.c in Sources */ = {isa = PBXBuildFile; fileRef = 22465F3D2849E0EC00A03E5A /* ping6.c */; };
+		22465F402849F97000A03E5A /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 22465F3F2849F97000A03E5A /* md5.c */; };
+		22465F42284B34E000A03E5A /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 22465F41284B34E000A03E5A /* libresolv.tbd */; };
+		22465F46284B45A700A03E5A /* libresolv.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 22465F45284B45A700A03E5A /* libresolv.9.tbd */; };
 		2256DE6E257C23B900396B43 /* wol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2256DE6C257C23B900396B43 /* wol.cpp */; };
 		22B7520A2068CCE200F2B025 /* network_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 22B752082068CCE200F2B025 /* network_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22B7520F2068CD0A00F2B025 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 223A3E622034A369004C9F62 /* libcurses.tbd */; };
-		22B752102068CD1000F2B025 /* libresolv.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D8641820287DDB00456179 /* libresolv.9.tbd */; };
 		22B752112068CDBE00F2B025 /* aclconf.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D8640E2027B3C000456179 /* aclconf.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
 		22B752122068CDBE00F2B025 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D864102027B3C900456179 /* log.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
 		22B752132068CDBE00F2B025 /* namedconf.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D864122027B3CE00456179 /* namedconf.c */; settings = {COMPILER_FLAGS = "-I sources/bind9/ -I sources/bind9/lib/bind9/include/ -I sources/bind9/lib/isc/include -I sources/bind9/lib/isc/unix/include -I sources/bind9/lib/isc/nothreads/include -I sources/bind9/lib/isc/noatomic/include/ -I sources/bind9/lib/dns/include/ -I sources/bind9/bin/dig/include/ -I sources/bind9/lib/isccfg/include/ -I sources/bind9/lib/lwres/include/ -I sources/bind9/lib/lwres/unix/include/"; }; };
@@ -279,6 +282,10 @@
 		223A3E622034A369004C9F62 /* libcurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurses.tbd; path = usr/lib/libcurses.tbd; sourceTree = SDKROOT; };
 		223A3E642034F4EF004C9F62 /* ios_error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_error.h; sourceTree = "<group>"; };
 		223A3E652034F7EB004C9F62 /* ncurses_dll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ncurses_dll.h; sourceTree = "<group>"; };
+		22465F3D2849E0EC00A03E5A /* ping6.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ping6.c; path = sources/ping6/ping6.c; sourceTree = "<group>"; };
+		22465F3F2849F97000A03E5A /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5.c; path = sources/ping6/md5.c; sourceTree = "<group>"; };
+		22465F41284B34E000A03E5A /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/lib/libresolv.tbd; sourceTree = DEVELOPER_DIR; };
+		22465F45284B45A700A03E5A /* libresolv.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.9.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/lib/libresolv.9.tbd; sourceTree = DEVELOPER_DIR; };
 		2256DE6C257C23B900396B43 /* wol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = wol.cpp; sourceTree = "<group>"; };
 		229EC3EA20259991004E76C6 /* ip_var.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ip_var.h; sourceTree = "<group>"; };
 		229EC3EB20259A53004E76C6 /* ping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ping.c; path = sources/ping.c; sourceTree = "<group>"; };
@@ -489,7 +496,6 @@
 		22D864122027B3CE00456179 /* namedconf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = namedconf.c; path = sources/bind9/lib/isccfg/namedconf.c; sourceTree = SOURCE_ROOT; };
 		22D864142027B3D300456179 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = parser.c; path = sources/bind9/lib/isccfg/parser.c; sourceTree = SOURCE_ROOT; };
 		22D864162027B3DA00456179 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = sources/bind9/lib/isccfg/version.c; sourceTree = SOURCE_ROOT; };
-		22D8641820287DDB00456179 /* libresolv.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.9.tbd; path = usr/lib/libresolv.9.tbd; sourceTree = SDKROOT; };
 		22F0805C20984EB9003C3BF0 /* whois.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = whois.c; sourceTree = "<group>"; };
 		D2334E9F25C16BB800385378 /* ios_system.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ios_system.xcframework; path = xcfs/.build/artifacts/xcfs/ios_system.xcframework; sourceTree = "<group>"; };
 		D2F3B942214D300700D8E248 /* udptunnel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = udptunnel.m; sourceTree = "<group>"; };
@@ -502,7 +508,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22B752102068CD1000F2B025 /* libresolv.9.tbd in Frameworks */,
+				22465F46284B45A700A03E5A /* libresolv.9.tbd in Frameworks */,
+				22465F42284B34E000A03E5A /* libresolv.tbd in Frameworks */,
 				22B7520F2068CD0A00F2B025 /* libcurses.tbd in Frameworks */,
 				D2334EA025C16BB800385378 /* ios_system.xcframework in Frameworks */,
 			);
@@ -559,6 +566,15 @@
 			name = libtelnet;
 			sourceTree = "<group>";
 		};
+		22465F3C2849E01900A03E5A /* ping6 */ = {
+			isa = PBXGroup;
+			children = (
+				22465F3F2849F97000A03E5A /* md5.c */,
+				22465F3D2849E0EC00A03E5A /* ping6.c */,
+			);
+			name = ping6;
+			sourceTree = "<group>";
+		};
 		2256DE64257C188D00396B43 /* wakeonlan */ = {
 			isa = PBXGroup;
 			children = (
@@ -593,6 +609,7 @@
 				223A3E612034A2C7004C9F62 /* term.h */,
 				229EC406202668F6004E76C6 /* mptcp_client */,
 				229EC3F820265918004E76C6 /* netcat */,
+				22465F3C2849E01900A03E5A /* ping6 */,
 				229EC3E720249394004E76C6 /* ping */,
 				22B752072068CCE200F2B025 /* network_ios */,
 				229EC3DB20249305004E76C6 /* Products */,
@@ -620,9 +637,10 @@
 		229EC3ED2025B810004E76C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				22465F45284B45A700A03E5A /* libresolv.9.tbd */,
+				22465F41284B34E000A03E5A /* libresolv.tbd */,
 				D2334E9F25C16BB800385378 /* ios_system.xcframework */,
 				223A3E622034A369004C9F62 /* libcurses.tbd */,
-				22D8641820287DDB00456179 /* libresolv.9.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1027,6 +1045,7 @@
 				22B752672068CDD200F2B025 /* name.c in Sources */,
 				22B7526F2068CDD200F2B025 /* stats.c in Sources */,
 				D2F3B945214D300700D8E248 /* udptunnel.m in Sources */,
+				22465F402849F97000A03E5A /* md5.c in Sources */,
 				22B752E92068D59500F2B025 /* sourceroute.c in Sources */,
 				22B752AA2068CDE200F2B025 /* regex.c in Sources */,
 				22B7529A2068CDE200F2B025 /* lib.c in Sources */,
@@ -1135,6 +1154,7 @@
 				22B7523F2068CDD200F2B025 /* ds.c in Sources */,
 				221CD98421E384DC00F3B47C /* af_link.c in Sources */,
 				22B752CE2068CDF000F2B025 /* mutex.c in Sources */,
+				22465F3E2849E0EC00A03E5A /* ping6.c in Sources */,
 				22B752B42068CDE200F2B025 /* string.c in Sources */,
 				22B752262068CDCA00F2B025 /* lwinetpton.c in Sources */,
 				22B752DA2068D55D00F2B025 /* kerberos5.c in Sources */,
