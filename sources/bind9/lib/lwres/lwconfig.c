@@ -77,6 +77,7 @@
 #if TARGET_OS_IPHONE || TARGET_OS_SIMULATOR
 #include <resolv.h>
 #include "ios_error.h"
+#include <netdb.h>
 #endif
 
 
@@ -631,13 +632,28 @@ lwres_conf_parse(lwres_context_t *ctx, const char *filename) {
         // iOS: no resolv.conf, we need to get the DNS servers using resolv.h:
         // See: http://www.galloway.me.uk/2009/11/iphone-dns-servers/
         if ((_res.options & RES_INIT) == 0) res_init();
-        for (int k = 0; k < _res.nscount; k++ ) {
-            lwres_addr_t addr;
-            addr.family = LWRES_ADDRTYPE_V4;
-            addr.length = NS_INADDRSZ;
-            addr.zone = 0;
-            memmove((void *)addr.address, &_res.nsaddr_list[k].sin_addr, NS_INADDRSZ);
-            confdata->nameservers[confdata->nsnext++] = addr;
+        // Get all servers, including IPV6:
+        // https://stackoverflow.com/questions/31256024/get-dns-server-ip-from-iphone-settings/41303040#41303040
+        union res_sockaddr_union servers[NI_MAXSERV];
+        int serversFound = res_getservers(&_res, servers, NI_MAXSERV);
+        for (int k = 0; k < serversFound; k++ ) {
+            union res_sockaddr_union s = servers[k];
+            if (s.sin.sin_len > 0) {
+                lwres_addr_t addr;
+                // fprintf(thread_stderr, "server: %s family: %x length: %x\n", inet_ntoa(s.sin.sin_addr), s.sin.sin_family, s.sin.sin_len);
+                if (s.sin.sin_family == AF_INET) {
+                    addr.family = LWRES_ADDRTYPE_V4;
+                    addr.length = s.sin.sin_len;
+                    addr.zone = 0;
+                    memmove((void *)addr.address, &s.sin.sin_addr, s.sin.sin_len);
+                } else if (s.sin.sin_family == AF_INET6) {
+                    addr.family = LWRES_ADDRTYPE_V6;
+                    addr.length = s.sin6.sin6_len;
+                    addr.zone = 0;
+                    memmove((void *)addr.address, &s.sin6.sin6_addr, s.sin6.sin6_len);
+                } else continue;
+                confdata->nameservers[confdata->nsnext++] = addr;
+            }
         }
         return (LWRES_R_SUCCESS);
 #endif
