@@ -11,8 +11,8 @@ _ = Package(
     targets: [
         .binaryTarget(
             name: "ios_system",
-            url: "https://github.com/holzschu/ios_system/releases/download/v2.7.0/ios_system.xcframework.zip",
-            checksum: "faa7fcc0b6f6a3a2c127d3d6f843b43a9dbffe5461c6703b31587eb51c00500b"
+            url: "https://github.com/holzschu/ios_system/releases/download/v3.0.1/ios_system.xcframework.zip",
+            checksum: "635fc346304416f05f94a61ded08a2a5792f5072081eca7c142834326366d4d0"
         ),
         .target(
             name: "build",
