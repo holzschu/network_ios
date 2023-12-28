@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2017 Apple Inc. All rights reserved.
+ * Copyright (c) 2009-2021 Apple Inc. All rights reserved.
  *
  * @APPLE_OSREFERENCE_LICENSE_HEADER_START@
  *
@@ -103,11 +103,16 @@ __unused static const char copyright[] =
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 #include <unistd.h>
 #include <sysexits.h>
+
+#include <stdbool.h>
+#include <regex.h>
 
 #include "ifconfig.h"
 
@@ -146,16 +151,25 @@ static char *bytes_to_str(unsigned long long bytes);
 static char *bps_to_str(unsigned long long rate);
 static char *ns_to_str(unsigned long long nsec);
 static	void tunnel_status(int s);
+static void clat46_addr(int s, char *name);
+static void nat64_status(int s, char *name);
 static	void usage(void);
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 static char *sched2str(unsigned int s);
 static char *tl2str(unsigned int s);
 #endif
 static char *ift2str(unsigned int t, unsigned int f, unsigned int sf);
+static char *iffunct2str(u_int32_t functional_type);
 
 static struct afswtch *af_getbyname(const char *name);
 static struct afswtch *af_getbyfamily(int af);
 static void af_other_status(int);
+
+/* Formatter Strings */
+char	*f_inet, *f_inet6, *f_ether, *f_addr;
+
+static void freeformat(void);
+static void setformat(char *input);
 
 static struct ifconfig_option *opts = NULL;
 
@@ -165,7 +179,6 @@ opt_register(struct ifconfig_option *p)
 	p->next = opts;
 	opts = p;
 }
-
 static void
 usage(void)
 {
@@ -185,8 +198,9 @@ usage(void)
 	"       ifconfig interface create\n"
 	"       ifconfig -a %s[-d] [-m] [-u] [-v] [address_family]\n"
 	"       ifconfig -l [-d] [-u] [address_family]\n"
-	"       ifconfig %s[-d] [-m] [-u] [-v]\n",
-		options, options, options);
+	"       ifconfig %s[-d] [-m] [-u] [-v]\n"
+	"       ifconfig -X pattern %s[-a] [-d] [-d] [-m] [-u] [-v] [address_family]\n",
+		options, options, options, options);
 	exit(1);
 }
 
@@ -200,9 +214,11 @@ ifconfig_main(int argc, char *argv[])
 	struct ifreq paifr;
 	const struct sockaddr_dl *sdl;
 	char options[1024], *cp;
-	const char *ifname;
+	const char *ifname = NULL;
 	struct ifconfig_option *p;
 	size_t iflen;
+	bool is_regex = false;
+	regex_t if_reg = {};
 
 	all = downonly = uponly = namesonly = noload = 0;
 
@@ -227,15 +243,17 @@ ifconfig_main(int argc, char *argv[])
 #endif
     
 	/* Parse leading line options */
-#ifndef __APPLE__
-	strlcpy(options, "adklmnuv", sizeof(options));
-#else
-	strlcpy(options, "abdlmruv", sizeof(options));
-#endif
+	strlcpy(options, "X:abdf:lmruv", sizeof(options));
 	for (p = opts; p != NULL; p = p->next)
 		strlcat(options, p->opt, sizeof(options));
 	while ((c = getopt(argc, argv, options)) != -1) {
 		switch (c) {
+#ifdef __APPLE__
+		case 'X':
+			is_regex = true;
+			ifname = optarg;
+			break;
+#endif /* __APPLE__ */
 		case 'a':	/* scan all interfaces */
 			all++;
 			break;
@@ -244,6 +262,11 @@ ifconfig_main(int argc, char *argv[])
 			break;				
 		case 'd':	/* restrict scan to "down" interfaces */
 			downonly++;
+			break;
+		case 'f':
+			if (optarg == NULL)
+				usage();
+			setformat(optarg);
 			break;
 #ifndef __APPLE__
 		case 'k':
@@ -297,8 +320,14 @@ ifconfig_main(int argc, char *argv[])
 	if (!namesonly && argc < 1)
 		all = 1;
 
+	if (is_regex) {
+		if (regcomp(&if_reg, ifname, REG_EXTENDED | REG_NOSUB) != 0) {
+			errx(1, "bad interface pattern '%s'", ifname);
+		}
+	}
+
 	/* -a and -l allow an address family arg to limit the output */
-	if (all || namesonly) {
+	if (all || namesonly || is_regex) {
 		if (argc > 1)
 			usage();
 
@@ -319,10 +348,6 @@ ifconfig_main(int argc, char *argv[])
 		ifname = *argv;
 		argc--, argv++;
 
-#ifdef notdef
-		/* check and maybe load support for this interface */
-		ifmaybeload(ifname);
-#endif
 		ifindex = if_nametoindex(ifname);
 		if (ifindex == 0) {
 			/*
@@ -331,11 +356,11 @@ ifconfig_main(int argc, char *argv[])
 			 * to find the interface.
 			 */
 			if (argc > 0 && (strcmp(argv[0], "create") == 0 ||
-			    strcmp(argv[0], "plumb") == 0)) {
+							 strcmp(argv[0], "plumb") == 0)) {
 				iflen = strlcpy(name, ifname, sizeof(name));
 				if (iflen >= sizeof(name))
 					errx(1, "%s: cloning name too long",
-					    ifname);
+						 ifname);
 				ifconfig(argc, argv, 1, NULL);
 				exit(0);
 			}
@@ -356,14 +381,20 @@ ifconfig_main(int argc, char *argv[])
 	ifindex = 0;
 	for (ifa = ifap; ifa; ifa = ifa->ifa_next) {
 		memset(&paifr, 0, sizeof(paifr));
-		strncpy(paifr.ifr_name, ifa->ifa_name, sizeof(paifr.ifr_name));
+		strlcpy(paifr.ifr_name, ifa->ifa_name, sizeof(paifr.ifr_name));
 		if (sizeof(paifr.ifr_addr) >= ifa->ifa_addr->sa_len) {
 			memcpy(&paifr.ifr_addr, ifa->ifa_addr,
 			    ifa->ifa_addr->sa_len);
 		}
 
-		if (ifname != NULL && strcmp(ifname, ifa->ifa_name) != 0)
-			continue;
+		if (is_regex) {
+			if (regexec(&if_reg, ifa->ifa_name, 0, NULL, 0) != 0) {
+				continue;
+			}
+		} else {
+			if (ifname != NULL && strcmp(ifname, ifa->ifa_name) != 0)
+				continue;
+		}
 		if (ifa->ifa_addr->sa_family == AF_LINK)
 			sdl = (const struct sockaddr_dl *) ifa->ifa_addr;
 		else
@@ -401,6 +432,10 @@ ifconfig_main(int argc, char *argv[])
 	if (namesonly)
 		printf("\n");
 	freeifaddrs(ifap);
+	if (is_regex) {
+		regfree(&if_reg);
+	}
+	freeformat();
 
 	exit(0);
 }
@@ -437,6 +472,17 @@ af_getbyfamily(int af)
 }
 
 static void
+call_af_other_status(const struct afswtch *afp, int s)
+{
+	if (afp->af_clone_name != NULL &&
+	    strncmp(name, afp->af_clone_name, afp->af_clone_name_length) != 0) {
+		/* clone specific status */
+		return;
+	}
+	(*afp->af_other_status)(s);
+}
+
+static void
 af_other_status(int s)
 {
 	struct afswtch *afp;
@@ -448,7 +494,7 @@ af_other_status(int s)
 			continue;
 		if (afp->af_af != AF_UNSPEC && isset(afmask, afp->af_af))
 			continue;
-		afp->af_other_status(s);
+		call_af_other_status(afp, s);
 		setbit(afmask, afp->af_af);
 	}
 }
@@ -526,9 +572,9 @@ ifconfig(int argc, char *const *argv, int iscreate, const struct afswtch *afp)
 {
 	const struct afswtch *nafp;
 	struct callback *cb;
-	int s;
+	int ret, s;
 
-	strncpy(ifr.ifr_name, name, sizeof ifr.ifr_name);
+	strlcpy(ifr.ifr_name, name, sizeof ifr.ifr_name);
 top:
 	if (afp == NULL)
 		afp = af_getbyname("inet");
@@ -594,8 +640,15 @@ top:
 					    p->c_name);
 				p->c_u.c_func2(argv[1], argv[2], s, afp);
 				argc -= 2, argv += 2;
-			} else
+			} else if (p->c_parameter == VAARGS) {
+				ret = p->c_u.c_funcv(argc - 1, argv + 1, s, afp);
+				if (ret < 0)
+					errx(1, "'%s' command error",
+					    p->c_name);
+				argc -= ret, argv += ret;
+			} else {
 				p->c_u.c_func(*argv, p->c_parameter, s, afp);
+			}
 		}
 		argc--, argv++;
 	}
@@ -622,8 +675,7 @@ top:
 		}
 	}
 	if (clearaddr) {
-		int ret;
-		strncpy(afp->af_ridreq, name, sizeof ifr.ifr_name);
+		strlcpy(afp->af_ridreq, name, sizeof ifr.ifr_name);
 		ret = ioctl(s, afp->af_difaddr, afp->af_ridreq);
 		if (ret < 0) {
 			if (errno == EADDRNOTAVAIL && (doalias >= 0)) {
@@ -640,7 +692,7 @@ top:
 		}
 	}
 	if (newaddr && (setaddr || setmask)) {
-		strncpy(afp->af_addreq, name, sizeof ifr.ifr_name);
+		strlcpy(afp->af_addreq, name, sizeof ifr.ifr_name);
 		if (ioctl(s, afp->af_aifaddr, afp->af_addreq) < 0)
 			Perror("ioctl (SIOCAIFADDR)");
 	}
@@ -781,7 +833,7 @@ setifflags(const char *vname, int value, int s, const struct afswtch *afp)
  		Perror("ioctl (SIOCGIFFLAGS)");
  		exit(1);
  	}
-	strncpy(my_ifr.ifr_name, name, sizeof (my_ifr.ifr_name));
+	strlcpy(my_ifr.ifr_name, name, sizeof (my_ifr.ifr_name));
 	flags = my_ifr.ifr_flags;
 	
 	if (value < 0) {
@@ -807,8 +859,13 @@ setifcap(const char *vname, int value, int s, const struct afswtch *afp)
 	if (value < 0) {
 		value = -value;
 		flags &= ~value;
-	} else
+	} else {
 		flags |= value;
+	}
+	/* SIOCGIFCAP returns the supported capabilities in ifr_reqcap */
+	if ((value & ifr.ifr_reqcap) != value) {
+		errx(1, "%s does not support %s", ifr.ifr_name, vname);
+	}
 	flags &= ifr.ifr_reqcap;
 	ifr.ifr_reqcap = flags;
 	if (ioctl(s, SIOCSIFCAP, (caddr_t)&ifr) < 0)
@@ -819,7 +876,7 @@ static void
 setifmetric(const char *val, int dummy __unused, int s, 
     const struct afswtch *afp)
 {
-	strncpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
 	ifr.ifr_metric = atoi(val);
 	if (ioctl(s, SIOCSIFMETRIC, (caddr_t)&ifr) < 0)
 		warn("ioctl (set metric)");
@@ -829,7 +886,7 @@ static void
 setifmtu(const char *val, int dummy __unused, int s, 
     const struct afswtch *afp)
 {
-	strncpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
 	ifr.ifr_mtu = atoi(val);
 	if (ioctl(s, SIOCSIFMTU, (caddr_t)&ifr) < 0)
 		warn("ioctl (set mtu)");
@@ -870,6 +927,13 @@ setrouter(const char *vname, int value, int s, const struct afswtch *afp)
 	afp->af_setrouter(s, value);
 }
 
+static int
+routermode(int argc, char *const *argv, int s, const struct afswtch *afp)
+{
+	return (*afp->af_routermode)(s, argc, argv);
+}
+
+
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 static void
 setifdesc(const char *val, int dummy __unused, int s, const struct afswtch *afp)
@@ -877,9 +941,9 @@ setifdesc(const char *val, int dummy __unused, int s, const struct afswtch *afp)
 	struct if_descreq ifdr;
 
 	bzero(&ifdr, sizeof (ifdr));
-	strncpy(ifdr.ifdr_name, name, sizeof (ifdr.ifdr_name));
+	strlcpy(ifdr.ifdr_name, name, sizeof (ifdr.ifdr_name));
 	ifdr.ifdr_len = strlen(val);
-	strncpy((char *)ifdr.ifdr_desc, val, sizeof (ifdr.ifdr_desc));
+	strlcpy((char *)ifdr.ifdr_desc, val, sizeof (ifdr.ifdr_desc));
 
 	if (ioctl(s, SIOCSIFDESC, (caddr_t)&ifdr) < 0) {
 		warn("ioctl (set desc)");
@@ -899,7 +963,7 @@ settbr(const char *val, int dummy __unused, int s, const struct afswtch *afp)
 
 	errno = 0;
 	bzero(&iflpr, sizeof (iflpr));
-	strncpy(iflpr.iflpr_name, name, sizeof (iflpr.iflpr_name));
+	strlcpy(iflpr.iflpr_name, name, sizeof (iflpr.iflpr_name));
 
 	bps = strtold(val, &cp);
 	if (val == cp || errno != 0) {
@@ -934,7 +998,7 @@ settbr(const char *val, int dummy __unused, int s, const struct afswtch *afp)
 		warn("ioctl (set link params)");
 	} else if (errno == ENXIO) {
 		printf("TBR cannot be set on %s\n", name);
-	} else if (errno == ENOENT || rate == 0) {
+	} else if (errno == 0 && rate == 0) {
 		printf("%s: TBR is now disabled\n", name);
 	} else if (errno == ENODEV) {
 		printf("%s: requires absolute TBR rate\n", name);
@@ -948,6 +1012,423 @@ settbr(const char *val, int dummy __unused, int s, const struct afswtch *afp)
 #endif
 
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+static bool
+get_longlong(long long *value, char const *s)
+{
+    long long result;
+	char *cp;
+	result = strtoll(s, &cp, 10);
+    if (cp == s) {
+        return false; // no digits at all
+    }
+    if (result == 0) {
+        if (errno == EINVAL) {
+            return false;
+        }
+    } else if (result == LLONG_MIN || result == LLONG_MAX) {
+        if (errno == ERANGE) {
+            fprintf(stderr, "The value provided was out of range\n");
+            return false;
+        }
+    }
+
+    *value = result;
+	return true;
+}
+
+static bool
+get_uint32(uint32_t *value, char const *s)
+{
+    long long result;
+    if (!get_longlong(&result, s)) {
+        return false;
+    }
+
+    if (result > UINT32_MAX) {
+        fprintf(stderr, "The value provided was out of range\n");
+    }
+
+    *value = (uint32_t)result;
+    return true;
+}
+
+static bool
+get_uint64(uint64_t *value, char const *s)
+{
+    long long result;
+    if (!get_longlong(&result, s)) {
+        return false;
+    }
+
+    if (result > UINT64_MAX) {
+        fprintf(stderr, "The value provided was out of range\n");
+    }
+
+    *value = (uint64_t)result;
+    return true;
+}
+
+static bool
+get_percent(double *d, const char *s)
+{
+	char *cp;
+	*d = strtod(s, &cp) / (double)100;
+	if (*d == HUGE_VALF || *d == HUGE_VALL) {
+		return false;
+	}
+	if (*d == 0.0 || (*cp != '\0' && strcmp(cp, "%") != 0)) {
+		return false;
+	}
+	return true;
+}
+
+static bool
+get_percent_fixed_point(uint32_t *i, const char *s)
+{
+	double p;
+
+	if (!get_percent(&p, s)){
+		return false;
+	}
+
+	*i = p * IF_NETEM_PARAMS_PSCALE;
+	return true;
+}
+
+static int
+netem_parse_args(struct if_netem_params *p, int argc, char *const *argv)
+{
+	int argc_saved = argc;
+	uint64_t bandwitdh = UINT64_MAX;
+	uint32_t latency = 0, jitter = 0;
+	uint32_t corruption = 0;
+	uint32_t duplication = 0;
+	uint32_t loss_p_gr_gl = 0, loss_p_gr_bl = 0, loss_p_bl_br = 0,
+	    loss_p_bl_gr = 0, loss_p_br_bl = 0;
+	uint32_t loss_recovery_ms = 0;
+	uint32_t reordering = 0;
+	uint32_t output_ival_ms = 0;
+
+	bzero(p, sizeof (*p));
+	p->ifnetem_model = IF_NETEM_MODEL_NLC; /* default NLC model */
+
+	/* take out "input"/"output" */
+	argc--, argv++;
+
+	for ( ; argc > 0; ) {
+		if (strcmp(*argv, "model") == 0) {
+			argc--, argv++;
+			if (strcmp(*argv, "nlc") == 0) {
+				p->ifnetem_model = IF_NETEM_MODEL_NLC;
+			} else if (strcmp(*argv, "iod") == 0) {
+				p->ifnetem_model = IF_NETEM_MODEL_IOD;
+			} else if (strcmp(*argv, "fpd") == 0) {
+				p->ifnetem_model = IF_NETEM_MODEL_FPD;
+			} else {
+				err(1, "Invalid model '%s'", *argv);
+			}
+			argc--, argv++;
+		} else if (strcmp(*argv, "bandwidth") == 0) {
+			argc--, argv++;
+			if (argc <= 0 || !get_uint64(&bandwitdh, *argv)) {
+				err(1, "Invalid value '%s' for bandwidth", *argv);
+			}
+			argc--, argv++;
+		} else if (strcmp(*argv, "corruption") == 0) {
+			argc--, argv++;
+			if (argc <= 0 || !get_percent_fixed_point(&corruption, *argv)) {
+				err(1, "Invalid value '%s' for corruption", *argv);
+			}
+			argc--, argv++;
+		} else if (strcmp(*argv, "delay") == 0) {
+			argc--, argv++;
+			if (argc <= 0 || !get_uint32(&latency, *argv)) {
+				err(1, "Invalid value '%s' for delay", *argv);
+			}
+			argc--, argv++;
+			if (argc > 0 && get_uint32(&jitter, *argv)) {
+				argc--, argv++;
+			}
+		} else if (strcmp(*argv, "duplication") == 0) {
+			argc--, argv++;
+			if (argc <= 0 || !get_percent_fixed_point(&duplication, *argv)) {
+				err(1, "Invalid value '%s' for duplication", *argv);
+				return (-1);
+			}
+			argc--, argv++;
+		} else if (strcmp(*argv, "loss") == 0) {
+			argc--, argv++;
+			if (argc <= 0 || !get_percent_fixed_point(&loss_p_gr_gl, *argv)) {
+				err(1, "Invalid value '%s' for loss", *argv);
+			}
+			/* we may have all 5 probs, use naive model if not */
+			argc--, argv++;
+			if (argc <= 0 || !get_percent_fixed_point(&loss_p_gr_bl, *argv)) {
+				continue;
+			}
+			/* if more than p_gr_gl, then should have all probs */
+			argc--, argv++;
+			if (argc <= 0 || !get_percent_fixed_point(&loss_p_bl_br, *argv)) {
+				err(1, "Invalid value '%s' for p_bl_br", *argv);
+			}
+			argc--, argv++;
+			if (argc <= 0 || !get_percent_fixed_point(&loss_p_bl_gr, *argv)) {
+				err(1, "Invalid value '%s' for p_bl_gr", *argv);
+			}
+			argc--, argv++;
+			if (argc <= 0 || !get_percent_fixed_point(&loss_p_br_bl, *argv)) {
+				err(1, "Invalid value '%s' for p_br_bl", *argv);
+			}
+			argc--, argv++;
+		} else if (strcmp(*argv, "recovery") == 0) {
+			argc--, argv++;
+			if (argc <= 0 || !get_uint32(&loss_recovery_ms, *argv)) {
+				err(1, "Invalid value '%s' for recovery", *argv);
+			}
+			argc--, argv++;
+		} else if (strcmp(*argv, "reordering") == 0) {
+			argc--, argv++;
+			if (argc <= 0 || !get_percent_fixed_point(&reordering, *argv)) {
+				err(1, "Invalid value '%s' for reordering", *argv);
+			}
+			argc--, argv++;
+		} else if (strcmp(*argv, "ival") == 0) {
+			argc--, argv++;
+			if (argc <= 0 || !get_uint32(&output_ival_ms, *argv)) {
+				err(1, "Invalid value '%s' for ival", *argv);
+			}
+			argc--, argv++;
+		} else {
+			return (-1);
+		}
+	}
+
+	if (corruption > IF_NETEM_PARAMS_PSCALE) {
+		err(1, "corruption percentage > 100%%");
+	}
+
+	if (duplication > IF_NETEM_PARAMS_PSCALE) {
+		err(1, "duplication percentage > 100%%");
+	}
+
+	if (duplication > 0 && latency == 0) {
+		/* we need to insert dup'ed packet with latency */
+		err(1, "duplication needs latency param");
+	}
+
+	if (latency > 1000) {
+		err(1, "latency %dms too big (> 1 sec)", latency);
+	}
+
+	if (jitter * 3 > latency) {
+		err(1, "jitter %dms too big (latency %dms)", jitter, latency);
+	}
+
+	/* if gr_gl == 0 (no loss), other prob should all be zero */
+	if (loss_p_gr_gl == 0 &&
+	    (loss_p_gr_bl != 0 || loss_p_bl_br != 0 || loss_p_bl_gr != 0 ||
+	    loss_p_br_bl != 0)) {
+		err(1, "loss params not all zero when gr_gl is zero");
+	}
+
+	/* check state machine transition prob integrity */
+	if (loss_p_gr_gl > IF_NETEM_PARAMS_PSCALE ||
+	    /* gr_gl = IF_NETEM_PARAMS_PSCALE for total loss */
+	    loss_p_gr_bl > IF_NETEM_PARAMS_PSCALE ||
+	    loss_p_bl_br > IF_NETEM_PARAMS_PSCALE ||
+	    loss_p_bl_gr > IF_NETEM_PARAMS_PSCALE ||
+	    loss_p_br_bl > IF_NETEM_PARAMS_PSCALE ||
+	    loss_p_gr_gl + loss_p_gr_bl > IF_NETEM_PARAMS_PSCALE ||
+	    loss_p_bl_br + loss_p_bl_gr > IF_NETEM_PARAMS_PSCALE) {
+		err(1, "loss params too big");
+	}
+
+	if (reordering > IF_NETEM_PARAMS_PSCALE) {
+	        err(1, "reordering percentage > 100%%");
+	}
+
+	p->ifnetem_bandwidth_bps = bandwitdh;
+	p->ifnetem_latency_ms = latency;
+	p->ifnetem_jitter_ms = jitter;
+	p->ifnetem_corruption_p = corruption;
+	p->ifnetem_duplication_p = duplication;
+	p->ifnetem_loss_p_gr_gl = loss_p_gr_gl;
+	p->ifnetem_loss_p_gr_bl = loss_p_gr_bl;
+	p->ifnetem_loss_p_bl_br = loss_p_bl_br;
+	p->ifnetem_loss_p_bl_gr = loss_p_bl_gr;
+	p->ifnetem_loss_p_br_bl = loss_p_br_bl;
+	p->ifnetem_loss_recovery_ms = loss_recovery_ms;
+	p->ifnetem_reordering_p = reordering;
+	p->ifnetem_output_ival_ms = output_ival_ms;
+
+	return (argc_saved - argc);
+}
+
+static char *
+netem_model_str(if_netem_model_t model)
+{
+	switch (model) {
+		case IF_NETEM_MODEL_NLC:
+			return ("Network link conditioner");
+			break;
+		case IF_NETEM_MODEL_IOD:
+			return ("In-order delivery");
+			break;
+		case IF_NETEM_MODEL_FPD:
+			return ("Fast packet delivery");
+			break;
+		default:
+			return ("unknown");
+			break;
+	}
+}
+
+static void
+print_netem_params(struct if_netem_params *p, const char *desc)
+{
+	struct if_netem_params zero_params;
+	double pscale = IF_NETEM_PARAMS_PSCALE / 100;
+	bzero(&zero_params, sizeof (zero_params));
+
+	if (memcmp(p, &zero_params, sizeof (zero_params)) == 0) {
+		printf("%s NetEm Disabled\n\n", desc);
+	} else {
+		printf(
+		    "%s NetEm Parameters\n"
+		    "\tmodel                          %s\n",
+		    desc, netem_model_str(p->ifnetem_model));
+
+		if (p->ifnetem_bandwidth_bps == UINT64_MAX) {
+			printf("\tbandwidth rate                 unlimited\n");
+		} else if (p->ifnetem_bandwidth_bps == 0) {
+			printf("\tbandwidth rate                 0, blocking all\n");
+		} else {
+			printf("\tbandwidth rate                 %llubps\n",
+			    p->ifnetem_bandwidth_bps);
+		}
+
+		printf(
+		    "\tdelay latency                  %dms\n"
+		    "\t      jitter                   %dms\n"
+		    "\tcorruption                     %.3f%%\n"
+		    "\treordering                     %.3f%%\n\n"
+		    "\trecovery                       %dms\n",
+		    p->ifnetem_latency_ms,
+		    p->ifnetem_jitter_ms,
+		    (double) p->ifnetem_corruption_p / pscale,
+		    (double) p->ifnetem_reordering_p / pscale,
+		    p->ifnetem_loss_recovery_ms);
+
+		if (p->ifnetem_loss_p_gr_bl == 0 &&
+		    p->ifnetem_loss_p_bl_br == 0 &&
+		    p->ifnetem_loss_p_bl_gr == 0 &&
+		    p->ifnetem_loss_p_br_bl == 0) {
+			printf(
+		    "\tloss                           %.3f%%\n",
+		    (double) p->ifnetem_loss_p_gr_gl / pscale);
+		} else {
+			printf(
+		    "\tloss GAP_RECV   -> GAP_LOSS    %.3f%%\n"
+		    "\t     GAP_RECV   -> BURST_LOSS  %.3f%%\n"
+		    "\t     BURST_LOSS -> BURST_RECV  %.3f%%\n"
+		    "\t     BURST_LOSS -> GAP_RECV    %.3f%%\n"
+		    "\t     BURST_RECV -> BURST_LOSS  %.3f%%\n",
+		    (double) p->ifnetem_loss_p_gr_gl / pscale,
+		    (double) p->ifnetem_loss_p_gr_bl / pscale,
+		    (double) p->ifnetem_loss_p_bl_br / pscale,
+		    (double) p->ifnetem_loss_p_bl_gr / pscale,
+		    (double) p->ifnetem_loss_p_br_bl / pscale);
+		}
+	}
+}
+
+static int
+setnetem(int argc, char *const *argv, int s, const struct afswtch *afp)
+{
+	struct if_linkparamsreq iflpr;
+	struct if_netem_params input_params, output_params;
+	int ret = 0, error = 0;
+
+	bzero(&iflpr, sizeof (iflpr));
+	bzero(&input_params, sizeof (input_params));
+	bzero(&output_params, sizeof (output_params));
+
+	if (argc > 1) {
+		if (strcmp(argv[0], "input") == 0) {
+			ret = netem_parse_args(&input_params, argc, argv);
+		} else if (strcmp(argv[0], "output") == 0) {
+			ret = netem_parse_args(&output_params, argc, argv);
+		} else if (strcmp(argv[0], "-h") == 0 || strcmp(argv[0], "--help") == 0) {
+			goto bad_args;
+		} else {
+			fprintf(stderr, "uknown option %s\n", argv[0]);
+			goto bad_args;
+		}
+		if (ret < 0) {
+			goto bad_args;
+		}
+	}
+
+	errno = 0;
+	strlcpy(iflpr.iflpr_name, name, sizeof (iflpr.iflpr_name));
+	error = ioctl(s, SIOCGIFLINKPARAMS, &iflpr);
+	if (error < 0) {
+		warn("ioctl (get link params)");
+	}
+
+	if (argc == 0) {
+		print_netem_params(&iflpr.iflpr_input_netem, "Input");
+		print_netem_params(&iflpr.iflpr_output_netem, "Output");
+		return (0);
+	} else if (argc == 1) {
+		if (strcmp(argv[0], "input") == 0) {
+			bzero(&iflpr.iflpr_input_netem,
+			    sizeof (iflpr.iflpr_input_netem));
+		} else if (strcmp(argv[0], "output") == 0) {
+			bzero(&iflpr.iflpr_output_netem,
+			    sizeof (iflpr.iflpr_output_netem));
+		} else {
+			fprintf(stderr, "uknown option %s\n", argv[0]);
+			goto bad_args;
+		}
+		printf("%s: netem is now disabled for %s\n", name, argv[0]);
+		ret = 1;
+	} else {
+		if (strcmp(argv[0], "input") == 0) {
+			iflpr.iflpr_input_netem = input_params;
+		} else if (strcmp(argv[0], "output") == 0) {
+			iflpr.iflpr_output_netem = output_params;
+		}
+	}
+
+	error = ioctl(s, SIOCSIFLINKPARAMS, &iflpr);
+	if (error < 0 && errno != ENOENT && errno != ENXIO && errno != ENODEV) {
+		warn("ioctl (set link params)");
+	} else if (errno == ENXIO) {
+		printf("netem cannot be set on %s\n", name);
+	} else {
+		printf("%s: netem configured\n", name);
+	}
+
+	return (ret);
+bad_args:
+	fprintf(stderr, "Usage:\n"
+			"\tTo enable/set netem params\n"
+			"\t\tnetem <input|output>\n"
+			"\t\t      [ bandwidth BIT_PER_SEC ]\n"
+			"\t\t      [ delay DELAY_MSEC [ JITTER_MSEC ] ]\n"
+			"\t\t      [ loss PERCENTAGE ]\n"
+			"\t\t      [ duplication PERCENTAGE ]\n"
+			"\t\t      [ reordering PERCENTAGE ]\n\n"
+			"\tTo disable <input|output> netem\n"
+			"\t\tnetem <input|output>\n\n"
+			"\tTo show current settings\n"
+			"\t\tnetem\n\n");
+	return (-1);
+}
+#endif
+
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 static void
 setthrottle(const char *val, int dummy __unused, int s,
     const struct afswtch *afp)
@@ -957,7 +1438,7 @@ setthrottle(const char *val, int dummy __unused, int s,
 
 	errno = 0;
 	bzero(&iftr, sizeof (iftr));
-	strncpy(iftr.ifthr_name, name, sizeof (iftr.ifthr_name));
+	strlcpy(iftr.ifthr_name, name, sizeof (iftr.ifthr_name));
 
 	iftr.ifthr_level = strtold(val, &cp);
 	if (val == cp || errno != 0) {
@@ -985,7 +1466,7 @@ setdisableoutput(const char *val, int dummy __unused, int s,
 	char *cp;
 	errno = 0;
 	bzero(&ifr, sizeof (ifr));
-	strncpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
 
 	ifr.ifr_ifru.ifru_disable_output = strtold(val, &cp);
 	if (val == cp || errno != 0) {
@@ -1013,7 +1494,7 @@ setlog(const char *val, int dummy __unused, int s,
 	char *cp;
 
 	errno = 0;
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 
 	ifr.ifr_log.ifl_level = strtold(val, &cp);
 	if (val == cp || errno != 0) {
@@ -1032,7 +1513,7 @@ setlog(const char *val, int dummy __unused, int s,
 void
 setcl2k(const char *vname, int value, int s, const struct afswtch *afp)
 {
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 	ifr.ifr_ifru.ifru_2kcl = value;
 	
 	if (ioctl(s, SIOCSIF2KCL, (caddr_t)&ifr) < 0)
@@ -1042,7 +1523,7 @@ setcl2k(const char *vname, int value, int s, const struct afswtch *afp)
 void
 setexpensive(const char *vname, int value, int s, const struct afswtch *afp)
 {
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 	ifr.ifr_ifru.ifru_expensive = value;
 	
 	if (ioctl(s, SIOCSIFEXPENSIVE, (caddr_t)&ifr) < 0)
@@ -1052,9 +1533,31 @@ setexpensive(const char *vname, int value, int s, const struct afswtch *afp)
 
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 void
+setconstrained(const char *vname, int value, int s, const struct afswtch *afp)
+{
+    strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+    ifr.ifr_ifru.ifru_constrained = value;
+
+    if (ioctl(s, SIOCSIFCONSTRAINED, (caddr_t)&ifr) < 0)
+        Perror(vname);
+}
+
+static void
+setifmpklog(const char *vname, int value, int s, const struct afswtch *afp)
+{
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	ifr.ifr_ifru.ifru_mpk_log = value;
+
+	if (ioctl(s, SIOCSIFMPKLOG, (caddr_t)&ifr) < 0)
+		Perror(vname);
+}
+#endif
+
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+void
 settimestamp(const char *vname, int value, int s, const struct afswtch *afp)
 {
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 	
 	if (value == 0) {
 		if (ioctl(s, SIOCSIFTIMESTAMPDISABLE, (caddr_t)&ifr) < 0)
@@ -1087,31 +1590,42 @@ setecnmode(const char *val, int dummy __unused, int s,
 		}
 	}
 	
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 	
 	if (ioctl(s, SIOCSECNMODE, (caddr_t)&ifr) < 0)
 		Perror("ioctl(SIOCSECNMODE)");
 }
 #endif
 
-#if defined(SIOCSQOSMARKINGMODE) && defined(SIOCSQOSMARKINGENABLED)
+#if  !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+void
+setprobeconnectivity(const char *vname, int value, int s, const struct afswtch *afp)
+{
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	ifr.ifr_ifru.ifru_probe_connectivity = value;
 
+	if (ioctl(s, SIOCSIFPROBECONNECTIVITY, (caddr_t)&ifr) < 0)
+		Perror(vname);
+}
+#endif
+
+#if  !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 void
 setqosmarking(const char *cmd, const char *arg, int s, const struct afswtch *afp)
 {
 	u_long ioc;
 
-#if (DEBUG | DEVELOPMENT)
-	printf("%s(%s, %s)\n", __func__, cmd, arg);
-#endif /* (DEBUG | DEVELOPMENT) */
-	
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 	
 	if (strcmp(cmd, "mode") == 0) {
 		ioc = SIOCSQOSMARKINGMODE;
 		
 		if (strcmp(arg, "fastlane") == 0)
 			ifr.ifr_qosmarking_mode = IFRTYPE_QOSMARKING_FASTLANE;
+        else if (strcmp(arg, "rfc4594") == 0)
+            ifr.ifr_qosmarking_mode = IFRTYPE_QOSMARKING_RFC4594;
+        else if (strcmp(arg, "custom") == 0)
+            ifr.ifr_qosmarking_mode = IFRTYPE_QOSMARKING_CUSTOM;
 		else if (strcasecmp(arg, "none") == 0 || strcasecmp(arg, "off") == 0)
 			ifr.ifr_qosmarking_mode = IFRTYPE_QOSMARKING_MODE_NONE;
 		else
@@ -1133,11 +1647,13 @@ setqosmarking(const char *cmd, const char *arg, int s, const struct afswtch *afp
 	if (ioctl(s, ioc, (caddr_t)&ifr) < 0)
 		err(EX_OSERR, "ioctl(%s, %s)", cmd, arg);
 }
+#endif
 
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 void
 setfastlane(const char *cmd, const char *arg, int s, const struct afswtch *afp)
 {
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 	
 	warnx("### fastlane is obsolete, use qosmarking ###");
 	
@@ -1163,71 +1679,208 @@ setfastlane(const char *cmd, const char *arg, int s, const struct afswtch *afp)
 		err(EX_USAGE, "fastlane takes capable or enable");
 	}
 }
-
-#else /* defined(SIOCSQOSMARKINGMODE) && defined(SIOCSQOSMARKINGENABLED) */
-
-#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
-void
-setfastlane(const char *cmd, const char *arg, int s, const struct afswtch *afp)
-{
-	int value;
-	u_long ioc;
-	
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
-	
-	if (strcmp(cmd, "capable") == 0)
-		ioc = SIOCSFASTLANECAPABLE;
-	else if (strcmp(cmd, "enable") == 0)
-		ioc = SIOCSFASTLEENABLED;
-	else
-		err(EX_USAGE, "fastlane takes capable or enabled");
-	
-	if (strcmp(arg, "1") == 0 || strcasecmp(arg, "on") == 0||
-	    strcasecmp(arg, "yes") == 0 || strcasecmp(arg, "true") == 0)
-		value = 1;
-	else if (strcmp(arg, "0") == 0 || strcasecmp(arg, "off") == 0||
-		 strcasecmp(arg, "no") == 0 || strcasecmp(arg, "false") == 0)
-		value = 0;
-	else
-		err(EX_USAGE, "bad value for fastlane %s", cmd);
-	
-	if (ioc == SIOCSFASTLANECAPABLE)
-		ifr.ifr_fastlane_capable = value;
-	else
-		ifr.ifr_fastlane_enabled = value;
-	
-	if (ioctl(s, ioc, (caddr_t)&ifr) < 0)
-		err(EX_OSERR, "ioctl(%s, %s)", cmd, arg);
-}
 #endif
 
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 void
-setqosmarking(const char *cmd, const char *arg, int s, const struct afswtch *afp)
+setlowpowermode(const char *vname, int value, int s, const struct afswtch *afp)
 {
-	if (strcmp(cmd, "mode") == 0) {
-		if (strcmp(arg, "fastlane") == 0)
-			setfastlane("capable", "on", s, afp);
-		else if (strcmp(arg, "none") == 0)
-			setfastlane("capable", "off", s, afp);
-		else
-			err(EX_USAGE, "bad value for qosmarking mode: %s", arg);
-	} else if (strcmp(cmd, "enabled") == 0) {
-		if (strcmp(arg, "1") == 0 || strcasecmp(arg, "on") == 0||
-		    strcasecmp(arg, "yes") == 0 || strcasecmp(arg, "true") == 0)
-			setfastlane("enable", "on", s, afp);
-		else if (strcmp(arg, "0") == 0 || strcasecmp(arg, "off") == 0||
-			 strcasecmp(arg, "no") == 0 || strcasecmp(arg, "false") == 0)
-			setfastlane("enable", "off", s, afp);
-		else
-			err(EX_USAGE, "bad value for qosmarking enabled: %s", arg);
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	ifr.ifr_low_power_mode = !!value;
+
+	if (ioctl(s, SIOCSIFLOWPOWER, (caddr_t)&ifr) < 0)
+		Perror(vname);
+}
+
+
+void
+setifmarkwakepkt(const char *vname, int value, int s, const struct afswtch *afp)
+{
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	ifr.ifr_intval = value;
+
+	if (ioctl(s, SIOCSIFMARKWAKEPKT, (caddr_t)&ifr) < 0)
+		Perror(vname);
+}
+
+void
+setnoackpri(const char *vname, int value, int s, const struct afswtch *afp)
+{
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	ifr.ifr_noack_prio = value;
+
+	if (ioctl(s, SIOCSIFNOACKPRIO, (caddr_t)&ifr) < 0)
+		Perror(vname);
+}
+#endif
+
+void
+setnoshaping(const char *vname, int value, int s, const struct afswtch *afp)
+{
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	ifr.ifr_intval = value;
+#ifdef SIOCSIFNOTRAFFICSHAPING
+	if (ioctl(s, SIOCSIFNOTRAFFICSHAPING, (caddr_t)&ifr) < 0)
+		Perror(vname);
+#endif /* SIOCSIFNOTRAFFICSHAPING */
+}
+
+void
+setmanagement(const char *vname, int value, int s, const struct afswtch *afp)
+{
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	ifr.ifr_intval = value;
+#ifdef SIOCSIFMANAGEMENT
+	if (ioctl(s, SIOCSIFMANAGEMENT, (caddr_t)&ifr) < 0)
+		Perror(vname);
+#endif /* SIOCSIFMANAGEMENT */
+}
+
+struct str2num {
+	const char *str;
+	uint32_t num;
+};
+
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+static struct str2num subfamily_str2num[] = {
+	{ .str = "any", .num = IFRTYPE_SUBFAMILY_ANY },
+	{ .str = "USB", .num = IFRTYPE_SUBFAMILY_USB },
+	{ .str = "Bluetooth", .num = IFRTYPE_SUBFAMILY_BLUETOOTH },
+	{ .str = "Wi-Fi", .num = IFRTYPE_SUBFAMILY_WIFI },
+	{ .str = "wifi", .num = IFRTYPE_SUBFAMILY_WIFI },
+	{ .str = "Thunderbolt", .num = IFRTYPE_SUBFAMILY_THUNDERBOLT },
+	{ .str = "reserverd", .num = IFRTYPE_SUBFAMILY_RESERVED },
+	{ .str = "intcoproc", .num = IFRTYPE_SUBFAMILY_INTCOPROC },
+	{ .str = "QuickRelay", .num = IFRTYPE_SUBFAMILY_QUICKRELAY },
+	{ .str = "Default", .num = IFRTYPE_SUBFAMILY_DEFAULT },
+	{ .str = NULL, .num = 0 },
+};
+
+static uint32_t
+get_num_from_str(struct str2num* str2nums, const char *str)
+{
+	struct str2num *str2num = str2nums;
+
+	while (str2num != NULL && str2num->str != NULL) {
+		if (strcasecmp(str2num->str, str) == 0) {
+			return str2num->num;
+		}
+		str2num++;
+	}
+	return 0;
+}
+
+static void
+setifsubfamily(const char *val, int dummy __unused, int s,
+	 const struct afswtch *afp)
+{
+	strlcpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
+
+	char *endptr;
+	uint32_t subfamily = strtoul(val, &endptr, 0);
+	if (*endptr != 0) {
+		subfamily = get_num_from_str(subfamily_str2num, val);
+		if (subfamily == 0) {
+			return;
+		}
+	}
+
+	ifr.ifr_type.ift_subfamily = subfamily;
+	if (ioctl(s, SIOCSIFSUBFAMILY, (caddr_t)&ifr) < 0)
+		warn("ioctl(SIOCSIFSUBFAMILY)");
+}
+
+void
+setifavailability(const char *vname, int value, int s, const struct afswtch *afp)
+{
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	ifr.ifr_interface_state.valid_bitmask = IF_INTERFACE_STATE_INTERFACE_AVAILABILITY_VALID;
+	if (value == 0) {
+		ifr.ifr_interface_state.interface_availability = IF_INTERFACE_STATE_INTERFACE_UNAVAILABLE;
 	} else {
-		err(EX_USAGE, "qosmarking takes mode or enabled");
+		ifr.ifr_interface_state.interface_availability = IF_INTERFACE_STATE_INTERFACE_AVAILABLE;
+	}
+	if (ioctl(s, SIOCSIFINTERFACESTATE, (caddr_t)&ifr) < 0)
+		warn("ioctl(SIOCSIFINTERFACESTATE)");
+}
+
+static void
+show_routermode(int s)
+{
+	struct afswtch *afp;
+
+	afp = af_getbyname("inet");
+	if (afp != NULL) {
+		(*afp->af_routermode)(s, 0, NULL);
+	}
+}
+
+static void
+show_routermode6(void)
+{
+	struct afswtch *afp;
+	static int 	s = -1;
+
+	afp = af_getbyname("inet6");
+	if (afp != NULL) {
+		if (s < 0) {
+			s = socket(AF_INET6, SOCK_DGRAM, 0);
+			if (s < 0) {
+				perror("socket");
+				return;
+			}
+		}
+		(*afp->af_routermode)(s, 0, NULL);
 	}
 }
 #endif
 
-#endif /* defined(SIOCSQOSMARKINGMODE) && defined(SIOCSQOSMARKINGENABLED) */
+#define	IFHWASSISTBITS \
+"\020\1CSUM_IP\2CSUM_TCP\3CSUM_UDP\4CSUM_IP_FRAGS\5CSUM_FRAGMENT\6CSUM_TCPIPV6\7CSUM_UDPIPV6" \
+"\10CSUM_FRAGMENT_IPV6\15CSUM_PARTIAL\16CSUM_ZERO_INVERT" \
+"\21VLAN_TAGGING\22VLAN_MTU\25MULTIPAGES\26TSO_V4\27TSO_V6" \
+"\30TXSTATUS\31HW_TIMESTAMP\32SW_TIMESTAMP\35LRO\36RX_CSUM "
+
+static void
+show_hwassist(void)
+{
+	int mib[6];
+	char *buf = NULL;
+	size_t buf_len = 0;
+	struct if_msghdr *ifm;
+
+	mib[0] = CTL_NET;
+	mib[1] = PF_ROUTE;
+	mib[2] = 0;
+	mib[3] = AF_LINK;
+	mib[4] = NET_RT_IFLIST;
+	mib[5] = if_nametoindex(name);
+
+	if (sysctl(mib, 6, NULL, &buf_len, NULL, 0) == -1) {
+		perror("sysctl");
+		goto done;
+	}
+	buf = calloc(buf_len, 1);
+	if (buf == NULL) {
+		perror("calloc");
+		goto done;
+	}
+	if (sysctl(mib, 6, buf, &buf_len, NULL, 0) == -1) {
+		perror("sysctl");
+		goto done;
+	}
+	ifm = (struct if_msghdr *)(void *)buf;
+	if (ifm->ifm_data.ifi_hwassist != 0) {
+		printb("\thwassist", ifm->ifm_data.ifi_hwassist, IFHWASSISTBITS);
+		printf("\n");
+	}
+
+done:
+	if (buf != NULL) {
+		free(buf);
+	}
+}
+
 
 #define	IFFBITS \
 "\020\1UP\2BROADCAST\3DEBUG\4LOOPBACK\5POINTOPOINT\6SMART\7RUNNING" \
@@ -1235,11 +1888,16 @@ setqosmarking(const char *cmd, const char *arg, int s, const struct afswtch *afp
 "\20MULTICAST"
 
 #define	IFEFBITS \
-"\020\1AUTOCONFIGURING\5FASTLN_CAP\6IPV6_DISABLED\7ACCEPT_RTADV\10TXSTART\11RXPOLL" \
-"\12VLAN\13BOND\14ARPLL\15NOWINDOWSCALE\16NOAUTOIPV6LL\17EXPENSIVE\20ROUTER4" \
-"\21ROUTER6\22LOCALNET_PRIVATE\23ND6ALT\24RESTRICTED_RECV\25AWDL\26NOACKPRI" \
+"\020\1AUTOCONFIGURING\4PROBE_CONNECTIVITY\5ADV_REPORT\6IPV6_DISABLED\7ACCEPT_RTADV\10TXSTART\11RXPOLL" \
+"\12VLAN\13BOND\14ARPLL\15CLAT46\16NOAUTOIPV6LL\17EXPENSIVE\20ROUTER4\21CLONE" \
+"\22LOCALNET_PRIVATE\23ND6ALT\24RESTRICTED_RECV\25AWDL\26NOACKPRI" \
 "\27AWDL_RESTRICTED\30CL2K\31ECN_ENABLE\32ECN_DISABLE\33CHANNEL_DRV\34CA" \
 "\35SENDLIST\36DIRECTLINK\37FASTLN_ON\40UPDOWNCHANGE"
+
+#define	IFXFBITS \
+"\020\1WOL\2TIMESTAMP\3NOAUTONX\4LEGACY\5TXLOWINET\6RXLOWINET\7ALLOCKPI" \
+"\10LOWPOWER\11MPKLOG\12CONSTRAINED\13LOWLAT\14MARKWKPKT\15FPD\16NOSHAPING" \
+"\17MANAGEMENT"
 
 #define	IFCAPBITS \
 "\020\1RXCSUM\2TXCSUM\3VLAN_MTU\4VLAN_HWTAGGING\5JUMBO_MTU" \
@@ -1270,6 +1928,7 @@ status(const struct afswtch *afp, const struct sockaddr_dl *sdl,
 	size_t miblen = sizeof(struct ifmibdata_supplemental);
 #endif
 	u_int64_t eflags = 0;
+	u_int64_t xflags = 0;
 	int curcap = 0;
 	
 	if (afp == NULL) {
@@ -1279,7 +1938,7 @@ status(const struct afswtch *afp, const struct sockaddr_dl *sdl,
 		allfamilies = 0;
 
 	ifr.ifr_addr.sa_family = afp->af_af == AF_LINK ? AF_INET : afp->af_af;
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 
 	s = socket(ifr.ifr_addr.sa_family, SOCK_DGRAM, 0);
 	if (s < 0)
@@ -1301,12 +1960,24 @@ status(const struct afswtch *afp, const struct sockaddr_dl *sdl,
 		if (ifindex != 0)
 			printf(" index %u", ifindex);
 	}
+#ifdef SIOCGIFCONSTRAINED
+    // Constrained is stored in if_xflags which isn't exposed directly
+    if (ioctl(s, SIOCGIFCONSTRAINED, (caddr_t)&ifr) == 0 &&
+        ifr.ifr_constrained != 0) {
+        printf(" constrained");
+    }
+#endif
 	putchar('\n');
 
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 	if (verbose && ioctl(s, SIOCGIFEFLAGS, (caddr_t)&ifr) != -1 &&
 	    (eflags = ifr.ifr_eflags) != 0) {
 		printb("\teflags", eflags, IFEFBITS);
+		putchar('\n');
+	}
+	if (verbose && ioctl(s, SIOCGIFXFLAGS, (caddr_t)&ifr) != -1 &&
+	    (xflags = ifr.ifr_xflags) != 0) {
+		printb("\txflags", xflags, IFXFBITS);
 		putchar('\n');
 	}
 #endif
@@ -1322,7 +1993,11 @@ status(const struct afswtch *afp, const struct sockaddr_dl *sdl,
 			putchar('\n');
 		}
 	}
-	
+
+	if (verbose) {
+		show_hwassist();
+	}
+
 	tunnel_status(s);
 
 	for (ift = ifa; ift != NULL; ift = ift->ifa_next) {
@@ -1338,6 +2013,15 @@ status(const struct afswtch *afp, const struct sockaddr_dl *sdl,
 		} else if (afp->af_af == ift->ifa_addr->sa_family)
 			afp->af_status(s, ift);
 	}
+
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+/* Print CLAT46 address */
+	clat46_addr(s, name);
+
+/* Print NAT64 prefix */
+	nat64_status(s, name);
+#endif
+
 #if 0
 	if (allfamilies || afp->af_af == AF_LINK) {
 		const struct afswtch *lafp;
@@ -1357,10 +2041,11 @@ status(const struct afswtch *afp, const struct sockaddr_dl *sdl,
 #endif
 	if (allfamilies)
 		af_other_status(s);
-	else if (afp->af_other_status != NULL)
-		afp->af_other_status(s);
+	else if (afp->af_other_status != NULL) {
+		call_af_other_status(afp, s);
+	}
 
-	strncpy(ifs.ifs_name, name, sizeof ifs.ifs_name);
+	strlcpy(ifs.ifs_name, name, sizeof ifs.ifs_name);
 	if (ioctl(s, SIOCGIFSTATUS, &ifs) == 0) 
 		printf("%s", ifs.ascii);
 
@@ -1368,8 +2053,14 @@ status(const struct afswtch *afp, const struct sockaddr_dl *sdl,
 	if (!verbose)
 		goto done;
 
+#ifdef SIOCGIFGENERATIONID
+	if (ioctl(s, SIOCGIFGENERATIONID, &ifr) != -1) {
+		printf("\tgeneration id: %llu\n", ifr.ifr_creation_generation_id);
+	}
+#endif /* SIOCGIFGENERATIONID */
+
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
-if (ioctl(s, SIOCGIFTYPE, &ifr) != -1) {
+    if (ioctl(s, SIOCGIFTYPE, &ifr) != -1) {
 		char *c = ift2str(ifr.ifr_type.ift_type,
 		    ifr.ifr_type.ift_family, ifr.ifr_type.ift_subfamily);
 		if (c != NULL)
@@ -1378,7 +2069,14 @@ if (ioctl(s, SIOCGIFTYPE, &ifr) != -1) {
 #endif
 
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
-	if (verbose > 0) {
+	if (verbose > 1) {
+		if (ioctl(s, SIOCGIFFUNCTIONALTYPE, &ifr) != -1) {
+			char *c = iffunct2str(ifr.ifr_functional_type);
+			if (c != NULL)
+				printf("\tfunctional type: %s\n", c);
+		}
+	}
+	{
 		struct if_agentidsreq ifar;
 		memset(&ifar, 0, sizeof(ifar));
 
@@ -1446,7 +2144,6 @@ if (ioctl(s, SIOCGIFTYPE, &ifr) != -1) {
 #endif
     
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
-	if (verbose > 0) {
 		if (ioctl(s, SIOCGIFINTERFACESTATE, &ifr) != -1) {
 			printf("\tstate");
 			if (ifr.ifr_interface_state.valid_bitmask &
@@ -1502,7 +2199,7 @@ if (ioctl(s, SIOCGIFTYPE, &ifr) != -1) {
     
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 	bzero(&iflpr, sizeof (iflpr));
-	strncpy(iflpr.iflpr_name, name, sizeof (iflpr.iflpr_name));
+	strlcpy(iflpr.iflpr_name, name, sizeof (iflpr.iflpr_name));
 	if (ioctl(s, SIOCGIFLINKPARAMS, &iflpr) != -1) {
 		u_int64_t ibw_max = iflpr.iflpr_input_bw.max_bw;
 		u_int64_t ibw_eff = iflpr.iflpr_input_bw.eff_bw;
@@ -1530,7 +2227,7 @@ if (ioctl(s, SIOCGIFTYPE, &ifr) != -1) {
 			printf("\n");
 
 			bzero(&iftr, sizeof (iftr));
-			strncpy(iftr.ifthr_name, name,
+			strlcpy(iftr.ifthr_name, name,
 			    sizeof (iftr.ifthr_name));
 			if (ioctl(s, SIOCGIFTHROTTLE, &iftr) != -1 &&
 			    iftr.ifthr_level != IFNET_THROTTLE_OFF)
@@ -1635,7 +2332,7 @@ if (ioctl(s, SIOCGIFTYPE, &ifr) != -1) {
 
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 	bzero(&ifdr, sizeof (ifdr));
-	strncpy(ifdr.ifdr_name, name, sizeof (ifdr.ifdr_name));
+	strlcpy(ifdr.ifdr_name, name, sizeof (ifdr.ifdr_name));
 	if (ioctl(s, SIOCGIFDESC, &ifdr) != -1 && ifdr.ifdr_len) {
 		printf("\tdesc: %s\n", ifdr.ifdr_desc);
 	}
@@ -1661,16 +2358,13 @@ if (ioctl(s, SIOCGIFTYPE, &ifr) != -1) {
 			    ifr.ifr_start_delay_timeout/1000);
 		}
 	}
-#if defined(IFCAP_HW_TIMESTAMP) && defined(IFCAP_SW_TIMESTAMP)
-	if ((curcap & (IFCAP_HW_TIMESTAMP | IFCAP_SW_TIMESTAMP)) &&
+
+    if ((curcap & (IFCAP_HW_TIMESTAMP | IFCAP_SW_TIMESTAMP)) &&
 	    ioctl(s, SIOCGIFTIMESTAMPENABLED, &ifr) != -1) {
 		printf("\ttimestamp: %s\n",
 		       (ifr.ifr_intval != 0) ? "enabled" : "disabled");
 	}
-#endif
-#endif
-#if defined(SIOCGQOSMARKINGENABLED) && defined(SIOCGQOSMARKINGMODE)
-	if (ioctl(s, SIOCGQOSMARKINGENABLED, &ifr) != -1) {
+    if (ioctl(s, SIOCGQOSMARKINGENABLED, &ifr) != -1) {
 		printf("\tqosmarking enabled: %s mode: ",
 		       ifr.ifr_qosmarking_enabled ? "yes" : "no");
 		if (ioctl(s, SIOCGQOSMARKINGMODE, &ifr) != -1) {
@@ -1678,6 +2372,12 @@ if (ioctl(s, SIOCGIFTYPE, &ifr) != -1) {
 				case IFRTYPE_QOSMARKING_FASTLANE:
 					printf("fastlane\n");
 					break;
+                case IFRTYPE_QOSMARKING_RFC4594:
+                    printf("RFC4594\n");
+                    break;
+                case IFRTYPE_QOSMARKING_CUSTOM:
+                    printf("custom\n");
+                    break;
 				case IFRTYPE_QOSMARKING_MODE_NONE:
 					printf("none\n");
 					break;
@@ -1687,7 +2387,18 @@ if (ioctl(s, SIOCGIFTYPE, &ifr) != -1) {
 			}
 		}
 	}
-#endif /* defined(SIOCGQOSMARKINGENABLED) && defined(SIOCGQOSMARKINGMODE) */
+
+	if (ioctl(s, SIOCGIFLOWPOWER, &ifr) != -1) {
+		printf("\tlow power mode: %s\n",
+		       (ifr.ifr_low_power_mode != 0) ? "enabled" : "disabled");
+	}
+	if (ioctl(s, SIOCGIFMPKLOG, &ifr) != -1) {
+		printf("\tmulti layer packet logging (mpklog): %s\n",
+		       (ifr.ifr_mpk_log != 0) ? "enabled" : "disabled");
+	}
+	show_routermode(s);
+	show_routermode6();
+#endif
 done:
 	close(s);
 	return;
@@ -1786,6 +2497,53 @@ tunnel_status(int s)
 	af_all_tunnel_status(s);
 }
 
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+static void
+clat46_addr(int s, char * if_name)
+{
+	struct if_clat46req ifr;
+	char buf[MAXHOSTNAMELEN];
+
+	bzero(&ifr, sizeof (ifr));
+	strlcpy(ifr.ifclat46_name, if_name, sizeof(ifr.ifclat46_name));
+
+	if (ioctl(s, SIOCGIFCLAT46ADDR, &ifr) < 0) {
+		if (errno != ENOENT && errno != ENOMEM && errno != EPERM)
+			warn("ioctl (SIOCGIFCLAT46ADDR)");
+		return;
+	}
+
+	if (inet_ntop(AF_INET6, &ifr.ifclat46_addr.v6_address, buf, sizeof(buf)) != NULL)
+		printf("\tinet6 %s prefixlen %d clat46\n",
+			buf, ifr.ifclat46_addr.v6_prefixlen);
+}
+
+static void
+nat64_status(int s, char * if_name)
+{
+	int i;
+	struct if_nat64req ifr;
+	char buf[MAXHOSTNAMELEN];
+
+	bzero(&ifr, sizeof(ifr));
+	strlcpy(ifr.ifnat64_name, if_name, sizeof(ifr.ifnat64_name));
+
+	if (ioctl(s, SIOCGIFNAT64PREFIX, &ifr) < 0) {
+		if (errno != ENOENT && errno != ENOMEM && errno != EPERM)
+			warn("ioctl(SIOCGIFNAT64PREFIX)");
+		return;
+	}
+
+	for (i = 0; i < NAT64_MAX_NUM_PREFIXES; i++) {
+		if (ifr.ifnat64_prefixes[i].prefix_len > 0) {
+			inet_ntop(AF_INET6, &ifr.ifnat64_prefixes[i].ipv6_prefix, buf, sizeof(buf));
+			printf("\tnat64 prefix %s prefixlen %d\n",
+			    buf, ifr.ifnat64_prefixes[i].prefix_len << 3);
+		}
+	}
+}
+#endif
+
 void
 Perror(const char *cmd)
 {
@@ -1835,59 +2593,6 @@ printb(const char *s, unsigned v, const char *bits)
 	}
 }
 
-#ifndef __APPLE__
-void
-ifmaybeload(const char *name)
-{
-#define MOD_PREFIX_LEN		3	/* "if_" */
-	struct module_stat mstat;
-	int fileid, modid;
-	char ifkind[IFNAMSIZ + MOD_PREFIX_LEN], ifname[IFNAMSIZ], *dp;
-	const char *cp;
-
-	/* loading suppressed by the user */
-	if (noload)
-		return;
-
-	/* trim the interface number off the end */
-	strlcpy(ifname, name, sizeof(ifname));
-	for (dp = ifname; *dp != 0; dp++)
-		if (isdigit(*dp)) {
-			*dp = 0;
-			break;
-		}
-
-	/* turn interface and unit into module name */
-	strlcpy(ifkind, "if_", sizeof(ifkind));
-	strlcpy(ifkind + MOD_PREFIX_LEN, ifname,
-	    sizeof(ifkind) - MOD_PREFIX_LEN);
-
-	/* scan files in kernel */
-	mstat.version = sizeof(struct module_stat);
-	for (fileid = kldnext(0); fileid > 0; fileid = kldnext(fileid)) {
-		/* scan modules in file */
-		for (modid = kldfirstmod(fileid); modid > 0;
-		     modid = modfnext(modid)) {
-			if (modstat(modid, &mstat) < 0)
-				continue;
-			/* strip bus name if present */
-			if ((cp = strchr(mstat.name, '/')) != NULL) {
-				cp++;
-			} else {
-				cp = mstat.name;
-			}
-			/* already loaded? */
-			if (strncmp(ifname, cp, strlen(ifname) + 1) == 0 ||
-			    strncmp(ifkind, cp, strlen(ifkind) + 1) == 0)
-				return;
-		}
-	}
-
-	/* not present, we should try to load it */
-	kldload(ifkind);
-}
-#endif
-
 static struct cmd basic_cmds[] = {
 	DEF_CMD("up",		IFF_UP,		setifflags),
 	DEF_CMD("down",		-IFF_UP,	setifflags),
@@ -1926,6 +2631,10 @@ static struct cmd basic_cmds[] = {
 	DEF_CMD("monitor",	IFF_MONITOR:,	setifflags),
 	DEF_CMD("-monitor",	-IFF_MONITOR,	setifflags),
 #endif /* IFF_MONITOR */
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+	DEF_CMD("mpklog",	1,		setifmpklog),
+	DEF_CMD("-mpklog",	0,		setifmpklog),
+#endif
 #ifdef IFF_STATICARP
 	DEF_CMD("staticarp",	IFF_STATICARP,	setifflags),
 	DEF_CMD("-staticarp",	-IFF_STATICARP,	setifflags),
@@ -1983,21 +2692,43 @@ static struct cmd basic_cmds[] = {
 #endif /* IFCAP_AV */
 	DEF_CMD("router",	1,		setrouter),
 	DEF_CMD("-router",	0,		setrouter),
+	DEF_CMD_VA("routermode", 		routermode),
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 	DEF_CMD_ARG("desc",			setifdesc),
 	DEF_CMD_ARG("tbr",			settbr),
+	DEF_CMD_VA("netem",			setnetem),
 	DEF_CMD_ARG("throttle",			setthrottle),
 	DEF_CMD_ARG("log",			setlog),
 	DEF_CMD("cl2k",	1,			setcl2k),
 	DEF_CMD("-cl2k",	0,		setcl2k),
 	DEF_CMD("expensive",	1,		setexpensive),
 	DEF_CMD("-expensive",	0,		setexpensive),
+#ifdef SIOCSIFCONSTRAINED
+    DEF_CMD("constrained",  1,      setconstrained),
+    DEF_CMD("-constrained", 0,      setconstrained),
+#endif
 	DEF_CMD("timestamp",	1,		settimestamp),
 	DEF_CMD("-timestamp",	0,		settimestamp),
 	DEF_CMD_ARG("ecn",			setecnmode),
 	DEF_CMD_ARG2("fastlane",		setfastlane),
 	DEF_CMD_ARG2("qosmarking",		setqosmarking),
 	DEF_CMD_ARG("disable_output",		setdisableoutput),
+	DEF_CMD("probe_connectivity",	1,		setprobeconnectivity),
+	DEF_CMD("-probe_connectivity",	0,		setprobeconnectivity),
+	DEF_CMD("lowpowermode",	1,		setlowpowermode),
+	DEF_CMD("-lowpowermode",	0,	setlowpowermode),
+	DEF_CMD_ARG("subfamily",		setifsubfamily),
+	DEF_CMD("available",	1,	setifavailability),
+	DEF_CMD("-available",	0,	setifavailability),
+	DEF_CMD("unavailable",	0,	setifavailability),
+	DEF_CMD("markwakepkt",	1,	setifmarkwakepkt),
+	DEF_CMD("-markwakepkt",	0,	setifmarkwakepkt),
+	DEF_CMD("noackpri",  1,      setnoackpri),
+	DEF_CMD("-noackpri", 0,      setnoackpri),
+	DEF_CMD("noshaping",  1,      setnoshaping),
+	DEF_CMD("-noshaping", 0,      setnoshaping),
+	DEF_CMD("management", 1,      setmanagement),
+	DEF_CMD("-management", 0,      setmanagement),
 #endif
 };
 
@@ -2021,12 +2752,6 @@ sched2str(unsigned int s)
 	switch (s) {
 	case PKTSCHEDT_NONE:
 		c = "NONE";
-		break;
-	case PKTSCHEDT_TCQ:
-		c = "TCQ";
-		break;
-	case PKTSCHEDT_QFQ:
-		c = "QFQ";
 		break;
 	case PKTSCHEDT_FQ_CODEL:
 		c = "FQ_CODEL";
@@ -2106,10 +2831,27 @@ ift2str(unsigned int t, unsigned int f, unsigned int sf)
 		c = "Cellular";
 		break;
 
+	case IFT_OTHER:
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+		if (ifr.ifr_type.ift_family == APPLE_IF_FAM_IPSEC) {
+			if (ifr.ifr_type.ift_subfamily == IFRTYPE_SUBFAMILY_BLUETOOTH) {
+				c = "Companion Link Bluetooth";
+			} else if (ifr.ifr_type.ift_subfamily == IFRTYPE_SUBFAMILY_QUICKRELAY) {
+				c = "Companion Link QuickRelay";
+			} else if (ifr.ifr_type.ift_subfamily == IFRTYPE_SUBFAMILY_WIFI) {
+				c = "Companion Link Wi-Fi";
+			} else if (ifr.ifr_type.ift_subfamily == IFRTYPE_SUBFAMILY_DEFAULT) {
+				c = "Companion Link Default";
+			}
+		}
+#else
+            c = "Companion Link Wi-Fi";
+#endif
+		break;
+
 	case IFT_BRIDGE:
 	case IFT_PFLOG:
 	case IFT_PFSYNC:
-	case IFT_OTHER:
 	case IFT_PPP:
 	case IFT_LOOP:
 	case IFT_GIF:
@@ -2136,6 +2878,89 @@ ift2str(unsigned int t, unsigned int f, unsigned int sf)
 		c = buf;
 	}
 #endif
-    
 	return (c);
+}
+
+static char *
+iffunct2str(u_int32_t functional_type)
+{
+	char *str = NULL;
+
+	switch (functional_type) {
+		case IFRTYPE_FUNCTIONAL_UNKNOWN:
+			break;
+
+		case IFRTYPE_FUNCTIONAL_LOOPBACK:
+			str = "loopback";
+			break;
+
+		case IFRTYPE_FUNCTIONAL_WIRED:
+			str = "wired";
+			break;
+
+		case IFRTYPE_FUNCTIONAL_WIFI_INFRA:
+			str = "wifi";
+			break;
+
+		case IFRTYPE_FUNCTIONAL_WIFI_AWDL:
+			str = "awdl";
+			break;
+
+		case IFRTYPE_FUNCTIONAL_CELLULAR:
+			str = "cellular";
+			break;
+
+		case IFRTYPE_FUNCTIONAL_INTCOPROC:
+			break;
+
+		case IFRTYPE_FUNCTIONAL_COMPANIONLINK:
+			str = "companionlink";
+			break;
+
+		default:
+			break;
+	}
+	return str;
+}
+
+static void freeformat(void)
+{
+
+	if (f_inet != NULL)
+		free(f_inet);
+	if (f_inet6 != NULL)
+		free(f_inet6);
+	if (f_ether != NULL)
+		free(f_ether);
+	if (f_addr != NULL)
+		free(f_addr);
+}
+
+static void setformat(char *input)
+{
+	char	*formatstr, *category, *modifier;
+
+	formatstr = strdup(input);
+	while ((category = strsep(&formatstr, ",")) != NULL) {
+		modifier = strchr(category, ':');
+		if (modifier == NULL || modifier[1] == '\0') {
+			warnx("Skipping invalid format specification: %s\n",
+				category);
+			continue;
+		}
+
+		/* Split the string on the separator, then seek past it */
+		modifier[0] = '\0';
+		modifier++;
+
+		if (strcmp(category, "addr") == 0)
+			f_addr = strdup(modifier);
+		else if (strcmp(category, "ether") == 0)
+			f_ether = strdup(modifier);
+		else if (strcmp(category, "inet") == 0)
+			f_inet = strdup(modifier);
+		else if (strcmp(category, "inet6") == 0)
+			f_inet6 = strdup(modifier);
+	}
+	free(formatstr);
 }

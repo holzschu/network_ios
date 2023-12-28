@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2011 Apple Inc. All rights reserved.
+ * Copyright (c) 2009-2011, 2020 Apple Inc. All rights reserved.
  *
  * @APPLE_OSREFERENCE_LICENSE_HEADER_START@
  *
@@ -84,6 +84,8 @@
 
 static struct ifaliasreq in_addreq;
 static struct ifreq in_ridreq;
+static char addr_buf[NI_MAXHOST];	/*for getnameinfo()*/
+extern char *f_inet, *f_addr;
 
 static void
 in_status(int s __unused, const struct ifaddrs *ifa)
@@ -96,24 +98,58 @@ in_status(int s __unused, const struct ifaddrs *ifa)
 	if (sin == NULL)
 		return;
 
-	printf("\tinet %s ", inet_ntoa(sin->sin_addr));
+	if (f_addr == NULL || strcmp(f_addr, "default") == 0) {
+		printf("\tinet %s", inet_ntoa(sin->sin_addr));
+	} else {
+		int error, n_flags;
+
+		if (f_addr != NULL && strcmp(f_addr, "fqdn") == 0)
+			n_flags = 0;
+		else if (f_addr != NULL && strcmp(f_addr, "host") == 0)
+			n_flags = NI_NOFQDN;
+		else
+			n_flags = NI_NUMERICHOST;
+
+		error = getnameinfo((struct sockaddr *)sin, sin->sin_len, addr_buf,
+					sizeof(addr_buf), NULL, 0, n_flags);
+		if (error)
+			inet_ntop(AF_INET, &sin->sin_addr, addr_buf, sizeof(addr_buf));
+
+		printf("\tinet %s", addr_buf);
+	}
 
 	if (ifa->ifa_flags & IFF_POINTOPOINT) {
 		sin = (struct sockaddr_in *)ifa->ifa_dstaddr;
 		if (sin == NULL)
 			sin = &null_sin;
-		printf("--> %s ", inet_ntoa(sin->sin_addr));
+		printf(" --> %s", inet_ntoa(sin->sin_addr));
 	}
 
 	sin = (struct sockaddr_in *)ifa->ifa_netmask;
 	if (sin == NULL)
 		sin = &null_sin;
-	printf("netmask 0x%lx ", (unsigned long)ntohl(sin->sin_addr.s_addr));
+	if (f_inet != NULL && strcmp(f_inet, "cidr") == 0) {
+		int cidr = 32;
+		unsigned long smask;
+
+		smask = ntohl(sin->sin_addr.s_addr);
+		while ((smask & 1) == 0) {
+			smask = smask >> 1;
+			cidr--;
+			if (cidr == 0)
+				break;
+		}
+		printf("/%d", cidr);
+	} else if (f_inet != NULL && strcmp(f_inet, "dotted") == 0)
+		printf(" netmask %s", inet_ntoa(sin->sin_addr));
+	else {
+		printf(" netmask 0x%lx", (unsigned long)ntohl(sin->sin_addr.s_addr));
+	}
 
 	if (ifa->ifa_flags & IFF_BROADCAST) {
 		sin = (struct sockaddr_in *)ifa->ifa_broadaddr;
 		if (sin != NULL && sin->sin_addr.s_addr != 0)
-			printf("broadcast %s", inet_ntoa(sin->sin_addr));
+			printf(" broadcast %s", inet_ntoa(sin->sin_addr));
 	}
 	putchar('\n');
 }
@@ -179,7 +215,7 @@ in_status_tunnel(int s)
 	const struct sockaddr *sa = (const struct sockaddr *) &ifr.ifr_addr;
 
 	memset(&ifr, 0, sizeof(ifr));
-	strncpy(ifr.ifr_name, name, IFNAMSIZ);
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 
 	if (ioctl(s, SIOCGIFPSRCADDR, (caddr_t)&ifr) < 0)
 		return;
@@ -204,7 +240,7 @@ in_set_tunnel(int s, struct addrinfo *srcres, struct addrinfo *dstres)
 	struct ifaliasreq addreq;
 
 	memset(&addreq, 0, sizeof(addreq));
-	strncpy(addreq.ifra_name, name, IFNAMSIZ);
+	strlcpy(addreq.ifra_name, name, sizeof(addreq.ifra_name));
 	memcpy(&addreq.ifra_addr, srcres->ai_addr, srcres->ai_addr->sa_len);
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 	memcpy(&addreq.ifra_dstaddr, dstres->ai_addr, dstres->ai_addr->sa_len);
@@ -220,7 +256,7 @@ in_set_router(int s, int enable)
 	struct ifreq ifr;
 
 	bzero(&ifr, sizeof (ifr));
-	strncpy(ifr.ifr_name, name, IFNAMSIZ);
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 	ifr.ifr_intval = enable;
 
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
@@ -228,6 +264,84 @@ in_set_router(int s, int enable)
 		warn("SIOCSETROUTERMODE");
 #endif
 }
+
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+static int
+routermode_from_string(char * str, int *mode_p)
+{
+	int	success = 1;
+
+	if (strcasecmp(str, "enabled") == 0) {
+		*mode_p = 1;
+	} else if (strcasecmp(str, "disabled") == 0) {
+		*mode_p = 0;
+	} else {
+		success = 0;
+	}
+	return (success);
+}
+
+static const char *
+routermode_string(int mode)
+{
+	const char *	str;
+
+	switch (mode) {
+	case 0:
+		str = "disabled";
+		break;
+	case 1:
+		str = "enabled";
+		break;
+	default:
+		str = "<unknown>";
+		break;
+	}
+	return str;
+}
+
+static int
+in_routermode(int s, int argc, char *const*argv)
+{
+	struct ifreq 	ifr;
+	int 		ret;
+
+	bzero(&ifr, sizeof (ifr));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	if (argc == 0) {
+		ret = 0;
+#ifndef SIOCGETROUTERMODE
+#define SIOCGETROUTERMODE _IOWR('i', 209, struct ifreq)   /* get IPv4 router mode state */
+#endif /* SIOCGETROUTERMODE */
+		if (ioctl(s, SIOCGETROUTERMODE, &ifr) < 0) {
+			if (argv != NULL) {
+				warn("SIOCGETROUTERMODE");
+			}
+		} else {
+			/* argv is NULL if we're called from status() */
+			printf("%s%s\n",
+			       (argv == NULL) ? "\troutermode4: " : "",
+			       routermode_string(ifr.ifr_intval));
+		}
+		ret = 0;
+	} else {
+		int mode;
+
+		if (routermode_from_string(argv[0], &mode) == 0) {
+			errx(EXIT_FAILURE,
+			     "mode '%s' invalid, must be one of "
+			     "disabled or enabled",
+			     argv[0]);
+		}
+		ifr.ifr_intval = mode;
+		if (ioctl(s, SIOCSETROUTERMODE, &ifr) < 0) {
+			warn("SIOCSETROUTERMODE");
+		}
+		ret = 1;
+	}
+	return ret;
+}
+#endif
 
 static struct afswtch af_inet = {
 	.af_name	= "inet",
@@ -237,6 +351,9 @@ static struct afswtch af_inet = {
 	.af_status_tunnel = in_status_tunnel,
 	.af_settunnel	= in_set_tunnel,
 	.af_setrouter	= in_set_router,
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+	.af_routermode	= in_routermode,
+#endif
 	.af_difaddr	= SIOCDIFADDR,
 	.af_aifaddr	= SIOCAIFADDR,
 	.af_ridreq	= &in_ridreq,

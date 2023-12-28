@@ -237,6 +237,7 @@
 		22B752E92068D59500F2B025 /* sourceroute.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3FD20265981004E76C6 /* sourceroute.c */; };
 		22B752EA2068D59A00F2B025 /* ping.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3EB20259A53004E76C6 /* ping.c */; };
 		22B752EB2068D59A00F2B025 /* gmt2local.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC3F220264FCB004E76C6 /* gmt2local.c */; };
+		22E56C2A2B2999410062132D /* af_inet6.c in Sources */ = {isa = PBXBuildFile; fileRef = 22E56C292B2999410062132D /* af_inet6.c */; };
 		22F0805D20984EB9003C3BF0 /* whois.c in Sources */ = {isa = PBXBuildFile; fileRef = 22F0805C20984EB9003C3BF0 /* whois.c */; };
 		D2334EA025C16BB800385378 /* ios_system.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2334E9F25C16BB800385378 /* ios_system.xcframework */; };
 		D28F12B920B44D6A0046B948 /* conn_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 229EC40820276228004E76C6 /* conn_lib.c */; };
@@ -496,6 +497,7 @@
 		22D864122027B3CE00456179 /* namedconf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = namedconf.c; path = sources/bind9/lib/isccfg/namedconf.c; sourceTree = SOURCE_ROOT; };
 		22D864142027B3D300456179 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = parser.c; path = sources/bind9/lib/isccfg/parser.c; sourceTree = SOURCE_ROOT; };
 		22D864162027B3DA00456179 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = sources/bind9/lib/isccfg/version.c; sourceTree = SOURCE_ROOT; };
+		22E56C292B2999410062132D /* af_inet6.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = af_inet6.c; sourceTree = "<group>"; };
 		22F0805C20984EB9003C3BF0 /* whois.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = whois.c; sourceTree = "<group>"; };
 		D2334E9F25C16BB800385378 /* ios_system.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ios_system.xcframework; path = xcfs/.build/artifacts/xcfs/ios_system.xcframework; sourceTree = "<group>"; };
 		D2F3B942214D300700D8E248 /* udptunnel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = udptunnel.m; sourceTree = "<group>"; };
@@ -523,6 +525,7 @@
 			children = (
 				221CD96B21E35A6D00F3B47C /* ifconfig.c */,
 				221CD97921E384DB00F3B47C /* af_inet.c */,
+				22E56C292B2999410062132D /* af_inet6.c */,
 				221CD97E21E384DC00F3B47C /* af_link.c */,
 				221CD97D21E384DC00F3B47C /* ifclone.c */,
 			);
@@ -1191,6 +1194,7 @@
 				22B7524C2068CDD200F2B025 /* keytable.c in Sources */,
 				22B7526D2068CDD200F2B025 /* ssu_external.c in Sources */,
 				22B752AF2068CDE200F2B025 /* serial.c in Sources */,
+				22E56C2A2B2999410062132D /* af_inet6.c in Sources */,
 				22B752B22068CDE200F2B025 /* sockaddr.c in Sources */,
 				22B7522F2068CDD200F2B025 /* acache.c in Sources */,
 				22B752C02068CDEC00F2B025 /* file.c in Sources */,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2014 Apple Inc. All rights reserved.
+ * Copyright (c) 2009-2017, 2020 Apple Inc. All rights reserved.
  *
  * @APPLE_OSREFERENCE_LICENSE_HEADER_START@
  *
@@ -85,9 +85,14 @@
 
 #if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 #include <netinet6/nd6.h>	/* Define ND6_INFINITE_LIFETIME */
+#else
+#include "netinet6/in6_var.h"
+#include "netinet6/nd6.h"
 #endif
 
 #include "ifconfig.h"
+
+extern	char *f_inet6, *f_addr;
 
 #define ND6BITS "\020\001PERFORMNUD\002ACCEPT_RTADV\003PREFER_SOURCE" \
 	"\004IFDISABLED\005DONT_SET_IFROUTE\006PROXY_PREFIXES" \
@@ -101,7 +106,12 @@ static	struct in6_aliasreq in6_addreq =
     { 0 }, 
     0, 
     { 0, 0, ND6_INFINITE_LIFETIME, ND6_INFINITE_LIFETIME } };
+
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 static	int ip6lifetime;
+#else
+static __thread int ip6lifetime = 0;
+#endif
 
 static	void in6_fillscopeid(struct sockaddr_in6 *sin6);
 static	int prefix(void *, int);
@@ -127,7 +137,7 @@ setnd6flags(const char *dummyaddr __unused, int d, int s,
 	int error;
 
 	memset(&nd, 0, sizeof(nd));
-	strncpy(nd.ifname, ifr.ifr_name, sizeof(nd.ifname));
+	strlcpy(nd.ifname, ifr.ifr_name, sizeof(nd.ifname));
 	error = ioctl(s, SIOCGIFINFO_IN6, &nd);
 	if (error) {
 		warn("ioctl(SIOCGIFINFO_IN6)");
@@ -246,7 +256,7 @@ in6_status(int s __unused, const struct ifaddrs *ifa)
 	u_int32_t flags6;
 	struct in6_addrlifetime lifetime;
 	time_t t = time(NULL);
-	int error;
+	int error, n_flags;
 	u_int32_t scopeid;
 
 	memset(&null_sin, 0, sizeof(null_sin));
@@ -255,7 +265,7 @@ in6_status(int s __unused, const struct ifaddrs *ifa)
 	if (sin == NULL)
 		return;
 
-	strncpy(ifr6.ifr_name, ifr.ifr_name, sizeof(ifr.ifr_name));
+	strlcpy(ifr6.ifr_name, ifr.ifr_name, sizeof(ifr.ifr_name));
 	if ((s6 = socket(AF_INET6, SOCK_DGRAM, 0)) < 0) {
 		warn("socket(AF_INET6,SOCK_DGRAM)");
 		return;
@@ -289,12 +299,18 @@ in6_status(int s __unused, const struct ifaddrs *ifa)
 	}
 	scopeid = sin->sin6_scope_id;
 
+	if (f_addr != NULL && strcmp(f_addr, "fqdn") == 0)
+		n_flags = 0;
+	else if (f_addr != NULL && strcmp(f_addr, "host") == 0)
+		n_flags = NI_NOFQDN;
+	else
+		n_flags = NI_NUMERICHOST;
 	error = getnameinfo((struct sockaddr *)sin, sin->sin6_len, addr_buf,
-			    sizeof(addr_buf), NULL, 0, NI_NUMERICHOST);
+			    sizeof(addr_buf), NULL, 0, n_flags);
 	if (error != 0)
 		inet_ntop(AF_INET6, &sin->sin6_addr, addr_buf,
 			  sizeof(addr_buf));
-	printf("\tinet6 %s ", addr_buf);
+	printf("\tinet6 %s", addr_buf);
 
 	if (ifa->ifa_flags & IFF_POINTOPOINT) {
 		sin = (struct sockaddr_in6 *)ifa->ifa_dstaddr;
@@ -323,15 +339,19 @@ in6_status(int s __unused, const struct ifaddrs *ifa)
 			if (error != 0)
 				inet_ntop(AF_INET6, &sin->sin6_addr, addr_buf,
 					  sizeof(addr_buf));
-			printf("--> %s ", addr_buf);
+			printf(" --> %s", addr_buf);
 		}
 	}
 
 	sin = (struct sockaddr_in6 *)ifa->ifa_netmask;
 	if (sin == NULL)
 		sin = &null_sin;
-	printf("prefixlen %d ", prefix(&sin->sin6_addr,
-		sizeof(struct in6_addr)));
+	if (f_inet6 != NULL && strcmp(f_inet6, "cidr") == 0)
+		printf("/%d ", prefix(&sin->sin6_addr,
+			sizeof(struct in6_addr)));
+	else
+		printf(" prefixlen %d ", prefix(&sin->sin6_addr,
+			sizeof(struct in6_addr)));
 
 	if ((flags6 & IN6_IFF_ANYCAST) != 0)
 		printf("anycast ");
@@ -353,6 +373,8 @@ in6_status(int s __unused, const struct ifaddrs *ifa)
 		printf("dynamic ");
 	if ((flags6 & IN6_IFF_SECURED) != 0)
 		printf("secured ");
+	if ((flags6 & IN6_IFF_CLAT46) != 0)
+		printf("clat46 ");
 
         if (scopeid)
 		printf("scopeid 0x%x ", scopeid);
@@ -516,7 +538,7 @@ in6_status_tunnel(int s)
 	const struct sockaddr *sa = (const struct sockaddr *) &in6_ifr.ifr_addr;
 
 	memset(&in6_ifr, 0, sizeof(in6_ifr));
-	strncpy(in6_ifr.ifr_name, name, IFNAMSIZ);
+	strlcpy(in6_ifr.ifr_name, name, sizeof(in6_ifr.ifr_name));
 
 	if (ioctl(s, SIOCGIFPSRCADDR_IN6, (caddr_t)&in6_ifr) < 0)
 		return;
@@ -547,7 +569,7 @@ nd6_status(int s)
 	int error;
 
 	memset(&nd, 0, sizeof(nd));
-	strncpy(nd.ifname, ifr.ifr_name, sizeof(nd.ifname));
+	strlcpy(nd.ifname, ifr.ifr_name, sizeof(nd.ifname));
 	if ((s6 = socket(AF_INET6, SOCK_DGRAM, 0)) < 0) {
 		if (errno != EPROTONOSUPPORT)
 			warn("socket(AF_INET6, SOCK_DGRAM)");
@@ -573,7 +595,7 @@ in6_set_tunnel(int s, struct addrinfo *srcres, struct addrinfo *dstres)
 	struct in6_aliasreq in6_addreq; 
 
 	memset(&in6_addreq, 0, sizeof(in6_addreq));
-	strncpy(in6_addreq.ifra_name, name, IFNAMSIZ);
+	strlcpy(in6_addreq.ifra_name, name, sizeof(in6_addreq.ifra_name));
 	memcpy(&in6_addreq.ifra_addr, srcres->ai_addr, srcres->ai_addr->sa_len);
 	memcpy(&in6_addreq.ifra_dstaddr, dstres->ai_addr,
 	    dstres->ai_addr->sa_len);
@@ -582,18 +604,112 @@ in6_set_tunnel(int s, struct addrinfo *srcres, struct addrinfo *dstres)
 		warn("SIOCSIFPHYADDR_IN6");
 }
 
+#ifndef IPV6_ROUTER_MODE_EXCLUSIVE
+#define IPV6_ROUTER_MODE_DISABLED       0
+#define IPV6_ROUTER_MODE_EXCLUSIVE      1
+#define IPV6_ROUTER_MODE_HYBRID         2
+#endif /* IPV6_ROUTER_MODE_EXCLUSIVE */
+
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 static void
 in6_set_router(int s, int enable)
 {
 	struct ifreq ifr;
 
 	bzero(&ifr, sizeof (ifr));
-	strncpy(ifr.ifr_name, name, IFNAMSIZ);
-	ifr.ifr_intval = enable;
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	ifr.ifr_intval = (enable == 0)
+		? IPV6_ROUTER_MODE_DISABLED
+		: IPV6_ROUTER_MODE_EXCLUSIVE;
 
 	if (ioctl(s, SIOCSETROUTERMODE_IN6, &ifr) < 0)
 		warn("SIOCSETROUTERMODE_IN6");
 }
+#endif
+
+static int
+routermode_from_string(char * str, int *mode_p)
+{
+	int	success = 1;
+
+	if (strcasecmp(str, "exclusive") == 0 ||
+	    strcasecmp(str, "enabled") == 0) {
+		*mode_p = IPV6_ROUTER_MODE_EXCLUSIVE;
+	} else if (strcasecmp(str, "hybrid") == 0) {
+		*mode_p = IPV6_ROUTER_MODE_HYBRID;
+	} else if (strcasecmp(str, "disabled") == 0) {
+		*mode_p = IPV6_ROUTER_MODE_DISABLED;
+	} else {
+		success = 0;
+	}
+	return (success);
+}
+
+static const char *
+routermode_string(int mode)
+{
+	const char *	str;
+
+	switch (mode) {
+	case IPV6_ROUTER_MODE_EXCLUSIVE:
+		str = "enabled";
+		break;
+	case IPV6_ROUTER_MODE_HYBRID:
+		str = "hybrid";
+		break;
+	case IPV6_ROUTER_MODE_DISABLED:
+		str = "disabled";
+		break;
+	default:
+		str = "<unknown>";
+		break;
+	}
+	return str;
+}
+
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+static int
+in6_routermode(int s, int argc, char *const*argv)
+{
+	struct in6_ifreq	ifr;
+	int 			ret;
+
+	bzero(&ifr, sizeof (ifr));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	if (argc == 0) {
+		ret = 0;
+#ifndef SIOCGETROUTERMODE_IN6
+#define SIOCGETROUTERMODE_IN6   _IOWR('i', 137, struct in6_ifreq)
+#endif /* SIOCGETROUTERMODE_IN6 */
+		if (ioctl(s, SIOCGETROUTERMODE_IN6, &ifr) < 0) {
+			if (argv != NULL) {
+				warn("SIOCGETROUTERMODE_IN6");
+			}
+		} else {
+			/* argv is NULL if we're called from status() */
+			printf("%s%s\n",
+			       (argv == NULL) ? "\troutermode6: " : "",
+			       routermode_string(ifr.ifr_intval));
+		}
+		ret = 0;
+	} else {
+		int mode;
+
+		if (routermode_from_string(argv[0], &mode) == 0) {
+			errx(EXIT_FAILURE,
+			     "mode '%s' invalid, must be one of "
+			     "disabled, exclusive, or hybrid",
+			     argv[0]);
+		}
+		ifr.ifr_intval = mode;
+		if (ioctl(s, SIOCSETROUTERMODE_IN6, &ifr) < 0) {
+			warn("SIOCSETROUTERMODE_IN6");
+		}
+		ret = 1;
+	}
+	return ret;
+}
+#endif
 
 static struct cmd inet6_cmds[] = {
 	DEF_CMD_ARG("prefixlen",			setifprefixlen),
@@ -613,14 +729,18 @@ static struct cmd inet6_cmds[] = {
 	DEF_CMD("-autoconf",	-IN6_IFF_AUTOCONF,	setip6flags),
 	DEF_CMD("nud",		ND6_IFF_PERFORMNUD,	setnd6flags),
 	DEF_CMD("-nud",		-ND6_IFF_PERFORMNUD,	setnd6flags),
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 	DEF_CMD("ifdisabled",   ND6_IFF_IFDISABLED,	setnd6flags),
 	DEF_CMD("-ifdisabled",  -ND6_IFF_IFDISABLED,	setnd6flags),
+#endif
 	DEF_CMD("replicated",	ND6_IFF_REPLICATED,	setnd6flags),
 	DEF_CMD("-replicated",	-ND6_IFF_REPLICATED,	setnd6flags),
 	DEF_CMD("proxy_prefixes", ND6_IFF_PROXY_PREFIXES,	setnd6flags),
 	DEF_CMD("-proxy_prefixes", -ND6_IFF_PROXY_PREFIXES,	setnd6flags),
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 	DEF_CMD("insecure",	ND6_IFF_INSECURE,	setnd6flags),
 	DEF_CMD("-insecure",	-ND6_IFF_INSECURE,	setnd6flags),
+#endif
 	DEF_CMD_ARG("pltime",        			setip6pltime),
 	DEF_CMD_ARG("vltime",        			setip6vltime),
 	DEF_CMD("eui64",	0,			setip6eui64),
@@ -640,7 +760,10 @@ static struct afswtch af_inet6 = {
 	.af_postproc	= in6_postproc,
 	.af_status_tunnel = in6_status_tunnel,
 	.af_settunnel	= in6_set_tunnel,
+#if !(TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 	.af_setrouter	= in6_set_router,
+	.af_routermode	= in6_routermode,
+#endif
 	.af_difaddr	= SIOCDIFADDR_IN6,
 	.af_aifaddr	= SIOCAIFADDR_IN6,
 	.af_ridreq	= &in6_ridreq,
