@@ -409,6 +409,56 @@ ping6_main(int argc, char *argv[])
 	bool valid;
 #if TARGET_OS_IPHONE
     options = 0;
+    
+    longopt_flag = 0;
+    mx_dup_ck = MAX_DUP_CHK;
+    datalen = DEFDATALEN;
+    BSPACE = '\b';        /* characters written for flood */
+    BBELL = '\a';        /* characters written for AUDIBLE */
+    DOT = '.';
+    ident = 0;            /* process id to identify our packets */
+    hoplimit = -1;        /* hoplimit */
+    pathmtu = 0;        /* path MTU for the destination.  0 = unspec. */
+    packet = NULL;
+    cm = NULL;
+    ifscope = 0;
+    nocell = 0;
+
+    /* counters */
+    nmissedmax = 0;        /* max value of ntransmitted - nreceived - 1 */
+    npackets = 0;            /* max packets to transmit */
+    nreceived = 0;            /* # of packets we got back */
+    nrepeats = 0;            /* number of duplicates */
+    ntransmitted = 0;        /* sequence # for outbound packets = #sent */
+    interval = 1000;    /* interval between packets in ms */
+    waittime = MAXWAIT;    /* timeout for each packet */
+    nrcvtimeout = 0;    /* # of packets we got back after waittime */
+
+    snpackets = 0;        /* max packets to transmit in one sweep */
+    sntransmitted = 0;        /* # of packets we sent in this sweep */
+    sweepmax = 0;        /* max value of payload in sweep */
+    sweepmin = 0;        /* start value of payload in sweep */
+    sweepincr = 1;        /* payload increment in sweep */
+
+    /* timing */
+    timing = 0;            /* flag to do timing */
+    tmin = 999999999.0;    /* minimum round trip time */
+    tmax = 0.0;        /* maximum round trip time */
+    tsum = 0.0;        /* sum of all times, for doing average */
+    tsumsq = 0.0;        /* sum of all times squared, for std. dev. */
+
+    /* for node addresses */
+    naflags = 0;
+
+    /* for ancillary data(advanced API) */
+    scmsg = NULL;
+
+    rcvtclass = 0;
+
+    use_sendmsg = 0;
+    use_recvmsg = 0;
+    so_traffic_class = SO_TC_CTL;    /* use control class, by default */
+    net_service_type = -1;
 #endif
     
 	/* just to be sure */
